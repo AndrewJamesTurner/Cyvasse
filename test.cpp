@@ -1,42 +1,44 @@
 #include <SFML/Graphics.hpp>
 #include "math.h"
+#include <iostream>
 
 const unsigned int WIDTH = 400;
 const unsigned int HEIGHT = 400;
 
-const unsigned int HEXRADIUS = 40;
-const unsigned int HEXHEIGHT = 2*HEXRADIUS;
-const unsigned int HEXWIDTH = (unsigned int)((float)HEXHEIGHT * 0.866); // * cos(30)
+const float SIZE = 60;
+const float HEXHEIGHT = 2 * SIZE;
+const float HEXWIDTH = HEXHEIGHT * (sqrt(3) / 2); 
 
 
 
 
 int main()
 {
-	
+	std::cout<<HEXHEIGHT << std::endl;
+	std::cout<<HEXWIDTH << std::endl;
 	
     // create the window
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!");
 		
 		
-	sf::CircleShape shape(HEXWIDTH,6);	
-	shape.setPosition(HEXWIDTH, 0);
-	shape.setOutlineThickness(-5);
+	sf::CircleShape shape(SIZE,6);	
+	shape.setPosition(0, 0);
 	shape.setFillColor(sf::Color(0,255,0));
+	shape.setOutlineThickness(-5);
 	shape.setOutlineColor(sf::Color(0, 0, 0));
-	
-	sf::CircleShape shape2(HEXWIDTH,6);	
-	shape2.setPosition(HEXWIDTH*2, 0);
-	shape2.setOutlineThickness(-5);
+
+	sf::CircleShape shape2(SIZE,6);	
+	shape2.setPosition(HEXWIDTH, 0);
 	shape2.setFillColor(sf::Color(0,255,0));
+	shape2.setOutlineThickness(-5);
 	shape2.setOutlineColor(sf::Color(0, 0, 0));
-	
-	sf::CircleShape shape3(HEXWIDTH,6);	
-	shape3.setPosition(HEXWIDTH*1.75,HEXHEIGHT*1.25);
+
+	sf::CircleShape shape3(SIZE,6);	
+	shape3.setPosition(HEXWIDTH*0.5,HEXHEIGHT * 0.75);
 	shape3.setOutlineThickness(-5);
 	shape3.setFillColor(sf::Color(0,255,0));
 	shape3.setOutlineColor(sf::Color(0, 0, 0));
-	
+
 	
     // run the program as long as the window is open
     while (window.isOpen())
@@ -56,7 +58,7 @@ int main()
         // draw everything here...
         window.draw(shape);
         window.draw(shape2);
-		//window.draw(shape3);
+		window.draw(shape3);
         
             
         
