@@ -11,6 +11,8 @@ class HexMap
         void update(void);
         int getRow(int x, int y);
         int getCol(int x, int y);
+        int getXpos(int row, int col);
+        int getYpos(int row, int col);
     protected:
     private:
 
