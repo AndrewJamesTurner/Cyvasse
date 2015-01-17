@@ -13,9 +13,7 @@ int main()
     // make hexmap
 	HexMap hexmap(&window, SIZE, ROWS, COLS);
 
-	//
-	int mouseClickX;
-	int mouseClickY;
+
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -33,15 +31,13 @@ int main()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    mouseClickX = event.mouseButton.x;
-                    mouseClickY = event.mouseButton.y;
+                    int mouseClickX = event.mouseButton.x;
+                    int mouseClickY = event.mouseButton.y;
 
-                    //std::cout << "the left button was pressed" << std::endl;
-                    //std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-                    //std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+                    int row = hexmap.getRow(mouseClickX, mouseClickY);
+                    int col = hexmap.getCol(mouseClickX, mouseClickY);
 
-                    std::cout <<  hexmap.getRow(mouseClickX, mouseClickY) << "," << hexmap.getCol(mouseClickX, mouseClickY) << std::endl;
-
+                    hexmap.moveOrthogonal(row, col,2);
                 }
             }
         }
