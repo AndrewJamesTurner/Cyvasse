@@ -7,6 +7,7 @@
 
 #include "HexMap.h"
 
+
 const unsigned int WIDTH = 400;
 const unsigned int HEIGHT = 400;
 

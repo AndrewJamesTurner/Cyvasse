@@ -4,14 +4,15 @@
 #define SIZE 30
 #define ROWS 10
 #define COLS 10
+#define MAPSIZE 5
 
 int main()
 {
     // create the window
-    sf::RenderWindow window(sf::VideoMode(2*SIZE*COLS, 2*SIZE*COLS*(sqrt(3) / 2)), "Hex Map!");
+    sf::RenderWindow window(sf::VideoMode(2*SIZE*(COLS) - 0.9*SIZE, 2*SIZE*(ROWS)*(sqrt(3) / 2)- 0.4*SIZE), "Hex Map!");
 
     // make hexmap
-	HexMap hexmap(&window, SIZE, ROWS, COLS);
+	HexMap hexmap(&window, SIZE, MAPSIZE);
 
 
 
@@ -37,7 +38,7 @@ int main()
                     int row = hexmap.getRow(mouseClickX, mouseClickY);
                     int col = hexmap.getCol(mouseClickX, mouseClickY);
 
-                    hexmap.moveOrthogonal(row, col,2);
+                    hexmap.moveOrthogonal(row, col,3);
                 }
             }
         }
@@ -45,7 +46,7 @@ int main()
 
 
         // clear the window with black color
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Blue);
 
         // draw everything here...
         hexmap.update();

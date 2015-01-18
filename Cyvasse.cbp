@@ -38,8 +38,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Hex.h" />
 		<Unit filename="include/HexMap.h" />
 		<Unit filename="include/header.h" />
+		<Unit filename="src/Hex.cpp" />
 		<Unit filename="src/HexMap.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
