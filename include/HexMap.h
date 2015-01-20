@@ -2,13 +2,14 @@
 #define HEXMAP_H
 
 #include "Hex.h"
+#include "Pieces.h"
+
 #include <SFML/Graphics.hpp>
 #include <random>
 
 class HexMap
 {
     public:
-        HexMap(sf::RenderWindow *_window, float _hexSize, int _nrows, int _ncols);
         HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize);
         virtual ~HexMap();
 
@@ -36,6 +37,8 @@ class HexMap
         bool inRangeAny(int row1, int col1, int row2, int col2, int range);
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 
+        void clearMap(void);
+
     protected:
 
     private:
@@ -44,6 +47,8 @@ class HexMap
 
     //std::vector<sf::CircleShape> hex;
     std::vector<Hex> hex;
+
+    //Pieces pieces;
 
     float hexSize;
     float hexHeight;
@@ -58,6 +63,7 @@ class HexMap
     bool outOfBounds(int row, int col);
     bool outOfBounds(int x, int y, int z);
 
+    int getIndex(int row, int col);
 
 
 };

@@ -1,14 +1,15 @@
 # depslib dependency file v1.0
-1421587310 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
+1421780143 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
 	"HexMap.h"
 	<vector>
 
-1421600031 /home/andy/Desktop/Cyvasse/include/HexMap.h
+1421780404 /home/andy/Desktop/Cyvasse/include/HexMap.h
 	"Hex.h"
+	"Pieces.h"
 	<SFML/Graphics.hpp>
 	<random>
 
-1421586779 source:/home/andy/Desktop/Cyvasse/src/main.cpp
+1421772838 source:/home/andy/Desktop/Cyvasse/src/main.cpp
 	"header.h"
 
 1421592605 /home/andy/Desktop/Cyvasse/include/header.h
@@ -17,9 +18,23 @@
 	<iostream>
 	"HexMap.h"
 
-1421600245 /home/andy/Desktop/Cyvasse/include/Hex.h
+1421777968 /home/andy/Desktop/Cyvasse/include/Hex.h
+	<SFML/Graphics.hpp>
+	"Piece.h"
+
+1421779595 source:/home/andy/Desktop/Cyvasse/src/Hex.cpp
+	"Hex.h"
+
+1421780255 source:/home/andy/Desktop/Cyvasse/src/Piece.cpp
+	"Piece.h"
+
+1421780296 /home/andy/Desktop/Cyvasse/include/Piece.h
 	<SFML/Graphics.hpp>
 
-1421591580 source:/home/andy/Desktop/Cyvasse/src/Hex.cpp
-	"Hex.h"
+1421779711 source:/home/andy/Desktop/Cyvasse/src/Pieces.cpp
+	"Pieces.h"
+
+1421773217 /home/andy/Desktop/Cyvasse/include/Pieces.h
+	<SFML/Graphics.hpp>
+	"Piece.h"
 

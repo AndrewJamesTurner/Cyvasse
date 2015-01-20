@@ -1,29 +1,8 @@
 #include "HexMap.h"
 #include <vector>
 
-HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _nrows, int _ncols){
-    window = _window;
-
-    nrows =_nrows;
-    ncols = _ncols;
-
-    hexSize =_hexSize;
-    hexHeight = 2 * hexSize;
-    hexWidth = hexHeight * (sqrt(3) / 2);
-
-    for(int x = 0; x<ncols; x++){
-        for(int y = 0; y<nrows; y++){
-
-      //      hex.push_back(sf::CircleShape(hexSize,6));
-      //      hex.back().setPosition(getXpos(x,y), getYpos(x,y));
-      //      hex.back().setFillColor(sf::Color(0,255,0));
-      //      hex.back().setOutlineThickness(-5);
-      //      hex.back().setOutlineColor(sf::Color(0, 0, 0));
-        }
-    }
-}
-
 HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
+
     window = _window;
 
     mapHexSize = _mapHexSize;
@@ -36,35 +15,53 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
 
     for(int col = 0; col<ncols; col++){
         for(int row = 0; row<nrows; row++){
-
-           // hex.push_back(sf::CircleShape(hexSize,6));
-           // hex.back().setPosition(getXpos(col,row), getYpos(col,row));
-           // hex.back().setOutlineThickness(5);
-
-
-            if(!outOfBounds(row,col)){
-                hex.push_back(Hex(getXpos(col,row), getYpos(col,row), hexSize, sf::Color::Green));
-            //    hex.back().setFillColor(sf::Color::Green);
-            //    hex.back().setOutlineColor(sf::Color::Black);
-            }
-            else{
-                hex.push_back(Hex(getXpos(col,row), getYpos(col,row), hexSize, sf::Color::Blue));
-
-            //    hex.back().setFillColor(sf::Color::Blue);
-            //    hex.back().setOutlineColor(sf::Color::Black);
-            }
+            hex.push_back(Hex(getXpos(col,row), getYpos(col,row), hexSize, sf::Color::White));
         }
     }
+
+    hex[getIndex(5,5)].setPiece(new Piece());
+
+    clearMap();
 }
 
 HexMap::~HexMap(){
     //dtor
 }
 
+
+int HexMap::getIndex(int row, int col){
+    return col*ncols+row;
+}
+
+void HexMap::clearMap(void){
+
+    for(int col = 0; col<ncols; col++){
+        for(int row = 0; row<nrows; row++){
+
+            if(!outOfBounds(row,col)){
+                hex[col*ncols+row].setColor(sf::Color::Green);
+            }
+            else{
+                hex[col*ncols+row].setColor(sf::Color::Blue);
+            }
+        }
+    }
+
+}
+
+
 void HexMap::update(void){
 
     for(auto i = hex.begin(); i!=hex.end(); ++i){
-        window->draw((*i).getShape());
+
+        (*i).draw(window);
+/*
+        if((*i).getPiece()){
+            Piece *piece = (*i).getPiece();
+            sf::Sprite sprite = piece->getSprite();
+            window->draw(sprite);
+        }
+    */
     }
 }
 
@@ -138,6 +135,9 @@ void HexMap::changeColour(int x, int y, int z, int red, int green, int blue){
 
 void HexMap::moveOrthogonal(int row, int col, int range){
 
+    if(outOfBounds(row,col))
+        return;
+
     std::default_random_engine e1(rd());
     std::uniform_int_distribution<int> uniform_dist(0, 256);
 
@@ -176,6 +176,9 @@ void HexMap::moveOrthogonal(int row, int col, int range){
 }
 
 void HexMap::moveDiagonal(int row, int col, int range){
+
+    if(outOfBounds(row,col))
+        return;
 
     std::default_random_engine e1(rd());
     std::uniform_int_distribution<int> uniform_dist(0, 256);

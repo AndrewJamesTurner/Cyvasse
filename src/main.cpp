@@ -40,6 +40,11 @@ int main()
 
                     hexmap.moveOrthogonal(row, col,3);
                 }
+
+                if (event.mouseButton.button == sf::Mouse::Right)
+                {
+                    hexmap.clearMap();
+                }
             }
         }
 
