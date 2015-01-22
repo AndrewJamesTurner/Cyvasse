@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+enum class movement{orthogonal};
+
 class Piece
 {
     public:
@@ -12,6 +14,7 @@ class Piece
         sf::Sprite getSprite(void);
 
         void setPosition(float _xPos, float _yPos);
+        movement getMoveType(void);
 
     protected:
 
@@ -19,6 +22,7 @@ class Piece
 
         sf::Texture texture;
         sf::Sprite sprite;
+        movement movetype;
 };
 
 #endif // PIECE_H

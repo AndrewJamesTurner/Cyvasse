@@ -56,6 +56,13 @@ Piece* Hex::getPiece(void){
     return piece;
 }
 
+bool Hex::hasPiece(void){
+
+    if(piece)
+        return true;
+    else
+        return false;
+}
 
 void Hex::setPiece(Piece* _piece){
     piece = _piece;

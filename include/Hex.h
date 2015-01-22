@@ -18,6 +18,7 @@ class Hex
         void setColor(sf::Color color);
 
         Piece* getPiece(void);
+        bool hasPiece(void);
         void setPiece(Piece* _piece);
         void clearPiece(void);
 
@@ -37,6 +38,8 @@ class Hex
         float hexSize;
         float hexHeight;
         float hexWidth;
+
+
 
         int getPixelX(void);
         int getPixelY(void);

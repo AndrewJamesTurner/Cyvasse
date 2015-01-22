@@ -17,15 +17,8 @@ class HexMap
 
         void mapClicked(int xPixel, int yPixel);
 
-        int getX(int x, int y);
-        int getY(int x, int y);
-
-        int getXpos(int row, int col);
-        int getYpos(int row, int col);
-
-        int getCubeX(int x, int y);
-        int getCubeY(int x, int y);
-        int getCubeZ(int x, int y);
+        int getX(int pixelX, int pixelY);
+        int getY(int pixelX, int pixelY);
 
         void changeColour(int row, int col);
         void changeColour(int x, int y, int z);
@@ -62,8 +55,8 @@ class HexMap
 
     std::random_device rd;
 
-    bool outOfBounds(int row, int col);
-    bool outOfBounds(int x, int y, int z);
+    bool outOfBounds(int x, int y);
+    //bool outOfBounds(int x, int y, int z);
 
     int getIndex(int x, int y);
 

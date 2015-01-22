@@ -11,7 +11,8 @@ class HexCoordinates
         HexCoordinates(int _cubeX, int _cubeY, int _cubeZ);
         virtual ~HexCoordinates();
 
-        bool isOrthogonal(HexCoordinates hexCoordinates);
+        bool isOrthogonal(HexCoordinates hex);
+        bool isInRange(HexCoordinates hex, int range);
 
         int getCartesianX();
         int getCartesianY();

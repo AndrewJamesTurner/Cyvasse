@@ -32,9 +32,9 @@ void HexCoordinates::updateCartesianCoordinates(void) {
     cartesianY = cubeZ;
 }
 
-bool HexCoordinates::isOrthogonal(HexCoordinates hexCoordinates){
+bool HexCoordinates::isOrthogonal(HexCoordinates hex){
 
-    if(cubeX == hexCoordinates.getCubeX() || cubeY == hexCoordinates.getCubeY() || cubeZ == hexCoordinates.getCubeZ()){
+    if(cubeX == hex.getCubeX() || cubeY == hex.getCubeY() || cubeZ == hex.getCubeZ()){
         return true;
     }
     else{
@@ -42,9 +42,15 @@ bool HexCoordinates::isOrthogonal(HexCoordinates hexCoordinates){
     }
 }
 
+bool HexCoordinates::isInRange(HexCoordinates hex, int range){
 
+    int distance = (abs(cubeX - hex.getCubeX()) + abs(cubeY - hex.getCubeY()) + abs(cubeZ - hex.getCubeZ()))/2;
 
-
+    if(distance <= range)
+        return true;
+    else
+        return false;
+}
 
 
 

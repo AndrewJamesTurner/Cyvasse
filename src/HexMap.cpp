@@ -21,6 +21,7 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
         }
     }
 
+
     hex[getIndex(5,5)].setPiece(new Piece());
 
     clearMap();
@@ -36,10 +37,6 @@ void HexMap::mapClicked(int xPixel, int yPixel) {
     int x = getX(xPixel, yPixel);
     int y = getY(xPixel, yPixel);
 
-    //std::cout << "x: " << x << ", y: " << y << "\n";
-
-
-
     if(outOfBounds(x,y)) {
         return;
     }
@@ -48,36 +45,27 @@ void HexMap::mapClicked(int xPixel, int yPixel) {
 
     Hex* HexClicked = &hex[getIndex(x,y)];
 
-    //HexClicked->setColor(sf::Color::White);
+    if(!selectedHex && HexClicked->hasPiece()){
 
-    if(!selectedHex) {
         selectedHex = HexClicked;
+        selectedHex->setColor(sf::Color::White);
     }
 
-
-    if(selectedHex->isOrthogonal(*HexClicked)){
-        selectedHex = HexClicked;
-    }
+    else if(selectedHex && !HexClicked->hasPiece()){
 
 
-    selectedHex->setColor(sf::Color::White);
+        if(selectedHex->getPiece()->getMoveType() == movement::orthogonal && selectedHex->isOrthogonal(*HexClicked)){
 
-    /*
-
-        if(!outOfBounds(row,col)){
-            clearMap();
-            selectedHex = &hex[getIndex(row,col)];
-            changeColour(row,col);
+            HexClicked->setPiece(selectedHex->getPiece());
+            selectedHex->clearPiece();
+            selectedHex = nullptr;
         }
+    }
+    else{
+        selectedHex = nullptr;
+    }
 
-    */
-
-    // moveOrthogonal(row, col,3);
 }
-
-
-
-
 
 
 int HexMap::getIndex(int x, int y) {
@@ -86,17 +74,21 @@ int HexMap::getIndex(int x, int y) {
 
 void HexMap::clearMap(void) {
 
+    HexCoordinates centerHex(mapHexSize, mapHexSize);
+
     for(int x = 0; x<width; x++) {
         for(int y = 0; y<height; y++) {
 
-            if(!outOfBounds(x,y)) {
+            HexCoordinates currentHex(x, y);
+
+            if(centerHex.isInRange(currentHex, mapHexSize)){
                 hex[getIndex(x,y)].setColor(sf::Color::Green);
-            } else {
+            }
+            else {
                 hex[getIndex(x,y)].setColor(sf::Color::Blue);
             }
         }
     }
-
 }
 
 
@@ -301,95 +293,43 @@ void HexMap::moveAny(int row, int col, int range) {
 }
 
 
-int HexMap::getX(int x, int y) {
+int HexMap::getX(int pixelX, int pixelY) {
 
     int xPos;
 
-    if(getY(x, y) % 2 == 0) {
-        xPos = (x/hexWidth) + 0.5;;
+    if(getY(pixelX, pixelY) % 2 == 0) {
+        xPos = (pixelX/hexWidth) + 0.5;;
     } else {
 
-        if(x < hexWidth/2) {
+        if(pixelX < hexWidth/2) {
             xPos = -1;
         } else {
-            xPos = (x/hexWidth);
+            xPos = (pixelX/hexWidth);
         }
     }
 
     return xPos;
 }
 
-int HexMap::getY(int x, int y) {
+int HexMap::getY(int pixelX, int pixelY) {
 
     int yPos;
 
-    yPos = y /(hexHeight*0.75);
+    yPos = pixelY /(hexHeight*0.75);
 
     return yPos;
 }
 
 
+bool HexMap::outOfBounds(int x, int y){
 
-int HexMap::getCubeX(int x, int y) {
-/*
-    int row = getRow(x,y);
-    int col = getCol(x,y);
+    HexCoordinates current(x,y);
+    HexCoordinates center(mapHexSize,mapHexSize);
 
-    int cubeX = col - (row - (row&1))/2;
-*/
-    return 0;
-}
-
-int HexMap::getCubeY(int x, int y) {
-/*
-    int row = getRow(x,y);
-    int col = getCol(x,y);
-
-    int cubeX = col - (row - (row&1))/2;
-    int cubeZ = row;
-    int cubeY = 0 - cubeX - cubeZ;
-*/
-    return 0;
-}
-
-int HexMap::getCubeZ(int x, int y) {
-/*
-    int row = getRow(x,y);
-    int cubeZ = row;
-*/
-    return 0;
-}
-
-int HexMap::getXpos(int row, int col) {
-
-    if(col % 2 == 0)
-        return row*hexWidth - (hexWidth*0.5);
-    else
-        return (row*hexWidth);
-}
-
-int HexMap::getYpos(int row, int col) {
-
-    return col*hexHeight*0.75;
-}
-
-bool HexMap::outOfBounds(int row, int col) {
-
-    int x = row - (col - (col&1))/2;
-    int z = col;
-    int y = 0 - x - z;
-
-    return outOfBounds(x,y,z);
-}
-
-bool HexMap::outOfBounds(int x, int y, int z) {
-
-    int xCenter = mapHexSize - (mapHexSize - (mapHexSize&1))/2;
-    int zCenter = mapHexSize;
-    int yCenter = 0 - xCenter - zCenter;
-
-    if(inRangeAny(xCenter, yCenter, zCenter, x, y, z, mapHexSize))
+    if(center.isInRange(current, mapHexSize)){
         return false;
-    else
+    }
+    else{
         return true;
+    }
 }
