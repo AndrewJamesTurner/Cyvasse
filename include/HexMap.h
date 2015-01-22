@@ -15,8 +15,10 @@ class HexMap
 
         void update(void);
 
-        int getRow(int x, int y);
-        int getCol(int x, int y);
+        void mapClicked(int xPixel, int yPixel);
+
+        int getX(int x, int y);
+        int getY(int x, int y);
 
         int getXpos(int row, int col);
         int getYpos(int row, int col);
@@ -27,7 +29,7 @@ class HexMap
 
         void changeColour(int row, int col);
         void changeColour(int x, int y, int z);
-        void changeColour(int row, int col, int red, int greed, int blue);
+        void changeColour(int x, int y, int red, int greed, int blue);
         void changeColour(int x, int y, int z, int red, int greed, int blue);
 
         void moveOrthogonal(int row, int col, int range);
@@ -54,8 +56,8 @@ class HexMap
     float hexHeight;
     float hexWidth;
 
-    int nrows;
-    int ncols;
+    int width;
+    int height;
     int mapHexSize;
 
     std::random_device rd;
@@ -63,9 +65,9 @@ class HexMap
     bool outOfBounds(int row, int col);
     bool outOfBounds(int x, int y, int z);
 
-    int getIndex(int row, int col);
+    int getIndex(int x, int y);
 
-
+    Hex* selectedHex;
 };
 
 #endif // HEXMAP_H

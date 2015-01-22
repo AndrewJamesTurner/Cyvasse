@@ -1,21 +1,23 @@
 #include "HexMap.h"
 #include <vector>
 
-HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
+HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
 
     window = _window;
 
     mapHexSize = _mapHexSize;
-    nrows = 2*mapHexSize + mapHexSize;
-    ncols = 2*mapHexSize + mapHexSize;
+    width = 2*mapHexSize + mapHexSize;
+    height = 2*mapHexSize + mapHexSize;
 
     hexSize =_hexSize;
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);
 
-    for(int col = 0; col<ncols; col++){
-        for(int row = 0; row<nrows; row++){
-            hex.push_back(Hex(getXpos(col,row), getYpos(col,row), hexSize, sf::Color::White));
+    selectedHex = nullptr;
+
+    for(int x = 0; x<width; x++) {
+        for(int y = 0; y<height; y++) {
+            hex.push_back(Hex(x,y, hexSize, sf::Color::White));
         }
     }
 
@@ -24,25 +26,73 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
     clearMap();
 }
 
-HexMap::~HexMap(){
+HexMap::~HexMap() {
     //dtor
 }
 
 
-int HexMap::getIndex(int row, int col){
-    return col*ncols+row;
+void HexMap::mapClicked(int xPixel, int yPixel) {
+
+    int x = getX(xPixel, yPixel);
+    int y = getY(xPixel, yPixel);
+
+    //std::cout << "x: " << x << ", y: " << y << "\n";
+
+
+
+    if(outOfBounds(x,y)) {
+        return;
+    }
+
+    clearMap();
+
+    Hex* HexClicked = &hex[getIndex(x,y)];
+
+    //HexClicked->setColor(sf::Color::White);
+
+    if(!selectedHex) {
+        selectedHex = HexClicked;
+    }
+
+
+    if(selectedHex->isOrthogonal(*HexClicked)){
+        selectedHex = HexClicked;
+    }
+
+
+    selectedHex->setColor(sf::Color::White);
+
+    /*
+
+        if(!outOfBounds(row,col)){
+            clearMap();
+            selectedHex = &hex[getIndex(row,col)];
+            changeColour(row,col);
+        }
+
+    */
+
+    // moveOrthogonal(row, col,3);
 }
 
-void HexMap::clearMap(void){
 
-    for(int col = 0; col<ncols; col++){
-        for(int row = 0; row<nrows; row++){
 
-            if(!outOfBounds(row,col)){
-                hex[col*ncols+row].setColor(sf::Color::Green);
-            }
-            else{
-                hex[col*ncols+row].setColor(sf::Color::Blue);
+
+
+
+int HexMap::getIndex(int x, int y) {
+    return (x*width)+y;
+}
+
+void HexMap::clearMap(void) {
+
+    for(int x = 0; x<width; x++) {
+        for(int y = 0; y<height; y++) {
+
+            if(!outOfBounds(x,y)) {
+                hex[getIndex(x,y)].setColor(sf::Color::Green);
+            } else {
+                hex[getIndex(x,y)].setColor(sf::Color::Blue);
             }
         }
     }
@@ -50,22 +100,22 @@ void HexMap::clearMap(void){
 }
 
 
-void HexMap::update(void){
+void HexMap::update(void) {
 
-    for(auto i = hex.begin(); i!=hex.end(); ++i){
+    for(auto i = hex.begin(); i!=hex.end(); ++i) {
 
         (*i).draw(window);
-/*
-        if((*i).getPiece()){
-            Piece *piece = (*i).getPiece();
-            sf::Sprite sprite = piece->getSprite();
-            window->draw(sprite);
-        }
-    */
+        /*
+                if((*i).getPiece()){
+                    Piece *piece = (*i).getPiece();
+                    sf::Sprite sprite = piece->getSprite();
+                    window->draw(sprite);
+                }
+            */
     }
 }
 
-bool HexMap::inRangeAny(int row1, int col1, int row2, int col2, int range){
+bool HexMap::inRangeAny(int row1, int col1, int row2, int col2, int range) {
 
     // get cube coordinates
     int x1 = col1 - (row1 - (row1&1))/2;
@@ -79,7 +129,7 @@ bool HexMap::inRangeAny(int row1, int col1, int row2, int col2, int range){
     return inRangeAny(x1, y1, z1, x2, y2, z2, range);
 }
 
-bool HexMap::inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range){
+bool HexMap::inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range) {
 
     int distance = ( abs(x1-x2) + abs(y1-y2) + abs(z1-z2)) / 2;
 
@@ -89,7 +139,7 @@ bool HexMap::inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int rang
         return false;
 }
 
-void HexMap::changeColour(int row, int col){
+void HexMap::changeColour(int row, int col) {
 
     std::default_random_engine e1(rd());
     std::uniform_int_distribution<int> uniform_dist(0, 256);
@@ -101,7 +151,7 @@ void HexMap::changeColour(int row, int col){
     changeColour(row,col,red,green,blue);
 }
 
-void HexMap::changeColour(int x, int y, int z){
+void HexMap::changeColour(int x, int y, int z) {
 
     int row = z;
     int col = x + (z - (z&1))/2;
@@ -116,16 +166,16 @@ void HexMap::changeColour(int x, int y, int z){
     changeColour(row,col,red,green,blue);
 }
 
-void HexMap::changeColour(int row, int col, int red, int green, int blue){
+void HexMap::changeColour(int x, int y, int red, int green, int blue) {
 
-    if(outOfBounds(row,col)){
+    if(outOfBounds(x,y)) {
         return;
     }
 
-    hex[(col*ncols)+row].setColor(sf::Color(red,green,blue));
+    hex[getIndex(x,y)].setColor(sf::Color(red,green,blue));
 }
 
-void HexMap::changeColour(int x, int y, int z, int red, int green, int blue){
+void HexMap::changeColour(int x, int y, int z, int red, int green, int blue) {
 
     int row = z;
     int col = x + (z - (z&1))/2;
@@ -133,7 +183,7 @@ void HexMap::changeColour(int x, int y, int z, int red, int green, int blue){
     changeColour(row,col, red, green, blue);
 }
 
-void HexMap::moveOrthogonal(int row, int col, int range){
+void HexMap::moveOrthogonal(int row, int col, int range) {
 
     if(outOfBounds(row,col))
         return;
@@ -151,7 +201,7 @@ void HexMap::moveOrthogonal(int row, int col, int range){
     int yCentre = 0 - xCentre - zCentre;
     changeColour(zCentre, xCentre + (zCentre - (zCentre&1))/2, red, green, blue);
 
-    for(int i = -range; i <= range; i++){
+    for(int i = -range; i <= range; i++) {
 
         int x,y,z;
 
@@ -175,7 +225,7 @@ void HexMap::moveOrthogonal(int row, int col, int range){
     }
 }
 
-void HexMap::moveDiagonal(int row, int col, int range){
+void HexMap::moveDiagonal(int row, int col, int range) {
 
     if(outOfBounds(row,col))
         return;
@@ -193,7 +243,7 @@ void HexMap::moveDiagonal(int row, int col, int range){
     int yCentre = 0 - xCentre - zCentre;
     changeColour(zCentre, xCentre + (zCentre - (zCentre&1))/2, red, green, blue);
 
-    for(int i = -range; i <= range; i++){
+    for(int i = -range; i <= range; i++) {
 
         int x,y,z;
 
@@ -217,7 +267,7 @@ void HexMap::moveDiagonal(int row, int col, int range){
     }
 }
 
-void HexMap::moveAny(int row, int col, int range){
+void HexMap::moveAny(int row, int col, int range) {
 
     if(outOfBounds(row,col))
         return;
@@ -234,15 +284,15 @@ void HexMap::moveAny(int row, int col, int range){
     int zCentre = row;
     int yCentre = 0 - xCentre - zCentre;
 
-    for(int dx = -range; dx <= range; dx++){
-        for(int dy = -range; dy <= range; dy++){
-            for(int dz = -range; dz <= range; dz++){
+    for(int dx = -range; dx <= range; dx++) {
+        for(int dy = -range; dy <= range; dy++) {
+            for(int dz = -range; dz <= range; dz++) {
 
                 int x = xCentre + dx;
                 int y = yCentre + dy;
                 int z = zCentre + dz;
 
-                if(x+y+z == 0){
+                if(x+y+z == 0) {
                     changeColour(x, y, z, red, green, blue);
                 }
             }
@@ -250,96 +300,89 @@ void HexMap::moveAny(int row, int col, int range){
     }
 }
 
-int HexMap::getRow(int x, int y){
 
-    int row;
+int HexMap::getX(int x, int y) {
 
-    row = y /(hexHeight*0.75);
+    int xPos;
 
-    if(row < 0 || row >= nrows){
-        row = -1;
-    }
+    if(getY(x, y) % 2 == 0) {
+        xPos = (x/hexWidth) + 0.5;;
+    } else {
 
-    return row;
-}
-
-int HexMap::getCol(int x, int y){
-
-    int col;
-
-    if(getRow(x, y) % 2 == 0){
-        col = (x/hexWidth) + 0.5;;
-    }
-    else{
-
-        if(x < hexWidth/2){
-            col = -1;
-        }
-        else{
-            col = (x/hexWidth);
+        if(x < hexWidth/2) {
+            xPos = -1;
+        } else {
+            xPos = (x/hexWidth);
         }
     }
 
-    if(col < 0 || col >= ncols){
-        col = -1;
-    }
-
-    return col;
+    return xPos;
 }
 
-int HexMap::getCubeX(int x, int y){
+int HexMap::getY(int x, int y) {
 
+    int yPos;
+
+    yPos = y /(hexHeight*0.75);
+
+    return yPos;
+}
+
+
+
+int HexMap::getCubeX(int x, int y) {
+/*
     int row = getRow(x,y);
     int col = getCol(x,y);
 
     int cubeX = col - (row - (row&1))/2;
-
-    return cubeX;
+*/
+    return 0;
 }
 
-int HexMap::getCubeY(int x, int y){
-
+int HexMap::getCubeY(int x, int y) {
+/*
     int row = getRow(x,y);
     int col = getCol(x,y);
 
     int cubeX = col - (row - (row&1))/2;
     int cubeZ = row;
     int cubeY = 0 - cubeX - cubeZ;
-
-    return cubeY;
+*/
+    return 0;
 }
 
-int HexMap::getCubeZ(int x, int y){
-
+int HexMap::getCubeZ(int x, int y) {
+/*
     int row = getRow(x,y);
     int cubeZ = row;
-
-    return cubeZ;
+*/
+    return 0;
 }
 
-int HexMap::getXpos(int row, int col){
+int HexMap::getXpos(int row, int col) {
 
-     if(col % 2 == 0)
+    if(col % 2 == 0)
         return row*hexWidth - (hexWidth*0.5);
     else
-       return (row*hexWidth);
+        return (row*hexWidth);
 }
 
-int HexMap::getYpos(int row, int col){
+int HexMap::getYpos(int row, int col) {
 
     return col*hexHeight*0.75;
 }
 
-bool HexMap::outOfBounds(int row, int col){
+bool HexMap::outOfBounds(int row, int col) {
 
-    int x = col - (row - (row&1))/2;
-    int z = row;
+    int x = row - (col - (col&1))/2;
+    int z = col;
     int y = 0 - x - z;
 
     return outOfBounds(x,y,z);
 }
 
-bool HexMap::outOfBounds(int x, int y, int z){
+bool HexMap::outOfBounds(int x, int y, int z) {
 
     int xCenter = mapHexSize - (mapHexSize - (mapHexSize&1))/2;
     int zCenter = mapHexSize;

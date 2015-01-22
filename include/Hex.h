@@ -3,12 +3,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "Piece.h"
+#include "HexCoordinates.h"
 
 class Hex
 {
     public:
-        Hex(int _xPos, int _yPos, int hexSize, sf::Color color);
+        Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color);
         virtual ~Hex();
+
+        HexCoordinates* coordinates;
 
         sf::CircleShape getShape(void);
 
@@ -20,14 +23,26 @@ class Hex
 
         void draw(sf::RenderWindow *window);
 
-    protected:
+        bool isOrthogonal(Hex hex);
+
     private:
 
-    sf::CircleShape shape;
-    Piece* piece;
 
-    float xPos;
-    float yPos;
+        sf::CircleShape shape;
+        Piece* piece;
+
+        float pixelX;
+        float pixelY;
+
+        float hexSize;
+        float hexHeight;
+        float hexWidth;
+
+        int getPixelX(void);
+        int getPixelY(void);
+
+        void setPixelX(void);
+        void setPixelY(void);
 };
 
 #endif // HEX_H

@@ -35,10 +35,8 @@ int main()
                     int mouseClickX = event.mouseButton.x;
                     int mouseClickY = event.mouseButton.y;
 
-                    int row = hexmap.getRow(mouseClickX, mouseClickY);
-                    int col = hexmap.getCol(mouseClickX, mouseClickY);
-
-                    hexmap.moveOrthogonal(row, col,3);
+                    hexmap.mapClicked(mouseClickX, mouseClickY);
+                    //hexmap.moveOrthogonal(row, col,3);
                 }
 
                 if (event.mouseButton.button == sf::Mouse::Right)
