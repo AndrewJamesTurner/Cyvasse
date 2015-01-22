@@ -39,11 +39,13 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="include/Hex.h" />
+		<Unit filename="include/HexCoordinates.h" />
 		<Unit filename="include/HexMap.h" />
 		<Unit filename="include/Piece.h" />
 		<Unit filename="include/Pieces.h" />
 		<Unit filename="include/header.h" />
 		<Unit filename="src/Hex.cpp" />
+		<Unit filename="src/HexCoordinates.cpp" />
 		<Unit filename="src/HexMap.cpp" />
 		<Unit filename="src/Piece.cpp" />
 		<Unit filename="src/Pieces.cpp" />
