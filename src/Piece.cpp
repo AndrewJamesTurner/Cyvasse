@@ -1,12 +1,17 @@
 #include "Piece.h"
 
-Piece::Piece()
+Piece::Piece(Player _player, Type _type)
 {
     if (!texture.loadFromFile("Images/King.png")){
         // error...
     }
 
-    movetype = movement::orthogonal;
+    player = _player;
+    type = _type;
+    movetype = Movement::orthogonal;
+
+
+
 
     sprite.setTexture(texture);
     sf::FloatRect textureRect = sprite.getLocalBounds();
@@ -14,7 +19,10 @@ Piece::Piece()
 
     sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
 
-
+    if(player == Player::player1)
+        sprite.setColor(sf::Color::Black);
+    else
+        sprite.setColor(sf::Color::White);
 }
 
 Piece::~Piece()
@@ -32,6 +40,10 @@ void Piece::setPosition(float xPos, float yPos){
    sprite.setPosition(xPos,yPos);
 }
 
-movement Piece::getMoveType(void){
+Movement Piece::getMoveType(void){
     return movetype;
+}
+
+Player Piece::getPlayer(void){
+    return player;
 }

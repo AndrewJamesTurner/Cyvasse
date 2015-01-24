@@ -13,7 +13,7 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color)
 
     shape = sf::CircleShape(hexSize,6);
     shape.setPosition(pixelX, pixelY);
-    shape.setOutlineThickness(-1);
+    shape.setOutlineThickness(-1.5);
     shape.setFillColor(color);
     shape.setOutlineColor(sf::Color::Black);
 
@@ -51,6 +51,9 @@ void Hex::setColor(sf::Color color){
     shape.setFillColor(color);
 }
 
+void Hex::setBoarderColor(sf::Color color){
+    shape.setOutlineColor(color);
+}
 
 Piece* Hex::getPiece(void){
     return piece;

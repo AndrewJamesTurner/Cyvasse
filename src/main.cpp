@@ -9,7 +9,7 @@
 int main()
 {
     // create the window
-    sf::RenderWindow window(sf::VideoMode(2*SIZE*(COLS) - 0.9*SIZE, 2*SIZE*(ROWS)*(sqrt(3) / 2)- 0.4*SIZE), "Hex Map!");
+    sf::RenderWindow window(sf::VideoMode(2*SIZE*(COLS) - 0.9*SIZE, 2*SIZE*(ROWS)*(sqrt(3) / 2)- 0.4*SIZE), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
 
     // make hexmap
 	HexMap hexmap(&window, SIZE, MAPSIZE);

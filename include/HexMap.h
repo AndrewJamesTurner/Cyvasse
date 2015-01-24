@@ -62,7 +62,7 @@ class HexMap
 
     Hex* selectedHex;
 
-    bool canMove(Hex selectedHex, Hex targetHex);
+    bool movePiece(Hex* selectedHex, Hex* targetHex);
 
 };
 

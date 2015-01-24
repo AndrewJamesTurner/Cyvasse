@@ -3,18 +3,22 @@
 
 #include <SFML/Graphics.hpp>
 
-enum class movement{orthogonal};
+enum class Player{player1, player2};
+enum class Type{king};
+enum class Movement{orthogonal};
 
 class Piece
 {
     public:
-        Piece();
+        Piece(Player _player, Type _type);
         virtual ~Piece();
 
         sf::Sprite getSprite(void);
 
         void setPosition(float _xPos, float _yPos);
-        movement getMoveType(void);
+        Movement getMoveType(void);
+
+        Player getPlayer(void);
 
     protected:
 
@@ -22,7 +26,10 @@ class Piece
 
         sf::Texture texture;
         sf::Sprite sprite;
-        movement movetype;
+
+        Movement movetype;
+        Player player;
+        Type type;
 };
 
 #endif // PIECE_H

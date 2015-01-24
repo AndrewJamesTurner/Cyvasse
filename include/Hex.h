@@ -16,6 +16,7 @@ class Hex
         sf::CircleShape getShape(void);
 
         void setColor(sf::Color color);
+        void setBoarderColor(sf::Color color);
 
         Piece* getPiece(void);
         bool hasPiece(void);

@@ -22,8 +22,8 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
     }
 
 
-    hex[getIndex(5,5)].setPiece(new Piece());
-    hex[getIndex(6,6)].setPiece(new Piece());
+    hex[getIndex(5,5)].setPiece(new Piece(Player::player1, Type::king));
+    hex[getIndex(6,6)].setPiece(new Piece(Player::player2, Type::king));
 
     clearMap();
 }
@@ -46,55 +46,70 @@ void HexMap::mapClicked(int xPixel, int yPixel) {
 
     Hex* HexClicked = &hex[getIndex(x,y)];
 
-
     if(!selectedHex && HexClicked->hasPiece()){
         selectedHex = HexClicked;
-        selectedHex->setColor(sf::Color::White);
+        selectedHex->setBoarderColor(sf::Color::Yellow);
     }
-/*
+
+    else if(!selectedHex && !HexClicked->hasPiece()){
+        HexClicked->setBoarderColor(sf::Color::Yellow);
+    }
     else{
 
-        if(canMove(*selectedHex, *HexClicked)){
-
-        }
-
-    }
-*/
-
-    else if(selectedHex && !HexClicked->hasPiece()){
-
-
-        if(selectedHex->getPiece()->getMoveType() == movement::orthogonal && selectedHex->isOrthogonal(*HexClicked)){
-
-            std::vector<HexCoordinates> steps = selectedHex->getCoordinates()->orthogonalSteps(*HexClicked->getCoordinates());
-
-            for(auto i = steps.begin(); i!=steps.end(); ++i) {
-
-                if(hex[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){
-                    selectedHex = nullptr;
-                    return;
-                }
-            }
-
-
-            HexClicked->setPiece(selectedHex->getPiece());
-            selectedHex->clearPiece();
+        if(movePiece(selectedHex, HexClicked)){
             selectedHex = nullptr;
         }
-
-        selectedHex = nullptr;
-
+        else{
+            selectedHex = nullptr;
+        }
     }
-    else{
-        selectedHex = nullptr;
-    }
-
 }
 
 
-bool HexMap::canMove(Hex selectedHex, Hex targetHex){
+bool HexMap::movePiece(Hex* selectedHex, Hex* targetHex){
 
-    return true;
+    if(selectedHex == targetHex)
+        return false;
+
+    Movement moveType = selectedHex->getPiece()->getMoveType();
+
+    // if the movement type is orthogonal and the two hexes are orthogonal
+    if(moveType == Movement::orthogonal && selectedHex->isOrthogonal(*targetHex)){
+
+        // get the steps from selectedHex to targetHex
+        std::vector<HexCoordinates> steps = selectedHex->getCoordinates()->orthogonalSteps(*targetHex->getCoordinates());
+
+        // check all the steps to targetHex are clear
+        for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
+
+            if(hex[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){
+                return false;
+            }
+        }
+
+        // check if the target is clear
+        if(!targetHex->hasPiece()){
+
+            targetHex->setPiece(selectedHex->getPiece());
+            selectedHex->clearPiece();
+            return true;
+        }
+
+        // if target contains opponent
+        else if(selectedHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer()){
+
+            delete targetHex->getPiece();
+            targetHex->setPiece(selectedHex->getPiece());
+            selectedHex->clearPiece();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
 }
 
 
@@ -119,6 +134,8 @@ void HexMap::clearMap(void) {
             else {
                 hex[getIndex(x,y)].setColor(sf::Color::Blue);
             }
+
+            hex[getIndex(x,y)].setBoarderColor(sf::Color::Black);
         }
     }
 }
@@ -330,7 +347,7 @@ int HexMap::getX(int pixelX, int pixelY) {
     int xPos;
 
     if(getY(pixelX, pixelY) % 2 == 0) {
-        xPos = (pixelX/hexWidth) + 0.5;;
+        xPos = (pixelX/hexWidth) + 0.5;
     } else {
 
         if(pixelX < hexWidth/2) {
