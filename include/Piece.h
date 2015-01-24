@@ -5,7 +5,7 @@
 #include <iostream>
 
 enum class Player{player1, player2};
-enum class Type{king};
+enum class Type{king,rabble};
 enum class Movement{orthogonal};
 
 class Piece

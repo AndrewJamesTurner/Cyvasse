@@ -2,8 +2,19 @@
 
 Piece::Piece(Player _player, Type _type)
 {
-    if (!texture.loadFromFile("Images/King.png")){
-        exit(0);
+
+    switch(_type){
+
+        case Type::rabble:
+            if (!texture.loadFromFile("Images/Rabble.png"))
+            exit(0);
+
+            break;
+        case Type::king:
+            if (!texture.loadFromFile("Images/King.png"))
+            exit(0);
+
+            break;
     }
 
     player = _player;
