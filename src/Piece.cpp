@@ -3,14 +3,14 @@
 Piece::Piece(Player _player, Type _type)
 {
     if (!texture.loadFromFile("Images/King.png")){
-        // error...
+        exit(0);
     }
 
     player = _player;
     type = _type;
     movetype = Movement::orthogonal;
 
-
+    range = 3;
 
 
     sprite.setTexture(texture);
@@ -47,3 +47,7 @@ Movement Piece::getMoveType(void){
 Player Piece::getPlayer(void){
     return player;
 }
+
+ int Piece::getRange(void){
+    return range;
+ }

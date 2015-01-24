@@ -5,7 +5,7 @@
 #include "Piece.h"
 #include "HexCoordinates.h"
 
-class Hex
+class Hex : public HexCoordinates
 {
     public:
         Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color);
@@ -25,16 +25,14 @@ class Hex
 
         void draw(sf::RenderWindow *window);
 
-        bool isOrthogonal(Hex hex);
 
-        HexCoordinates* getCoordinates(void);
 
     private:
 
 
         sf::CircleShape shape;
         Piece* piece;
-        HexCoordinates* coordinates;
+
 
         float pixelX;
         float pixelY;

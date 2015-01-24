@@ -2,6 +2,7 @@
 #define PIECE_H
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 enum class Player{player1, player2};
 enum class Type{king};
@@ -16,9 +17,10 @@ class Piece
         sf::Sprite getSprite(void);
 
         void setPosition(float _xPos, float _yPos);
-        Movement getMoveType(void);
 
+        Movement getMoveType(void);
         Player getPlayer(void);
+        int getRange(void);
 
     protected:
 
@@ -30,6 +32,7 @@ class Piece
         Movement movetype;
         Player player;
         Type type;
+        int range;
 };
 
 #endif // PIECE_H

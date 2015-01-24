@@ -13,6 +13,7 @@ class HexCoordinates
         virtual ~HexCoordinates();
 
         bool isOrthogonal(HexCoordinates hex);
+        bool isOrthogonalRange(HexCoordinates hex, int range);
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);
 

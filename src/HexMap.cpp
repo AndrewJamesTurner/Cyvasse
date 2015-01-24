@@ -23,7 +23,10 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
 
 
     hex[getIndex(5,5)].setPiece(new Piece(Player::player1, Type::king));
-    hex[getIndex(6,6)].setPiece(new Piece(Player::player2, Type::king));
+    hex[getIndex(6,6)].setPiece(new Piece(Player::player1, Type::king));
+
+    hex[getIndex(2,2)].setPiece(new Piece(Player::player2, Type::king));
+    hex[getIndex(8,8)].setPiece(new Piece(Player::player2, Type::king));
 
     clearMap();
 }
@@ -77,7 +80,7 @@ bool HexMap::movePiece(Hex* selectedHex, Hex* targetHex){
     if(moveType == Movement::orthogonal && selectedHex->isOrthogonal(*targetHex)){
 
         // get the steps from selectedHex to targetHex
-        std::vector<HexCoordinates> steps = selectedHex->getCoordinates()->orthogonalSteps(*targetHex->getCoordinates());
+        std::vector<HexCoordinates> steps = selectedHex->orthogonalSteps(*targetHex);
 
         // check all the steps to targetHex are clear
         for(auto i = steps.begin(); i!=steps.end()-1; ++i) {

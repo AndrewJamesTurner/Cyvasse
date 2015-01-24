@@ -1,8 +1,10 @@
 #include "Hex.h"
 
-Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color)
-{
-    coordinates = new HexCoordinates(_cartesianX,_cartesianY);
+Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexCoordinates(_cartesianX, _cartesianY){
+
+
+
+
 
     hexSize = _hexSize;
     hexHeight = 2 * hexSize;
@@ -25,10 +27,6 @@ Hex::~Hex()
     //delete coordinates;
 }
 
-bool Hex::isOrthogonal(Hex hex){
-
-    return coordinates->isOrthogonal(*hex.coordinates);
-}
 
 
 void Hex::draw(sf::RenderWindow *window){
@@ -80,15 +78,15 @@ void Hex::clearPiece(void){
 
 void Hex::setPixelX(void){
 
-     if(coordinates->getCartesianY() % 2 == 0)
-        pixelX = coordinates->getCartesianX()*hexWidth - (hexWidth*0.5);
+     if(getCartesianY() % 2 == 0)
+        pixelX = getCartesianX()*hexWidth - (hexWidth*0.5);
     else
-       pixelX = (coordinates->getCartesianX()*hexWidth);
+       pixelX = (getCartesianX()*hexWidth);
 }
 
 void Hex::setPixelY(void){
 
-    pixelY = coordinates->getCartesianY()*hexHeight*0.75;
+    pixelY = getCartesianY()*hexHeight*0.75;
 }
 
 int Hex::getPixelX(void){
@@ -99,6 +97,3 @@ int Hex::getPixelY(void){
     return pixelY;
 }
 
-HexCoordinates* Hex::getCoordinates(void){
-    return coordinates;
-}
