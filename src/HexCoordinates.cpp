@@ -42,9 +42,56 @@ bool HexCoordinates::isOrthogonal(HexCoordinates hex){
     }
 }
 
+
+std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
+
+    std::vector<HexCoordinates> steps;
+
+    if(!isOrthogonal(hex))
+        return steps;
+
+    if(cubeX == hex.getCubeX()){
+
+        int sign = sgn(hex.getCubeY() - cubeY);
+        int distance = getDistance(hex);
+
+        for(int i=1; i < distance+1; i++){
+            steps.push_back(HexCoordinates(cubeX, cubeY+sign*i, cubeZ-sign*i));
+        }
+    }
+
+    else if(cubeY == hex.getCubeY()){
+
+        int sign = sgn(hex.getCubeZ() - cubeZ);
+        int distance = getDistance(hex);
+
+        for(int i=1; i < distance+1; i++){
+            steps.push_back(HexCoordinates(cubeX-sign*i, cubeY, cubeZ+sign*i));
+        }
+    }
+
+    else{
+
+        int sign = sgn(hex.getCubeX() - cubeX);
+        int distance = getDistance(hex);
+
+        for(int i=1; i < distance+1; i++){
+            steps.push_back(HexCoordinates(cubeX+sign*i, cubeY-sign*i, cubeZ));
+        }
+
+
+    }
+
+
+
+
+    return steps;
+}
+
+
 bool HexCoordinates::isInRange(HexCoordinates hex, int range){
 
-    int distance = (abs(cubeX - hex.getCubeX()) + abs(cubeY - hex.getCubeY()) + abs(cubeZ - hex.getCubeZ()))/2;
+    int distance = getDistance(hex);
 
     if(distance <= range)
         return true;
@@ -53,7 +100,12 @@ bool HexCoordinates::isInRange(HexCoordinates hex, int range){
 }
 
 
+int HexCoordinates::getDistance(HexCoordinates hex){
 
+    int distance = (abs(cubeX - hex.getCubeX()) + abs(cubeY - hex.getCubeY()) + abs(cubeZ - hex.getCubeZ()))/2;
+
+    return distance;
+}
 
 
 
@@ -76,3 +128,10 @@ int HexCoordinates::getCubeY() {
 int HexCoordinates::getCubeZ() {
     return cubeZ;
 }
+
+
+
+template <typename T> int HexCoordinates::sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+

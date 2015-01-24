@@ -61,6 +61,9 @@ class HexMap
     int getIndex(int x, int y);
 
     Hex* selectedHex;
+
+    bool canMove(Hex selectedHex, Hex targetHex);
+
 };
 
 #endif // HEXMAP_H

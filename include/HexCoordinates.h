@@ -2,6 +2,7 @@
 #define HEXCOORDINATES_H
 
 #include <iostream>
+#include <vector>
 
 class HexCoordinates
 {
@@ -13,6 +14,9 @@ class HexCoordinates
 
         bool isOrthogonal(HexCoordinates hex);
         bool isInRange(HexCoordinates hex, int range);
+        int getDistance(HexCoordinates hex);
+
+        std::vector<HexCoordinates> orthogonalSteps(HexCoordinates hex);
 
         int getCartesianX();
         int getCartesianY();
@@ -31,7 +35,7 @@ class HexCoordinates
         void updateCubeCoordinates(void);
         void updateCartesianCoordinates(void);
 
-
+        template <typename T> int sgn(T val);
 };
 
 #endif // HEXCOORDINATES_H

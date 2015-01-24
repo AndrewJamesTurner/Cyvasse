@@ -95,3 +95,7 @@ int Hex::getPixelX(void){
 int Hex::getPixelY(void){
     return pixelY;
 }
+
+HexCoordinates* Hex::getCoordinates(void){
+    return coordinates;
+}

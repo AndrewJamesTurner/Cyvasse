@@ -11,7 +11,7 @@ class Hex
         Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color);
         virtual ~Hex();
 
-        HexCoordinates* coordinates;
+
 
         sf::CircleShape getShape(void);
 
@@ -26,11 +26,14 @@ class Hex
 
         bool isOrthogonal(Hex hex);
 
+        HexCoordinates* getCoordinates(void);
+
     private:
 
 
         sf::CircleShape shape;
         Piece* piece;
+        HexCoordinates* coordinates;
 
         float pixelX;
         float pixelY;
