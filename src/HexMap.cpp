@@ -28,6 +28,10 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
     hexes[getIndex(2,2)].setPiece(new Piece(Player::player2, Type::rabble));
     hexes[getIndex(8,8)].setPiece(new Piece(Player::player2, Type::king));
 
+
+    hexes[getIndex(3,7)].setPiece(new Piece(Player::player1, Type::mountain));
+    hexes[getIndex(7,3)].setPiece(new Piece(Player::player2, Type::mountain));
+
     clearMap();
 }
 
@@ -127,7 +131,7 @@ bool HexMap::movePiece(Hex* sourceHex, Hex* targetHex){
         }
 
         // if target contains opponent
-        else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer()){
+        else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer() && !targetHex->getPiece()->isMoutain()){
 
             delete targetHex->getPiece();
             targetHex->setPiece(sourceHex->getPiece());

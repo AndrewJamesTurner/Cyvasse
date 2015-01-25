@@ -3,25 +3,29 @@
 Piece::Piece(Player _player, Type _type)
 {
 
-    switch(_type){
-
-        case Type::rabble:
-            if (!texture.loadFromFile("Images/Rabble.png"))
-            exit(0);
-
-            break;
-        case Type::king:
-            if (!texture.loadFromFile("Images/King.png"))
-            exit(0);
-
-            break;
-    }
-
     player = _player;
     type = _type;
     movetype = Movement::orthogonal;
-
     range = 3;
+
+    switch(type){
+
+        case Type::rabble:
+            if (!texture.loadFromFile("Images/Rabble.png"))
+                exit(0);
+            break;
+        case Type::king:
+            if (!texture.loadFromFile("Images/King.png"))
+                exit(0);
+            break;
+        case Type::mountain:
+            if (!texture.loadFromFile("Images/Mountain.png"))
+                exit(0);
+            movetype = Movement::none;
+            break;
+    }
+
+
 
 
     sprite.setTexture(texture);
@@ -39,6 +43,15 @@ Piece::Piece(Player _player, Type _type)
 Piece::~Piece()
 {
     //dtor
+}
+
+
+bool Piece::isMoutain(void){
+
+    if(type == Type::mountain)
+        return true;
+    else
+        return false;
 }
 
 

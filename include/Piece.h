@@ -5,8 +5,8 @@
 #include <iostream>
 
 enum class Player{player1, player2};
-enum class Type{king,rabble};
-enum class Movement{orthogonal};
+enum class Type{king,rabble,mountain};
+enum class Movement{orthogonal,none};
 
 class Piece
 {
@@ -21,6 +21,8 @@ class Piece
         Movement getMoveType(void);
         Player getPlayer(void);
         int getRange(void);
+
+        bool isMoutain(void);
 
     protected:
 
