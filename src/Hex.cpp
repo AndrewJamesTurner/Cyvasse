@@ -2,10 +2,6 @@
 
 Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexCoordinates(_cartesianX, _cartesianY){
 
-
-
-
-
     hexSize = _hexSize;
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);

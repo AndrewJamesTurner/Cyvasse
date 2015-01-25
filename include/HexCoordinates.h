@@ -19,6 +19,8 @@ class HexCoordinates
 
         std::vector<HexCoordinates> orthogonalSteps(HexCoordinates hex);
 
+        std::vector<HexCoordinates> getPossibleOrthogonalSteps(int range);
+
         int getCartesianX();
         int getCartesianY();
         int getCubeX();

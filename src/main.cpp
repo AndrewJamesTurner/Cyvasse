@@ -41,7 +41,7 @@ int main()
 
                 if (event.mouseButton.button == sf::Mouse::Right)
                 {
-                    hexmap.clearMap();
+                    hexmap.deselect();
                 }
             }
         }

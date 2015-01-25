@@ -33,6 +33,7 @@ class HexMap
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 
         void clearMap(void);
+        void deselect(void);
 
     protected:
 
@@ -41,7 +42,7 @@ class HexMap
     sf::RenderWindow *window;
 
     //std::vector<sf::CircleShape> hex;
-    std::vector<Hex> hex;
+    std::vector<Hex> hexes;
 
     //Pieces pieces;
 
@@ -62,7 +63,8 @@ class HexMap
 
     Hex* selectedHex;
 
-    bool movePiece(Hex* selectedHex, Hex* targetHex);
+    bool movePiece(Hex* sourceHex, Hex* targetHex);
+    void showMovements(Hex* hex);
 
 };
 

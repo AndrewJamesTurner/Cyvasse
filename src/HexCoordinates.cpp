@@ -77,7 +77,7 @@ std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
         int sign = sgn(hex.getCubeY() - cubeY);
         int distance = getDistance(hex);
 
-        for(int i=1; i < distance+1; i++){
+        for(int i=1; i <= distance; i++){
             steps.push_back(HexCoordinates(cubeX, cubeY+sign*i, cubeZ-sign*i));
         }
     }
@@ -87,7 +87,7 @@ std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
         int sign = sgn(hex.getCubeZ() - cubeZ);
         int distance = getDistance(hex);
 
-        for(int i=1; i < distance+1; i++){
+        for(int i=1; i <= distance; i++){
             steps.push_back(HexCoordinates(cubeX-sign*i, cubeY, cubeZ+sign*i));
         }
     }
@@ -95,9 +95,27 @@ std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
         int sign = sgn(hex.getCubeX() - cubeX);
         int distance = getDistance(hex);
 
-        for(int i=1; i < distance+1; i++){
+        for(int i=1; i <= distance; i++){
             steps.push_back(HexCoordinates(cubeX+sign*i, cubeY-sign*i, cubeZ));
         }
+    }
+
+    return steps;
+}
+
+
+std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range){
+
+    std::vector<HexCoordinates> steps;
+
+    for(int i = -range; i <= range; i++){
+
+        if(i==0)
+            continue;
+
+        steps.push_back(HexCoordinates(cubeX, cubeY+i, cubeZ-i));
+        steps.push_back(HexCoordinates(cubeX-i, cubeY, cubeZ+i));
+        steps.push_back(HexCoordinates(cubeX+i, cubeY-i, cubeZ));
     }
 
     return steps;
