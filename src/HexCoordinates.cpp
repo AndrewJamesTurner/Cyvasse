@@ -42,6 +42,24 @@ bool HexCoordinates::isOrthogonal(HexCoordinates hex){
     }
 }
 
+bool HexCoordinates::isDiagonal(HexCoordinates hex){
+
+    int cubeXdiff = abs(cubeX = hex.getCubeX());
+    int cubeYdiff = abs(cubeY = hex.getCubeY());
+    int cubeZdiff = abs(cubeZ = hex.getCubeZ());
+
+    if(cubeXdiff == 2 && cubeYdiff == 1 && cubeZdiff == 1)
+        return true;
+    else if(cubeXdiff == 1 && cubeYdiff == 2 && cubeZdiff == 1)
+        return true;
+    else if(cubeXdiff == 1 && cubeYdiff == 1 && cubeZdiff == 2)
+        return true;
+    else
+        return false;
+}
+
+
+
 bool HexCoordinates::isOrthogonalRange(HexCoordinates hex, int range){
 
     int distance;
@@ -59,6 +77,14 @@ bool HexCoordinates::isOrthogonalRange(HexCoordinates hex, int range){
         return false;
 
     if(distance <= range)
+        return true;
+    else
+        return false;
+}
+
+bool HexCoordinates::isDiagonalRange(HexCoordinates hex, int range){
+
+    if(isDiagonal(hex) && isInRange(hex, 2*range))
         return true;
     else
         return false;
@@ -99,6 +125,23 @@ std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
             steps.push_back(HexCoordinates(cubeX+sign*i, cubeY-sign*i, cubeZ));
         }
     }
+
+    return steps;
+}
+
+
+std::vector<HexCoordinates> HexCoordinates::diagonalSteps(HexCoordinates hex){
+
+    std::vector<HexCoordinates> steps;
+
+    if(!isDiagonal(hex))
+        return steps;
+
+    /* NEED FINISHING */
+
+
+
+
 
     return steps;
 }

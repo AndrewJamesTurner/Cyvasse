@@ -13,16 +13,23 @@ class HexCoordinates
         virtual ~HexCoordinates();
 
         bool isOrthogonal(HexCoordinates hex);
+        bool isDiagonal(HexCoordinates hex);
+
         bool isOrthogonalRange(HexCoordinates hex, int range);
-        bool isInRange(HexCoordinates hex, int range);
-        int getDistance(HexCoordinates hex);
+        bool isDiagonalRange(HexCoordinates hex, int range);
+
 
         std::vector<HexCoordinates> orthogonalSteps(HexCoordinates hex);
+        std::vector<HexCoordinates> diagonalSteps(HexCoordinates hex);
 
         std::vector<HexCoordinates> getPossibleOrthogonalSteps(int range);
 
+        bool isInRange(HexCoordinates hex, int range);
+        int getDistance(HexCoordinates hex);
+
         int getCartesianX();
         int getCartesianY();
+
         int getCubeX();
         int getCubeY();
         int getCubeZ();

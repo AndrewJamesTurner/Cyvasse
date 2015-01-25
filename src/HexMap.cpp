@@ -32,6 +32,10 @@ HexMap::HexMap(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
     hexes[getIndex(3,7)].setPiece(new Piece(Player::player1, Type::mountain));
     hexes[getIndex(7,3)].setPiece(new Piece(Player::player2, Type::mountain));
 
+    hexes[getIndex(4,7)].setPiece(new Piece(Player::player1, Type::spears));
+    hexes[getIndex(7,1)].setPiece(new Piece(Player::player2, Type::spears));
+
+
     clearMap();
 }
 
@@ -113,7 +117,6 @@ void HexMap::showMovements(Hex* hex){
         if(!outOfBounds(x,y))
             hexes[getIndex(x,y)].setColor(sf::Color(230,0,0));
     }
-
 }
 
 bool HexMap::movePiece(Hex* sourceHex, Hex* targetHex){
@@ -206,115 +209,11 @@ void HexMap::update(void) {
     }
 }
 
-bool HexMap::inRangeAny(int row1, int col1, int row2, int col2, int range) {
 
-    // get cube coordinates
-    int x1 = col1 - (row1 - (row1&1))/2;
-    int z1 = row1;
-    int y1 = 0 - x1 - z1;
 
-    int x2 = col2 - (row2 - (row2&1))/2;
-    int z2 = row2;
-    int y2 = 0 - x2 - z2;
 
-    return inRangeAny(x1, y1, z1, x2, y2, z2, range);
-}
+/*
 
-bool HexMap::inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range) {
-
-    int distance = ( abs(x1-x2) + abs(y1-y2) + abs(z1-z2)) / 2;
-
-    if(distance <= range)
-        return true;
-    else
-        return false;
-}
-
-void HexMap::changeColour(int row, int col) {
-
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(0, 256);
-
-    int red = uniform_dist(e1);
-    int green = uniform_dist(e1);
-    int blue = uniform_dist(e1);
-
-    changeColour(row,col,red,green,blue);
-}
-
-void HexMap::changeColour(int x, int y, int z) {
-
-    int row = z;
-    int col = x + (z - (z&1))/2;
-
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(0, 256);
-
-    int red = uniform_dist(e1);
-    int green = uniform_dist(e1);
-    int blue = uniform_dist(e1);
-
-    changeColour(row,col,red,green,blue);
-}
-
-void HexMap::changeColour(int x, int y, int red, int green, int blue) {
-
-    if(outOfBounds(x,y)) {
-        return;
-    }
-
-    hexes[getIndex(x,y)].setColor(sf::Color(red,green,blue));
-}
-
-void HexMap::changeColour(int x, int y, int z, int red, int green, int blue) {
-
-    int row = z;
-    int col = x + (z - (z&1))/2;
-
-    changeColour(row,col, red, green, blue);
-}
-
-void HexMap::moveOrthogonal(int row, int col, int range) {
-
-    if(outOfBounds(row,col))
-        return;
-
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(0, 256);
-
-    int red = uniform_dist(e1);
-    int green = uniform_dist(e1);
-    int blue = uniform_dist(e1);
-
-    // get cube coordinates
-    int xCentre = col - (row - (row&1))/2;
-    int zCentre = row;
-    int yCentre = 0 - xCentre - zCentre;
-    changeColour(zCentre, xCentre + (zCentre - (zCentre&1))/2, red, green, blue);
-
-    for(int i = -range; i <= range; i++) {
-
-        int x,y,z;
-
-        // left right
-        x = xCentre + i;
-        y = yCentre - i;
-        z = zCentre;
-        changeColour(x, y, z, red, green, blue);
-
-        // diagonal 1
-        x = xCentre + i;
-        y = yCentre;
-        z = zCentre - i;
-        changeColour(x, y, z, red, green, blue);
-
-        // diagonal 2
-        x = xCentre;
-        y = yCentre + i;
-        z = zCentre - i;
-        changeColour(x, y, z, red, green, blue);
-    }
-}
 
 void HexMap::moveDiagonal(int row, int col, int range) {
 
@@ -390,7 +289,7 @@ void HexMap::moveAny(int row, int col, int range) {
         }
     }
 }
-
+*/
 
 int HexMap::getX(int pixelX, int pixelY) {
 

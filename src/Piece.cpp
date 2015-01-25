@@ -26,6 +26,12 @@ Piece::Piece(Player _player, Type _type)
             movetype = Movement::none;
             range = 0;
             break;
+        case Type::spears:
+            if (!texture.loadFromFile("Images/Spears.png"))
+                exit(0);
+            movetype = Movement::diagonal;
+            range = 2;
+            break;
         default:
             std::cerr << "Piece type not known...\n";
             exit(0);
