@@ -49,7 +49,7 @@ int main()
 
 
         // clear the window with black color
-        window.clear(sf::Color::Blue);
+        window.clear(sf::Color(20,20,230));
 
         // draw everything here...
         hexmap.update();

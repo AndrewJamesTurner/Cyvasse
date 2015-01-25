@@ -5,24 +5,30 @@ Piece::Piece(Player _player, Type _type)
 
     player = _player;
     type = _type;
-    movetype = Movement::orthogonal;
-    range = 3;
 
     switch(type){
 
         case Type::rabble:
             if (!texture.loadFromFile("Images/Rabble.png"))
                 exit(0);
+            movetype = Movement::orthogonal;
+            range = 3;
             break;
         case Type::king:
             if (!texture.loadFromFile("Images/King.png"))
                 exit(0);
+            movetype = Movement::orthogonal;
+            range = 1;
             break;
         case Type::mountain:
             if (!texture.loadFromFile("Images/Mountain.png"))
                 exit(0);
             movetype = Movement::none;
+            range = 0;
             break;
+        default:
+            std::cerr << "Piece type not known...\n";
+            exit(0);
     }
 
 

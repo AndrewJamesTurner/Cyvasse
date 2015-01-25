@@ -49,31 +49,46 @@ void HexMap::mapClicked(int xPixel, int yPixel) {
         return;
     }
 
+    Hex* hexClicked = &hexes[getIndex(x,y)];
+
     clearMap();
 
-    Hex* HexClicked = &hexes[getIndex(x,y)];
+    // if nothing selected
+    if(!selectedHex){
 
-    if(!selectedHex && HexClicked->hasPiece()){
-        selectedHex = HexClicked;
-        selectedHex->setBoarderColor(sf::Color::Yellow);
-    }
+        // if clicked on an empty sapce, a moutain or an enemy
+        if(!hexClicked->hasPiece() || hexClicked->getPiece()->isMoutain() || hexClicked->getPiece()->getPlayer() != Player::player1){
+            selectedHex = nullptr;
 
-    else if(selectedHex == HexClicked){
-        showMovements(HexClicked);
-        selectedHex->setBoarderColor(sf::Color::Yellow);
+        }
+        // else if is moveable player unit
+        else{
+            hexClicked->setBoarderColor(sf::Color::Yellow);
+            selectedHex = hexClicked;
+        }
     }
-    else if(!selectedHex && !HexClicked->hasPiece()){
-        HexClicked->setBoarderColor(sf::Color::Yellow);
-    }
+    // if something selected
     else{
 
-        if(movePiece(selectedHex, HexClicked)){
+        // if clicked currently selected
+        if(selectedHex == hexClicked){
+            hexClicked->setBoarderColor(sf::Color::Yellow);
+            showMovements(hexClicked);
+        }
+
+        // if can move to place clicked
+        else if(movePiece(selectedHex, hexClicked)){
             selectedHex = nullptr;
         }
+
+        // if clicked some where cannot be moved
         else{
             selectedHex = nullptr;
         }
     }
+
+
+
 }
 
 void HexMap::deselect(void){
@@ -96,7 +111,7 @@ void HexMap::showMovements(Hex* hex){
         int y = (*i).getCartesianY();
 
         if(!outOfBounds(x,y))
-            hexes[getIndex(x,y)].setColor(sf::Color::Red);
+            hexes[getIndex(x,y)].setColor(sf::Color(230,0,0));
     }
 
 }
@@ -164,10 +179,10 @@ void HexMap::clearMap(void) {
             HexCoordinates currentHex(x, y);
 
             if(centerHex.isInRange(currentHex, mapHexSize)){
-                hexes[getIndex(x,y)].setColor(sf::Color::Green);
+                hexes[getIndex(x,y)].setColor(sf::Color(17,220,51));
             }
             else {
-                hexes[getIndex(x,y)].setColor(sf::Color::Blue);
+                hexes[getIndex(x,y)].setColor(sf::Color(20,20,230));
             }
 
             hexes[getIndex(x,y)].setBoarderColor(sf::Color::Black);
