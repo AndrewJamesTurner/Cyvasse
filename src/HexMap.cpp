@@ -90,9 +90,6 @@ void HexMap::mapClicked(int xPixel, int yPixel) {
             selectedHex = nullptr;
         }
     }
-
-
-
 }
 
 void HexMap::deselect(void){
@@ -108,6 +105,9 @@ void HexMap::showMovements(Hex* hex){
     if(hex->getPiece()->getMoveType() == Movement::orthogonal){
         movements = hex->getPossibleOrthogonalSteps(hex->getPiece()->getRange());
     }
+    else if(hex->getPiece()->getMoveType() == Movement::diagonal){
+       movements = hex->getPossibleDiagonalSteps(hex->getPiece()->getRange());
+    }
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
 
@@ -121,6 +121,8 @@ void HexMap::showMovements(Hex* hex){
 
 bool HexMap::movePiece(Hex* sourceHex, Hex* targetHex){
 
+    std::vector<HexCoordinates> steps;
+
     if(sourceHex == targetHex)
         return false;
 
@@ -128,41 +130,45 @@ bool HexMap::movePiece(Hex* sourceHex, Hex* targetHex){
 
     // if the movement type is orthogonal and the two hexes are orthogonal
     if(moveType == Movement::orthogonal && sourceHex->isOrthogonalRange(*targetHex, sourceHex->getPiece()->getRange())){
+       steps = sourceHex->orthogonalSteps(*targetHex);
+    }
 
-        // get the steps from sourceHex to targetHex
-        std::vector<HexCoordinates> steps = sourceHex->orthogonalSteps(*targetHex);
-
-        // check all the steps to targetHex are clear
-        for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
-
-            if(hexes[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){
-                return false;
-            }
-        }
-
-        // check if the target is clear
-        if(!targetHex->hasPiece()){
-
-            targetHex->setPiece(sourceHex->getPiece());
-            sourceHex->clearPiece();
-            return true;
-        }
-
-        // if target contains opponent
-        else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer() && !targetHex->getPiece()->isMoutain()){
-
-            delete targetHex->getPiece();
-            targetHex->setPiece(sourceHex->getPiece());
-            sourceHex->clearPiece();
-            return true;
-        }
-        else{
-            return false;
-        }
+    else if(moveType == Movement::diagonal && sourceHex->isDiagonalRange(*targetHex, sourceHex->getPiece()->getRange())){
+        steps = sourceHex->diagonalSteps(*targetHex);
     }
     else{
         return false;
     }
+
+
+    // check all the steps to targetHex are clear
+    for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
+
+        if(hexes[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){
+            return false;
+        }
+    }
+
+    // check if the target is clear
+    if(!targetHex->hasPiece()){
+
+        targetHex->setPiece(sourceHex->getPiece());
+        sourceHex->clearPiece();
+        return true;
+    }
+
+    // if target contains opponent
+    else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer() && !targetHex->getPiece()->isMoutain()){
+
+        delete targetHex->getPiece();
+        targetHex->setPiece(sourceHex->getPiece());
+        sourceHex->clearPiece();
+        return true;
+    }
+    else{
+        return false;
+    }
+
 }
 
 
