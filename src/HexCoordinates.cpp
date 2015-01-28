@@ -138,25 +138,34 @@ std::vector<HexCoordinates> HexCoordinates::diagonalSteps(HexCoordinates hex){
     if(!isDiagonal(hex))
         return steps;
 
-    int distance = getDistance(hex);
+    int distance = getDistance(hex)/2;
 
     int xDiff = cubeX - hex.getCubeX();
     int yDiff = cubeY - hex.getCubeY();
     int zDiff = cubeZ - hex.getCubeZ();
 
     if(xDiff == yDiff){
+
+        int sign = sgn(cubeZ - hex.getCubeZ());
+
         for(int i=1; i <= distance; i++){
-            steps.push_back(HexCoordinates(cubeX+i, cubeY+i, cubeZ-2*i));
+            steps.push_back(HexCoordinates(cubeX+sign*i, cubeY+sign*i, cubeZ-sign*2*i));
         }
     }
     else if(yDiff == zDiff){
+
+        int sign = sgn(cubeX - hex.getCubeX());
+
         for(int i=1; i <= distance; i++){
-            steps.push_back(HexCoordinates(cubeX-2*i, cubeY+i, cubeZ+i));
+            steps.push_back(HexCoordinates(cubeX-sign*2*i, cubeY+sign*i, cubeZ+sign*i));
         }
     }
     else if(zDiff == xDiff){
+
+        int sign = sgn(cubeY - hex.getCubeY());
+
         for(int i=1; i <= distance; i++){
-            steps.push_back(HexCoordinates(cubeX+i, cubeY-2*i, cubeZ+i));
+            steps.push_back(HexCoordinates(cubeX+sign*i, cubeY-sign*2*i, cubeZ+sign*i));
         }
     }
 

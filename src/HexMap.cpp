@@ -144,7 +144,7 @@ bool HexMap::movePiece(Hex* sourceHex, Hex* targetHex){
     // check all the steps to targetHex are clear
     for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
 
-        if(hexes[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){
+        if(hexes[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){ std::cout << "here";
             return false;
         }
     }
