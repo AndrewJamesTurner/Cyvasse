@@ -2,17 +2,18 @@
 #include "header.h"
 
 #define SIZE 30
-#define ROWS 10
-#define COLS 10
-#define MAPSIZE 5
+#define MAPSIZE 6
+
+#define WIDTH 2*SIZE*(MAPSIZE*2) - 4*SIZE
+#define HEIGHT 2*SIZE*(MAPSIZE*2)*(sqrt(3) / 2) - 3*SIZE
 
 int main()
 {
     // create the window
-    sf::RenderWindow window(sf::VideoMode(2*SIZE*(COLS) - 0.9*SIZE, 2*SIZE*(ROWS)*(sqrt(3) / 2)- 0.4*SIZE), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
 
     // make hexmap
-	HexMap hexmap(&window, SIZE, MAPSIZE);
+	GameLogic gameLogic(&window, SIZE, MAPSIZE);
 
 
 
@@ -35,13 +36,13 @@ int main()
                     int mouseClickX = event.mouseButton.x;
                     int mouseClickY = event.mouseButton.y;
 
-                    hexmap.mapClicked(mouseClickX, mouseClickY);
-                    //hexmap.moveOrthogonal(row, col,3);
+                    gameLogic.mapClicked(mouseClickX, mouseClickY);
+                    //gameLogic.moveOrthogonal(row, col,3);
                 }
 
                 if (event.mouseButton.button == sf::Mouse::Right)
                 {
-                    hexmap.deselect();
+                    gameLogic.deselect();
                 }
             }
         }
@@ -52,7 +53,7 @@ int main()
         window.clear(sf::Color(20,20,230));
 
         // draw everything here...
-        hexmap.update();
+        gameLogic.update();
 
         // end the current frame
         window.display();

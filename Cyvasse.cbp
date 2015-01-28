@@ -41,12 +41,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/GameLogic.h" />
 		<Unit filename="include/Hex.h" />
 		<Unit filename="include/HexCoordinates.h" />
 		<Unit filename="include/HexMap.h" />
 		<Unit filename="include/Piece.h" />
 		<Unit filename="include/Pieces.h" />
 		<Unit filename="include/header.h" />
+		<Unit filename="src/GameLogic.cpp" />
 		<Unit filename="src/Hex.cpp" />
 		<Unit filename="src/HexCoordinates.cpp" />
 		<Unit filename="src/HexMap.cpp" />

@@ -75,14 +75,14 @@ void Hex::clearPiece(void){
 void Hex::setPixelX(void){
 
      if(getCartesianY() % 2 == 0)
-        pixelX = getCartesianX()*hexWidth - (hexWidth*0.5);
+        pixelX = getCartesianX()*hexWidth - (hexWidth*0.5) - hexSize;
     else
-       pixelX = (getCartesianX()*hexWidth);
+       pixelX = (getCartesianX()*hexWidth) - hexSize;
 }
 
 void Hex::setPixelY(void){
 
-    pixelY = getCartesianY()*hexHeight*0.75;
+    pixelY = getCartesianY()*hexHeight*0.75 - (hexSize*0.5);
 }
 
 int Hex::getPixelX(void){

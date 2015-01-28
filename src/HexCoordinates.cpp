@@ -85,7 +85,7 @@ bool HexCoordinates::isOrthogonalRange(HexCoordinates hex, int range){
 
 bool HexCoordinates::isDiagonalRange(HexCoordinates hex, int range){
 
-    if(isDiagonal(hex) && isInRange(hex, range * 2))
+    if(isDiagonal(hex) && isInRange(hex, range*3))
         return true;
     else
         return false;
@@ -206,8 +206,6 @@ std::vector<HexCoordinates> HexCoordinates::getPossibleDiagonalSteps(int range){
         steps.push_back(HexCoordinates(cubeX-2*i, cubeY+i, cubeZ+i));
     }
 
-
-
     return steps;
 }
 
@@ -217,7 +215,7 @@ bool HexCoordinates::isInRange(HexCoordinates hex, int range){
 
     int distance = getDistance(hex);
 
-    if(distance <= range)
+    if(distance < range)
         return true;
     else
         return false;
@@ -230,7 +228,6 @@ int HexCoordinates::getDistance(HexCoordinates hex){
 
     return distance;
 }
-
 
 
 int HexCoordinates::getCartesianX() {

@@ -5,7 +5,7 @@
 #include "math.h"
 #include <iostream>
 
-#include "HexMap.h"
+#include "GameLogic.h"
 
 
 const unsigned int WIDTH = 400;
