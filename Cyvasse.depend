@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1422801114 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
+1422808176 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
 	"HexMap.h"
 
-1422801135 /home/andy/Desktop/Cyvasse/include/HexMap.h
+1422808164 /home/andy/Desktop/Cyvasse/include/HexMap.h
 	"Hex.h"
 
 1422797205 source:/home/andy/Desktop/Cyvasse/src/main.cpp
@@ -19,13 +19,13 @@
 	"Piece.h"
 	"HexCoordinates.h"
 
-1422800134 source:/home/andy/Desktop/Cyvasse/src/Hex.cpp
+1422808287 source:/home/andy/Desktop/Cyvasse/src/Hex.cpp
 	"Hex.h"
 
-1422209023 source:/home/andy/Desktop/Cyvasse/src/Piece.cpp
+1422811140 source:/home/andy/Desktop/Cyvasse/src/Piece.cpp
 	"Piece.h"
 
-1422209077 /home/andy/Desktop/Cyvasse/include/Piece.h
+1422811261 /home/andy/Desktop/Cyvasse/include/Piece.h
 	<SFML/Graphics.hpp>
 	<iostream>
 
@@ -43,14 +43,41 @@
 	<iostream>
 	<vector>
 
-1422798620 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
+1422810139 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
 	"GameLogic.h"
 	<vector>
 
-1422797537 /home/andy/Desktop/Cyvasse/include/GameLogic.h
+1422811600 /home/andy/Desktop/Cyvasse/include/GameLogic.h
 	"Hex.h"
-	"Pieces.h"
+	"Rabble.h"
+	"King.h"
+	"Spears.h"
+	"Mountain.h"
 	"HexMap.h"
 	<SFML/Graphics.hpp>
 	<random>
+
+1422808648 /home/andy/Desktop/Cyvasse/include/Rabble.h
+	"Piece.h"
+
+1422811315 source:/home/andy/Desktop/Cyvasse/src/Rabble.cpp
+	"Rabble.h"
+
+1422811282 source:/home/andy/Desktop/Cyvasse/src/King.cpp
+	"King.h"
+
+1422809389 /home/andy/Desktop/Cyvasse/include/King.h
+	"Piece.h"
+
+1422809614 /home/andy/Desktop/Cyvasse/include/Spears.h
+	"Piece.h"
+
+1422811335 source:/home/andy/Desktop/Cyvasse/src/Spears.cpp
+	"Spears.h"
+
+1422809736 /home/andy/Desktop/Cyvasse/include/Mountain.h
+	"Piece.h"
+
+1422811303 source:/home/andy/Desktop/Cyvasse/src/Mountain.cpp
+	"Mountain.h"
 

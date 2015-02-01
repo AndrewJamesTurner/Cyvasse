@@ -12,11 +12,17 @@ class HexMap
         void setPiece(int x, int y, Piece* piece);
         Piece* getPiece(int x, int y);
         void removePiece(int x, int y);
+        void clearPiece(int x, int y);
         bool hasPiece(int x, int y);
 
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
+        void movePeice(Hex* start, Hex* desination);
 
         void setColor(int x, int y, sf::Color color);
+        void setBoarderColor(int x, int y, sf::Color color);
+
+        std::vector<Hex> getHexes(void);
+        Hex* getHexPnt(int x, int y);
 
     protected:
     private:

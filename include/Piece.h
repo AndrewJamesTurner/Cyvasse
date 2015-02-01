@@ -11,7 +11,7 @@ enum class Movement{orthogonal,none,diagonal};
 class Piece
 {
     public:
-        Piece(Player _player, Type _type);
+        Piece(Player _player, Type _type, Movement _movement, int _range, std::string textureName);
         virtual ~Piece();
 
         sf::Sprite getSprite(void);
@@ -26,8 +26,6 @@ class Piece
 
     protected:
 
-    private:
-
         sf::Texture texture;
         sf::Sprite sprite;
 
@@ -35,6 +33,10 @@ class Piece
         Player player;
         Type type;
         int range;
+
+    private:
+
+
 };
 
 #endif // PIECE_H

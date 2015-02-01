@@ -77,7 +77,9 @@ void Hex::clearPiece(void){
 
 void Hex::deletePiece(void){
 
-    delete piece;
+    if(piece != nullptr)
+        delete piece;
+
     clearPiece();
 }
 

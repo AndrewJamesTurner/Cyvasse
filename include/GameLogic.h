@@ -2,7 +2,10 @@
 #define GAMELOGIC_H
 
 #include "Hex.h"
-#include "Pieces.h"
+#include "Rabble.h"
+#include "King.h"
+#include "Spears.h"
+#include "Mountain.h"
 #include "HexMap.h"
 
 #include <SFML/Graphics.hpp>
@@ -33,42 +36,30 @@ class GameLogic
         bool inRangeAny(int row1, int col1, int row2, int col2, int range);
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 
-        void clearMap(void);
+        void resetMap(void);
         void deselect(void);
 
     protected:
 
     private:
 
-    sf::RenderWindow *window;
+        sf::RenderWindow *window;
+        HexMap* hexMap;
+        Hex* selectedHex;
 
-    //std::vector<sf::CircleShape> hex;
-    std::vector<Hex> hexes;
+        float hexSize;
+        float hexHeight;
+        float hexWidth;
 
-    //Pieces pieces;
+        int width;
+        int height;
+        int mapHexSize;
 
-    float hexSize;
-    float hexHeight;
-    float hexWidth;
+        std::random_device rd;
 
-    int width;
-    int height;
-    int mapHexSize;
-
-    std::random_device rd;
-
-    bool outOfBounds(int x, int y);
-    //bool outOfBounds(int x, int y, int z);
-
-    int getIndex(int x, int y);
-
-    Hex* selectedHex;
-
-    bool movePiece(Hex* sourceHex, Hex* targetHex);
-    void showMovements(Hex* hex);
-
-    HexMap *hexMap;
-
+        bool outOfBounds(int x, int y);
+        bool movePiece(Hex* sourceHex, Hex* targetHex);
+        void showMovements(Hex* hex);
 };
 
 #endif // GAMELOGIC_H

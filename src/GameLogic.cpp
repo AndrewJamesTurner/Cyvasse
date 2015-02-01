@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 #include <vector>
 
-GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize) {
+GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)    {
 
     window = _window;
 
@@ -17,32 +17,21 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
 
     selectedHex = nullptr;
 
-    for(int x = 0; x<width; x++) {
-        for(int y = 0; y<height; y++) {
-            hexes.push_back(Hex(x,y, hexSize, sf::Color::White));
-        }
-    }
+    hexMap->setPiece(5,5,new Rabble(Player::player1));
+    hexMap->setPiece(6,6,new King(Player::player1));
+    hexMap->setPiece(5,7,new Spears(Player::player1));
+    hexMap->setPiece(3,7,new Mountain(Player::player1));
 
+    hexMap->setPiece(3,2,new Rabble(Player::player2));
+    hexMap->setPiece(8,8,new King(Player::player2));
+    hexMap->setPiece(8,1,new Spears(Player::player2));
+    hexMap->setPiece(7,3,new Mountain(Player::player2));
 
-    hexes[getIndex(5,5)].setPiece(new Piece(Player::player1, Type::rabble));
-    hexes[getIndex(6,6)].setPiece(new Piece(Player::player1, Type::king));
-
-    hexes[getIndex(3,2)].setPiece(new Piece(Player::player2, Type::rabble));
-    hexes[getIndex(8,8)].setPiece(new Piece(Player::player2, Type::king));
-
-
-    hexes[getIndex(3,7)].setPiece(new Piece(Player::player1, Type::mountain));
-    hexes[getIndex(7,3)].setPiece(new Piece(Player::player2, Type::mountain));
-
-    hexes[getIndex(5,7)].setPiece(new Piece(Player::player1, Type::spears));
-    hexes[getIndex(8,1)].setPiece(new Piece(Player::player2, Type::spears));
-
-
-    clearMap();
+    resetMap();
 }
 
 GameLogic::~GameLogic() {
-   delete hexMap;
+    delete hexMap;
 }
 
 
@@ -55,9 +44,9 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
         return;
     }
 
-    Hex* hexClicked = &hexes[getIndex(x,y)];
+    Hex* hexClicked = hexMap->getHexPnt(x,y);
 
-    clearMap();
+    resetMap();
 
     // if nothing selected
     if(!selectedHex){
@@ -97,7 +86,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
 void GameLogic::deselect(void){
 
     selectedHex = nullptr;
-    clearMap();
+    resetMap();
 }
 
 void GameLogic::showMovements(Hex* hex){
@@ -117,7 +106,7 @@ void GameLogic::showMovements(Hex* hex){
         int y = (*i).getCartesianY();
 
         if(!outOfBounds(x,y))
-            hexes[getIndex(x,y)].setColor(sf::Color(230,0,0));
+            hexMap->setColor(x,y,sf::Color(230,0,0));
     }
 }
 
@@ -130,7 +119,7 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
 
     Movement moveType = sourceHex->getPiece()->getMoveType();
 
-    // if the movement type is orthogonal and the two hexes are orthogonal
+    // if the movement type is orthogonal and the two hexes are orthogonal and in range
     if(moveType == Movement::orthogonal && sourceHex->isOrthogonalRange(*targetHex, sourceHex->getPiece()->getRange())){
        steps = sourceHex->orthogonalSteps(*targetHex);
     }
@@ -142,43 +131,32 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
         return false;
     }
 
-
     // check all the steps to targetHex are clear
     for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
 
-        if(hexes[getIndex((*i).getCartesianX(),(*i).getCartesianY())].hasPiece()){ std::cout << "here";
+        if( hexMap->hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
             return false;
         }
     }
 
     // check if the target is clear
     if(!targetHex->hasPiece()){
-
-        targetHex->setPiece(sourceHex->getPiece());
-        sourceHex->clearPiece();
+        hexMap->movePeice(sourceHex, targetHex);
         return true;
     }
 
     // if target contains opponent
     else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer() && !targetHex->getPiece()->isMoutain()){
-
-        targetHex->setPiece(sourceHex->getPiece());
-        sourceHex->clearPiece();
+        hexMap->movePeice(sourceHex, targetHex);
         return true;
     }
     else{
         return false;
     }
-
 }
 
 
-
-int GameLogic::getIndex(int x, int y) {
-    return (x*width)+y;
-}
-
-void GameLogic::clearMap(void) {
+void GameLogic::resetMap(void) {
 
     HexCoordinates centerHex(mapHexSize, mapHexSize);
 
@@ -188,13 +166,13 @@ void GameLogic::clearMap(void) {
             HexCoordinates currentHex(x, y);
 
             if(centerHex.isInRange(currentHex, mapHexSize)){
-                hexes[getIndex(x,y)].setColor(sf::Color(17,220,51));
+                hexMap->setColor(x,y,sf::Color(17,220,51));
             }
             else {
-                hexes[getIndex(x,y)].setColor(sf::Color(20,20,230));
+                hexMap->setColor(x,y,sf::Color(20,20,230));
             }
 
-            hexes[getIndex(x,y)].setBoarderColor(sf::Color::Black);
+            hexMap->setBoarderColor(x,y,sf::Color::Black);
         }
     }
 }
@@ -202,8 +180,9 @@ void GameLogic::clearMap(void) {
 
 void GameLogic::update(void) {
 
-    for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
+    std::vector<Hex> hexes = hexMap->getHexes();
 
+    for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
         (*i).draw(window);
     }
 }

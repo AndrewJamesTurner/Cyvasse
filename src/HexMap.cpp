@@ -20,6 +20,21 @@ HexMap::~HexMap()
 }
 
 
+std::vector<Hex> HexMap::getHexes(void){
+
+    return hexes;
+}
+
+Hex* HexMap::getHexPnt(int x, int y){
+
+    if(isOffMap(x,y))
+        return nullptr;
+
+    int index = getIndex(x,y);
+
+    return &hexes[index];
+}
+
 void HexMap::setPiece(int x, int y, Piece* piece){
 
     if(isOffMap(x,y))
@@ -58,6 +73,15 @@ void HexMap::removePiece(int x, int y){
     hexes[index].deletePiece();
 }
 
+void HexMap::clearPiece(int x, int y){
+
+    if(isOffMap(x,y))
+        return;
+
+    int index = getIndex(x,y);
+    hexes[index].clearPiece();
+}
+
 void HexMap::movePeice(int xStart, int yStart, int xEnd, int yEnd){
 
     if(isOffMap(xStart,yStart) || isOffMap(xEnd,yEnd))
@@ -66,7 +90,22 @@ void HexMap::movePeice(int xStart, int yStart, int xEnd, int yEnd){
     removePiece(xEnd,yEnd);
     Piece* piece = getPiece(xStart,yStart);
     setPiece(xEnd,yEnd, piece);
+    clearPiece(xStart,yStart);
 }
+
+
+
+void HexMap::movePeice(Hex* start, Hex* desination){
+
+    int xStart = start->getCartesianX();
+    int yStart = start->getCartesianY();
+
+    int xEnd = desination->getCartesianX();
+    int yEnd = desination->getCartesianY();
+
+    movePeice(xStart, yStart, xEnd, yEnd);
+}
+
 
 
 void HexMap::setColor(int x, int y, sf::Color color){
@@ -78,6 +117,15 @@ void HexMap::setColor(int x, int y, sf::Color color){
     hexes[index].setColor(color);
 }
 
+
+void HexMap::setBoarderColor(int x, int y, sf::Color color){
+
+    if(isOffMap(x,y))
+        return;
+
+    int index = getIndex(x,y);
+    hexes[index].setBoarderColor(color);
+}
 
 
 int HexMap::getIndex(int x, int y) {
