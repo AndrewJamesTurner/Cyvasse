@@ -62,22 +62,32 @@ bool Hex::hasPiece(void){
 }
 
 void Hex::setPiece(Piece* _piece){
+
+    if(hasPiece())
+        delete piece;
+
     piece = _piece;
     piece->setPosition(pixelX+(hexSize*(sqrt(3) / 2)) + hexSize - hexSize*cos(0.5236),pixelY+hexSize);
 }
 
 void Hex::clearPiece(void){
+
     piece = nullptr;
 }
 
+void Hex::deletePiece(void){
+
+    delete piece;
+    clearPiece();
+}
 
 
 void Hex::setPixelX(void){
 
      if(getCartesianY() % 2 == 0)
-        pixelX = getCartesianX()*hexWidth - (hexWidth*0.5) - hexSize;
+        pixelX = getCartesianX()*hexWidth - (hexWidth*0.5);
     else
-       pixelX = (getCartesianX()*hexWidth) - hexSize;
+       pixelX = (getCartesianX()*hexWidth);
 }
 
 void Hex::setPixelY(void){

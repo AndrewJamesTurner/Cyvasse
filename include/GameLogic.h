@@ -3,6 +3,7 @@
 
 #include "Hex.h"
 #include "Pieces.h"
+#include "HexMap.h"
 
 #include <SFML/Graphics.hpp>
 #include <random>
@@ -65,6 +66,8 @@ class GameLogic
 
     bool movePiece(Hex* sourceHex, Hex* targetHex);
     void showMovements(Hex* hex);
+
+    HexMap *hexMap;
 
 };
 

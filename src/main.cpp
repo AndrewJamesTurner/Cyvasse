@@ -4,8 +4,8 @@
 #define SIZE 30
 #define MAPSIZE 6
 
-#define WIDTH 2*SIZE*(MAPSIZE*2) - 4*SIZE
-#define HEIGHT 2*SIZE*(MAPSIZE*2)*(sqrt(3) / 2) - 3*SIZE
+#define WIDTH 2*SIZE*(MAPSIZE*2) * 0.88
+#define HEIGHT 2*SIZE*(MAPSIZE*2)*(sqrt(3) / 2) * 0.93
 
 int main()
 {

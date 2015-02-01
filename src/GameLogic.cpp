@@ -13,6 +13,8 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);
 
+    hexMap = new HexMap(width, height, hexSize);
+
     selectedHex = nullptr;
 
     for(int x = 0; x<width; x++) {
@@ -40,7 +42,7 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
 }
 
 GameLogic::~GameLogic() {
-    //dtor
+   delete hexMap;
 }
 
 
@@ -160,7 +162,6 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
     // if target contains opponent
     else if(sourceHex->getPiece()->getPlayer() != targetHex->getPiece()->getPlayer() && !targetHex->getPiece()->isMoutain()){
 
-        delete targetHex->getPiece();
         targetHex->setPiece(sourceHex->getPiece());
         sourceHex->clearPiece();
         return true;
@@ -170,7 +171,6 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
     }
 
 }
-
 
 
 
@@ -205,103 +205,15 @@ void GameLogic::update(void) {
     for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
 
         (*i).draw(window);
-        /*
-                if((*i).getPiece()){
-                    Piece *piece = (*i).getPiece();
-                    sf::Sprite sprite = piece->getSprite();
-                    window->draw(sprite);
-                }
-            */
     }
 }
 
-
-
-
-/*
-
-
-void GameLogic::moveDiagonal(int row, int col, int range) {
-
-    if(outOfBounds(row,col))
-        return;
-
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(0, 256);
-
-    int red = uniform_dist(e1);
-    int green = uniform_dist(e1);
-    int blue = uniform_dist(e1);
-
-    // get cube coordinates
-    int xCentre = col - (row - (row&1))/2;
-    int zCentre = row;
-    int yCentre = 0 - xCentre - zCentre;
-    changeColour(zCentre, xCentre + (zCentre - (zCentre&1))/2, red, green, blue);
-
-    for(int i = -range; i <= range; i++) {
-
-        int x,y,z;
-
-        // left right
-        x = xCentre + 2*i;
-        y = yCentre - i;
-        z = zCentre - i;
-        changeColour(x, y, z, red, green, blue);
-
-        // diagonal 1
-        x = xCentre - i;
-        y = yCentre + 2*i;
-        z = zCentre - i;
-        changeColour(x, y, z, red, green, blue);
-
-        // diagonal 2
-        x = xCentre - i;
-        y = yCentre - i;
-        z = zCentre + 2*i;
-        changeColour(x, y, z, red, green, blue);
-    }
-}
-
-void GameLogic::moveAny(int row, int col, int range) {
-
-    if(outOfBounds(row,col))
-        return;
-
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(0, 256);
-
-    int red = uniform_dist(e1);
-    int green = uniform_dist(e1);
-    int blue = uniform_dist(e1);
-
-    // get cube coordinates
-    int xCentre = col - (row - (row&1))/2;
-    int zCentre = row;
-    int yCentre = 0 - xCentre - zCentre;
-
-    for(int dx = -range; dx <= range; dx++) {
-        for(int dy = -range; dy <= range; dy++) {
-            for(int dz = -range; dz <= range; dz++) {
-
-                int x = xCentre + dx;
-                int y = yCentre + dy;
-                int z = zCentre + dz;
-
-                if(x+y+z == 0) {
-                    changeColour(x, y, z, red, green, blue);
-                }
-            }
-        }
-    }
-}
-*/
 
 int GameLogic::getX(int pixelX, int pixelY) {
 
     int xPos;
 
-    pixelX = pixelX + hexSize;
+    pixelX = pixelX;
 
     if(getY(pixelX, pixelY) % 2 == 0) {
         xPos = (pixelX/hexWidth) + 0.5;

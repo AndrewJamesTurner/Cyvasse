@@ -22,6 +22,7 @@ class Hex : public HexCoordinates
         bool hasPiece(void);
         void setPiece(Piece* _piece);
         void clearPiece(void);
+        void deletePiece(void);
 
         void draw(sf::RenderWindow *window);
 
