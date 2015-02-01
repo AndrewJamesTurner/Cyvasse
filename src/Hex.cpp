@@ -18,20 +18,15 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexC
     piece = nullptr;
 }
 
+/*
+    Not complete deep copy (piece is not copied propperly)
 
+*/
 Hex::Hex(const Hex &other) : HexCoordinates(other.getCartesianX(), other.getCartesianY()){
 
 
         shape = other.shape;
-
-        if(piece == nullptr)
-            piece = other.piece;
-        else
-            piece = new Piece(*other.piece);
-           // piece = Piece(*other.piece);
-        //piece = nullptr;
-
-        //*piece = Piece(*other.piece);
+        piece = other.piece;
 
         pixelX = other.pixelX;
         pixelY = other.pixelY;
@@ -95,7 +90,6 @@ void Hex::setPiece(Piece* _piece){
 }
 
 void Hex::clearPiece(void){
-
     piece = nullptr;
 }
 

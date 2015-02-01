@@ -23,6 +23,9 @@ Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::st
         sprite.setColor(sf::Color::White);
 }
 
+/*
+    I think this is wrong.
+*/
 Piece::Piece(const Piece &other){
 
     texture = sf::Texture(other.texture);
