@@ -9,6 +9,7 @@ class Hex : public HexCoordinates
 {
     public:
         Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color);
+        Hex(const Hex &other);
         virtual ~Hex();
 
 

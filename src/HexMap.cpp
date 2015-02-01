@@ -3,6 +3,8 @@
 HexMap::HexMap(int _width, int _height, int _hexSize)
 {
 
+
+
     width = _width;
     height = _height;
     hexSize = _hexSize;
@@ -13,6 +15,15 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
         }
     }
 }
+
+HexMap::HexMap(HexMap const &other){
+
+    width = other.width;
+    height = other.height;
+    hexSize = other.hexSize;
+    hexes = other.hexes;
+}
+
 
 HexMap::~HexMap()
 {

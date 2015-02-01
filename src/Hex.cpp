@@ -18,6 +18,30 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexC
     piece = nullptr;
 }
 
+
+Hex::Hex(const Hex &other) : HexCoordinates(other.getCartesianX(), other.getCartesianY()){
+
+
+        shape = other.shape;
+
+        if(piece == nullptr)
+            piece = other.piece;
+        else
+            piece = new Piece(*other.piece);
+           // piece = Piece(*other.piece);
+        //piece = nullptr;
+
+        //*piece = Piece(*other.piece);
+
+        pixelX = other.pixelX;
+        pixelY = other.pixelY;
+
+        hexSize = other.hexSize;
+        hexHeight = other.hexHeight;
+        hexWidth = other.hexWidth;
+}
+
+
 Hex::~Hex()
 {
     //delete coordinates;

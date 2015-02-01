@@ -15,6 +15,15 @@ HexCoordinates::HexCoordinates(int _cubeX, int _cubeY, int _cubeZ) {
     updateCartesianCoordinates();
 }
 
+HexCoordinates::HexCoordinates(HexCoordinates const &other){
+
+    cartesianX = other.cartesianX;
+    cartesianY = other.cartesianY;
+    cubeX = other.cubeX;
+    cubeY = other.cubeY;
+    cubeZ = other.cubeZ;
+}
+
 HexCoordinates::~HexCoordinates() {
     //dtor
 }
@@ -230,11 +239,11 @@ int HexCoordinates::getDistance(HexCoordinates hex){
 }
 
 
-int HexCoordinates::getCartesianX() {
+int HexCoordinates::getCartesianX() const{
     return cartesianX;
 }
 
-int HexCoordinates::getCartesianY() {
+int HexCoordinates::getCartesianY() const{
     return cartesianY;
 }
 

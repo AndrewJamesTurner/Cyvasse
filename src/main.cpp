@@ -12,10 +12,11 @@ int main()
     // create the window
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
 
+    // set the frame rate
+    window.setFramerateLimit(30);
+
     // make hexmap
 	GameLogic gameLogic(&window, SIZE, MAPSIZE);
-
-
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -47,9 +48,7 @@ int main()
             }
         }
 
-
-
-        // clear the window with black color
+        // clear the window with blue
         window.clear(sf::Color(20,20,230));
 
         // draw everything here...

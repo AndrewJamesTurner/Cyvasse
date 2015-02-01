@@ -10,6 +10,7 @@ class HexCoordinates
 
         HexCoordinates(int _cartesianX, int _cartesianY);
         HexCoordinates(int _cubeX, int _cubeY, int _cubeZ);
+        HexCoordinates(HexCoordinates const &other);
         virtual ~HexCoordinates();
 
         bool isOrthogonal(HexCoordinates hex);
@@ -28,8 +29,8 @@ class HexCoordinates
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);
 
-        int getCartesianX();
-        int getCartesianY();
+        int getCartesianX() const;
+        int getCartesianY() const;
 
         int getCubeX();
         int getCubeY();
