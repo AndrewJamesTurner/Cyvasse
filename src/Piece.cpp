@@ -28,8 +28,8 @@ Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::st
 */
 Piece::Piece(const Piece &other){
 
-    texture = sf::Texture(other.texture);
-    sprite = sf::Sprite(other.sprite);
+    texture = other.texture;//sf::Texture(other.texture);
+    sprite = other.sprite;//sf::Sprite(other.sprite);
     movetype = other.movetype;
     player = other.player;
     type = other.type;

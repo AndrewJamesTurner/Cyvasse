@@ -8,16 +8,14 @@
 class Hex : public HexCoordinates
 {
     public:
-        Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color);
+        Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color);
         Hex(const Hex &other);
         virtual ~Hex();
 
-
-
         sf::CircleShape getShape(void);
 
-        void setColor(sf::Color color);
-        void setBoarderColor(sf::Color color);
+        void setColor(sf::Color _color);
+        void setBoarderColor(sf::Color _color);
 
         Piece* getPiece(void);
         bool hasPiece(void);
@@ -43,7 +41,7 @@ class Hex : public HexCoordinates
         float hexHeight;
         float hexWidth;
 
-
+        sf::Color color;
 
         int getPixelX(void);
         int getPixelY(void);

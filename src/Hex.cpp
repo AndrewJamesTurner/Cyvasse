@@ -1,10 +1,11 @@
 #include "Hex.h"
 
-Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexCoordinates(_cartesianX, _cartesianY){
+Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color) : HexCoordinates(_cartesianX, _cartesianY){
 
     hexSize = _hexSize;
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);
+    color = _color;
 
     setPixelX();
     setPixelY();
@@ -24,8 +25,15 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color color) : HexC
 */
 Hex::Hex(const Hex &other) : HexCoordinates(other.getCartesianX(), other.getCartesianY()){
 
-
+/*
+        shape = sf::CircleShape(other.hexSize, 6);
+        shape.setPosition(other.pixelX, other.pixelY);
+        shape.setOutlineThickness(-1.5);
+        shape.setFillColor(other.color);
+        shape.setOutlineColor(sf::Color::Black);
+*/
         shape = other.shape;
+
         piece = other.piece;
 
         pixelX = other.pixelX;
@@ -34,6 +42,7 @@ Hex::Hex(const Hex &other) : HexCoordinates(other.getCartesianX(), other.getCart
         hexSize = other.hexSize;
         hexHeight = other.hexHeight;
         hexWidth = other.hexWidth;
+        color = other.color;
 }
 
 
@@ -60,12 +69,12 @@ sf::CircleShape Hex::getShape(void){
 }
 
 
-void Hex::setColor(sf::Color color){
-    shape.setFillColor(color);
+void Hex::setColor(sf::Color _color){
+    shape.setFillColor(_color);
 }
 
-void Hex::setBoarderColor(sf::Color color){
-    shape.setOutlineColor(color);
+void Hex::setBoarderColor(sf::Color _color){
+    shape.setOutlineColor(_color);
 }
 
 Piece* Hex::getPiece(void){

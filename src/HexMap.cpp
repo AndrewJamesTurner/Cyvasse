@@ -16,12 +16,30 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
     }
 }
 
-HexMap::HexMap(HexMap const &other){
+HexMap::HexMap(const HexMap &other)/* : hexes(other.hexes.size())*/{
 
     width = other.width;
     height = other.height;
     hexSize = other.hexSize;
     hexes = other.hexes;
+
+/*
+    for (std::size_t i = 0; i < other.hexes.size(); ++i)
+        hexes[i] = new Hex(other.hexes[i]);
+*/
+/*
+    std::cout << "\nhere\n";
+*/
+/*
+    for(std::size_t i = 0; i < hexes.size(); i++){
+        hexes.push_back(Hex(other.hexes[i]));
+        //std::cout << "\nhere\n";
+    }
+
+*/
+
+
+
 }
 
 
@@ -98,7 +116,7 @@ void HexMap::movePeice(int xStart, int yStart, int xEnd, int yEnd){
     if(isOffMap(xStart,yStart) || isOffMap(xEnd,yEnd))
         return;
 
-    removePiece(xEnd,yEnd);
+    clearPiece(xEnd,yEnd);
     Piece* piece = getPiece(xStart,yStart);
     setPiece(xEnd,yEnd, piece);
     clearPiece(xStart,yStart);

@@ -4,11 +4,9 @@
 GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)    {
 
     window = _window;
-
     mapHexSize = _mapHexSize;
     width = 2*mapHexSize+1;
     height = 2*mapHexSize+1;
-
     hexSize =_hexSize;
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);
@@ -36,6 +34,11 @@ GameLogic::~GameLogic() {
 
 
 void GameLogic::mapClicked(int xPixel, int yPixel) {
+
+    HexMap *hexMapTmp = new HexMap(*hexMap);
+   delete hexMap;
+    hexMap = new HexMap(*hexMapTmp);
+    delete hexMapTmp;
 
     int x = getX(xPixel, yPixel);
     int y = getY(xPixel, yPixel);

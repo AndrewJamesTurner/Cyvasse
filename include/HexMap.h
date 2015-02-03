@@ -7,7 +7,7 @@ class HexMap
 {
     public:
         HexMap(int _width, int _height, int _hexSize);
-        HexMap(HexMap const &other);
+        HexMap(const HexMap &other);
         virtual ~HexMap();
 
         void setPiece(int x, int y, Piece* piece);
