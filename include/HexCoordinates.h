@@ -10,7 +10,6 @@ class HexCoordinates
 
         HexCoordinates(int _cartesianX, int _cartesianY);
         HexCoordinates(int _cubeX, int _cubeY, int _cubeZ);
-        HexCoordinates(HexCoordinates const &other);
         virtual ~HexCoordinates();
 
         bool isOrthogonal(HexCoordinates hex);

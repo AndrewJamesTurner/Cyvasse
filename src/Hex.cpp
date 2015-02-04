@@ -19,33 +19,6 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color) : Hex
     piece = nullptr;
 }
 
-/*
-    Not complete deep copy (piece is not copied propperly)
-
-*/
-Hex::Hex(const Hex &other) : HexCoordinates(other.getCartesianX(), other.getCartesianY()){
-
-/*
-        shape = sf::CircleShape(other.hexSize, 6);
-        shape.setPosition(other.pixelX, other.pixelY);
-        shape.setOutlineThickness(-1.5);
-        shape.setFillColor(other.color);
-        shape.setOutlineColor(sf::Color::Black);
-*/
-        shape = other.shape;
-
-        piece = other.piece;
-
-        pixelX = other.pixelX;
-        pixelY = other.pixelY;
-
-        hexSize = other.hexSize;
-        hexHeight = other.hexHeight;
-        hexWidth = other.hexWidth;
-        color = other.color;
-}
-
-
 Hex::~Hex()
 {
     //delete coordinates;

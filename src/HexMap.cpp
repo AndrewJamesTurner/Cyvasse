@@ -16,32 +16,6 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
     }
 }
 
-HexMap::HexMap(const HexMap &other)/* : hexes(other.hexes.size())*/{
-
-    width = other.width;
-    height = other.height;
-    hexSize = other.hexSize;
-    hexes = other.hexes;
-
-/*
-    for (std::size_t i = 0; i < other.hexes.size(); ++i)
-        hexes[i] = new Hex(other.hexes[i]);
-*/
-/*
-    std::cout << "\nhere\n";
-*/
-/*
-    for(std::size_t i = 0; i < hexes.size(); i++){
-        hexes.push_back(Hex(other.hexes[i]));
-        //std::cout << "\nhere\n";
-    }
-
-*/
-
-
-
-}
-
 
 HexMap::~HexMap()
 {

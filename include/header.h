@@ -7,6 +7,9 @@
 
 #include "GameLogic.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 
 const unsigned int WIDTH = 400;
 const unsigned int HEIGHT = 400;

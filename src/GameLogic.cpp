@@ -11,6 +11,8 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
     hexHeight = 2 * hexSize;
     hexWidth = hexHeight * (sqrt(3) / 2);
 
+    srand (time(NULL));
+
     hexMap = new HexMap(width, height, hexSize);
 
     selectedHex = nullptr;
@@ -35,10 +37,10 @@ GameLogic::~GameLogic() {
 
 void GameLogic::mapClicked(int xPixel, int yPixel) {
 
-    HexMap *hexMapTmp = new HexMap(*hexMap);
-   delete hexMap;
-    hexMap = new HexMap(*hexMapTmp);
-    delete hexMapTmp;
+  //  HexMap *hexMapTmp = new HexMap(*hexMap);
+  //  delete hexMap;
+  //  hexMap = new HexMap(*hexMapTmp);
+  //  delete hexMapTmp;
 
     int x = getX(xPixel, yPixel);
     int y = getY(xPixel, yPixel);
@@ -54,10 +56,9 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
     // if nothing selected
     if(!selectedHex){
 
-        // if clicked on an empty sapce, a moutain or an enemy
+        // if clicked on an empty space, a mountain or an enemy
         if(!hexClicked->hasPiece() || hexClicked->getPiece()->isMoutain() || hexClicked->getPiece()->getPlayer() != Player::player1){
             selectedHex = nullptr;
-
         }
         // else if is moveable player unit
         else{
@@ -77,11 +78,56 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
         // if can move to place clicked
         else if(movePiece(selectedHex, hexClicked)){
             selectedHex = nullptr;
+            enemyMove();
         }
 
         // if clicked some where cannot be moved
         else{
             selectedHex = nullptr;
+        }
+    }
+}
+
+
+void GameLogic::enemyMove(void){
+
+    std::vector<HexCoordinates> movements;
+    bool moved = false;
+
+    while(!moved){
+
+        int x = rand() % width;
+        int y = rand() % height;
+
+        Hex* hex = hexMap->getHexPnt(x,y);
+
+        // if it has a piece && is not a mountain && is other player
+        if(hex->hasPiece() && !hex->getPiece()->isMoutain() && hex->getPiece()->getPlayer() == Player::player2){
+
+            if(hex->getPiece()->getMoveType() == Movement::orthogonal){
+                movements = hex->getPossibleOrthogonalSteps(hex->getPiece()->getRange());
+            }
+            else if(hex->getPiece()->getMoveType() == Movement::diagonal){
+               movements = hex->getPossibleDiagonalSteps(hex->getPiece()->getRange());
+            }
+            else{
+                exit(0);
+            }
+
+            for(auto i = movements.begin(); i<movements.end(); ++i) {
+
+                int xNew = (*i).getCartesianX();
+                int yNew = (*i).getCartesianY();
+
+                if(outOfBounds(xNew,yNew))
+                    continue;
+
+                if(movePiece(hex, hexMap->getHexPnt(xNew,yNew))){
+                    moved = true;
+                    break;
+                }
+
+            }
         }
     }
 }
@@ -120,6 +166,9 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
     if(sourceHex == targetHex)
         return false;
 
+    if(outOfBounds(targetHex->getCartesianX(), targetHex->getCartesianY()))
+        return false;
+
     Movement moveType = sourceHex->getPiece()->getMoveType();
 
     // if the movement type is orthogonal and the two hexes are orthogonal and in range
@@ -137,12 +186,20 @@ bool GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
     // check all the steps to targetHex are clear
     for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
 
+        if(outOfBounds((*i).getCartesianX(), (*i).getCartesianY())){
+            return false;
+        }
         if( hexMap->hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
             return false;
         }
     }
 
-    // check if the target is clear
+    // if out of bounds
+    if(outOfBounds(targetHex->getCartesianX(), targetHex->getCartesianY())){
+        return false;
+    }
+
+    // check if the target is clear && in bounds
     if(!targetHex->hasPiece()){
         hexMap->movePeice(sourceHex, targetHex);
         return true;

@@ -33,6 +33,8 @@ class GameLogic
         void moveDiagonal(int row, int col, int range);
         void moveAny(int row, int col, int range);
 
+        void enemyMove(void);
+
         bool inRangeAny(int row1, int col1, int row2, int col2, int range);
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 

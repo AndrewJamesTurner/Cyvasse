@@ -15,14 +15,6 @@ HexCoordinates::HexCoordinates(int _cubeX, int _cubeY, int _cubeZ) {
     updateCartesianCoordinates();
 }
 
-HexCoordinates::HexCoordinates(HexCoordinates const &other){
-
-    cartesianX = other.cartesianX;
-    cartesianY = other.cartesianY;
-    cubeX = other.cubeX;
-    cubeY = other.cubeY;
-    cubeZ = other.cubeZ;
-}
 
 HexCoordinates::~HexCoordinates() {
     //dtor

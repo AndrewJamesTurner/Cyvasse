@@ -12,8 +12,6 @@ class Piece
 {
     public:
         Piece(Player _player, Type _type, Movement _movement, int _range, std::string textureName);
-        Piece(const Piece &other);
-
         virtual ~Piece();
 
         sf::Sprite getSprite(void);
