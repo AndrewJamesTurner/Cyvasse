@@ -23,6 +23,7 @@ class Piece
         int getRange(void);
 
         bool isMoutain(void);
+        Type getType(void) const;
 
     protected:
 

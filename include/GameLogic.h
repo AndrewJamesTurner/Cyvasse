@@ -59,9 +59,14 @@ class GameLogic
 
         std::random_device rd;
 
+        std::vector<Piece*> pieces;
+
         bool outOfBounds(int x, int y);
-        bool movePiece(Hex* sourceHex, Hex* targetHex);
+        void movePiece(Hex* sourceHex, Hex* targetHex);
+        bool canMove(Hex* sourceHex, Hex* targetHex);
         void showMovements(Hex* hex);
+        void populateBoard(void);
+        bool isGameOver(void);
 };
 
 #endif // GAMELOGIC_H

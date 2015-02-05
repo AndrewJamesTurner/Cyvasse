@@ -36,6 +36,9 @@ bool Piece::isMoutain(void){
         return false;
 }
 
+Type Piece::getType(void) const {
+    return type;
+}
 
 sf::Sprite Piece::getSprite(void){
     return sprite;
