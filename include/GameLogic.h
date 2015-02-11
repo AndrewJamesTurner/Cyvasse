@@ -2,10 +2,6 @@
 #define GAMELOGIC_H
 
 #include "Hex.h"
-#include "Rabble.h"
-#include "King.h"
-#include "Spears.h"
-#include "Mountain.h"
 #include "HexMap.h"
 
 #include <SFML/Graphics.hpp>
@@ -59,14 +55,11 @@ class GameLogic
 
         std::random_device rd;
 
-        std::vector<Piece*> pieces;
-
         bool outOfBounds(int x, int y);
         void movePiece(Hex* sourceHex, Hex* targetHex);
         bool canMove(Hex* sourceHex, Hex* targetHex);
         void showMovements(Hex* hex);
         void populateBoard(void);
-        bool isGameOver(void);
 };
 
 #endif // GAMELOGIC_H

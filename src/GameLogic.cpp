@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 #include <vector>
 
-GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)    {
+GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
 
     window = _window;
     mapHexSize = _mapHexSize;
@@ -17,62 +17,12 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
 
     selectedHex = nullptr;
 
-    populateBoard();
-
     resetMap();
 }
 
 GameLogic::~GameLogic() {
     delete hexMap;
 }
-
-void GameLogic::populateBoard(void){
-
-    pieces.push_back(new Rabble(Player::player1));
-    hexMap->setPiece(5,5,pieces.back());
-
-    pieces.push_back(new King(Player::player1));
-    hexMap->setPiece(6,6,pieces.back());
-
-    pieces.push_back(new Spears(Player::player1));
-    hexMap->setPiece(5,7,pieces.back());
-
-    pieces.push_back(new Mountain(Player::player1));
-    hexMap->setPiece(3,7,pieces.back());
-
-    pieces.push_back(new Rabble(Player::player2));
-    hexMap->setPiece(3,2,pieces.back());
-
-    pieces.push_back(new King(Player::player2));
-    hexMap->setPiece(8,8,pieces.back());
-
-    pieces.push_back(new Spears(Player::player2));
-    hexMap->setPiece(8,1,pieces.back());
-
-    pieces.push_back(new Mountain(Player::player2));
-    hexMap->setPiece(7,3,pieces.back());
-}
-
-bool GameLogic::isGameOver(void){
-
-    bool isKingPlayer1 = false;
-    bool isKingPlayer2 = false;
-
-    for(auto i = pieces.begin(); i<pieces.end(); ++i) {
-
-        if((*i)->getType() == Type::king && (*i)->getPlayer() == Player::player1)
-            isKingPlayer1 = true;
-
-        if((*i)->getType() == Type::king && (*i)->getPlayer() == Player::player2)
-            isKingPlayer2 = true;
-    }
-
-    if(isKingPlayer1 &&  isKingPlayer2)
-        return false;
-    else
-        return true;
-}
-
 
 void GameLogic::mapClicked(int xPixel, int yPixel) {
 
@@ -122,12 +72,6 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
             selectedHex = nullptr;
         }
     }
-
-
-    if(isGameOver()){
-        exit(0);
-    }
-
 }
 
 
@@ -172,11 +116,6 @@ void GameLogic::enemyMove(void){
             }
         }
     }
-
-    if(isGameOver()){
-        exit(0);
-    }
-
 }
 
 void GameLogic::deselect(void){
@@ -263,7 +202,7 @@ bool GameLogic::canMove(Hex* sourceHex, Hex* targetHex){
 
 void GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
 
-    pieces.erase(std::remove(pieces.begin(), pieces.end(), targetHex->getPiece()), pieces.end());
+   // pieces.erase(std::remove(pieces.begin(), pieces.end(), targetHex->getPiece()), pieces.end());
     hexMap->movePeice(sourceHex, targetHex);
 }
 

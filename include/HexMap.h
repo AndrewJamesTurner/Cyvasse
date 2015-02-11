@@ -3,6 +3,11 @@
 
 #include "Hex.h"
 
+#include "Rabble.h"
+#include "King.h"
+#include "Spears.h"
+#include "Mountain.h"
+
 class HexMap
 {
     public:
@@ -24,6 +29,8 @@ class HexMap
         std::vector<Hex> getHexes(void);
         Hex* getHexPnt(int x, int y);
 
+        void populateBoard(void);
+
     protected:
     private:
 
@@ -31,11 +38,10 @@ class HexMap
         int height;
         int hexSize;
         std::vector<Hex> hexes;
-
+        std::vector<Piece*> pieces;
 
         int getIndex(int x, int y);
         bool isOffMap(int x, int y);
-
 };
 
 #endif // HEXMAP_H

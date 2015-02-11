@@ -3,8 +3,6 @@
 HexMap::HexMap(int _width, int _height, int _hexSize)
 {
 
-
-
     width = _width;
     height = _height;
     hexSize = _hexSize;
@@ -14,6 +12,8 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
             hexes.push_back(Hex(x,y, hexSize, sf::Color::White));
         }
     }
+
+    populateBoard();
 }
 
 
@@ -24,9 +24,36 @@ HexMap::~HexMap()
 
 
 std::vector<Hex> HexMap::getHexes(void){
-
     return hexes;
 }
+
+void HexMap::populateBoard(void){
+
+    pieces.push_back(new Rabble(Player::player1));
+    setPiece(5,5, pieces.back());
+
+    pieces.push_back(new King(Player::player1));
+    setPiece(6,6, pieces.back());
+
+    pieces.push_back(new Spears(Player::player1));
+    setPiece(5,7, pieces.back());
+
+    pieces.push_back(new Mountain(Player::player1));
+    setPiece(3,7, pieces.back());
+
+    pieces.push_back(new Rabble(Player::player2));
+    setPiece(3,2, pieces.back());
+
+    pieces.push_back(new King(Player::player2));
+    setPiece(8,8, pieces.back());
+
+    pieces.push_back(new Spears(Player::player2));
+    setPiece(8,1, pieces.back());
+
+    pieces.push_back(new Mountain(Player::player2));
+    setPiece(7,3, pieces.back());
+}
+
 
 Hex* HexMap::getHexPnt(int x, int y){
 
