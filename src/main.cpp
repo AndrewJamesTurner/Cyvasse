@@ -21,29 +21,35 @@ int main()
     // run the program as long as the window is open
     while (window.isOpen())
     {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
 
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
+        if(gameLogic.getGameState() == GameState::player2Turn){
+            gameLogic.enemyMove();
+        }
+        else if(gameLogic.getGameState() == GameState::player1Turn){
 
-            if (event.type == sf::Event::MouseButtonPressed)
+            // check all the window's events that were triggered since the last iteration of the loop
+            sf::Event event;
+
+            while (window.pollEvent(event))
             {
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    int mouseClickX = event.mouseButton.x;
-                    int mouseClickY = event.mouseButton.y;
+                // "close requested" event: we close the window
+                if (event.type == sf::Event::Closed)
+                    window.close();
 
-                    gameLogic.mapClicked(mouseClickX, mouseClickY);
-                    //gameLogic.moveOrthogonal(row, col,3);
-                }
-
-                if (event.mouseButton.button == sf::Mouse::Right)
+                if (event.type == sf::Event::MouseButtonPressed)
                 {
-                    gameLogic.deselect();
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        int mouseClickX = event.mouseButton.x;
+                        int mouseClickY = event.mouseButton.y;
+
+                        gameLogic.mapClicked(mouseClickX, mouseClickY);
+                    }
+
+                    if (event.mouseButton.button == sf::Mouse::Right)
+                    {
+                        gameLogic.deselect();
+                    }
                 }
             }
         }

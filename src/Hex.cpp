@@ -32,30 +32,14 @@ Hex::Hex(const Hex &obj) : HexCoordinates(obj.cartesianX, obj.cartesianY){
         piece = nullptr;
     else
         piece  = new Piece(*obj.piece);
-
-/*
-sf::CircleShape shape;
-        Piece* piece;
-
-
-        float pixelX;
-        float pixelY;
-
-        float hexSize;
-        float hexHeight;
-        float hexWidth;
-
-        sf::Color color;
-*/
-
-
 }
 
 
 
 Hex::~Hex()
 {
-    //delete coordinates;
+    if(piece != nullptr)
+        delete piece;
 }
 
 

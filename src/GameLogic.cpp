@@ -17,10 +17,16 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
     selectedHex = nullptr;
 
     resetMap();
+
+    gameState = GameState::player1Turn;
 }
 
 GameLogic::~GameLogic() {
     delete hexMap;
+}
+
+GameState GameLogic::getGameState(void){
+    return gameState;
 }
 
 void GameLogic::mapClicked(int xPixel, int yPixel) {
@@ -50,7 +56,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
             selectedHex = hexClicked;
         }
     }
-    // if something selected
+    // if something is already selected
     else{
 
         // if clicked currently selected
@@ -58,79 +64,66 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
             hexClicked->setBoarderColor(sf::Color::Yellow);
             showMovements(hexClicked);
         }
-
-        // if can move to place clicked
-        else if(canMove(selectedHex, hexClicked)){
-            movePiece(selectedHex, hexClicked);
-            selectedHex = nullptr;
-            enemyMove();
-        }
-
-        // if clicked some where cannot be moved
         else{
+
+            bool playerMoved = playerMove(selectedHex, hexClicked);
+
+            if(playerMoved){
+                gameState = GameState::player2Turn;
+            }
+
             selectedHex = nullptr;
         }
     }
 }
 
 
-std::vector<Move> getPossibleEnemyMoves(HexMap hexMap){
+std::vector<Move> GameLogic::getPossibleEnemyMoves(HexMap _hexMap){
 
     std::vector<Move> possibleMoves;
+    std::vector<Hex*> enemyPositions = _hexMap.getPlayerPositions(Player::player2);
 
-    std::vector<Hex*> enemyPositions = hexMap.getPlayerPositions(Player::player2);
+    for(auto i = enemyPositions.begin(); i<enemyPositions.end(); ++i) {
 
+        std::vector<Hex*> validMoves = getValidMovements(_hexMap, (*i));
 
-
+        for(auto j = validMoves.begin(); j<validMoves.end(); ++j) {
+            Move _move((*i), (*j));
+            possibleMoves.push_back(_move);
+        }
+    }
 
     return possibleMoves;
 }
 
 
+bool GameLogic::playerMove(Hex* sourceHex, Hex* destinationHex){
 
+    bool PlayerMoved;
+
+    if(canMove(*hexMap, sourceHex, destinationHex)){
+        hexMap->movePeice(sourceHex, destinationHex);
+        PlayerMoved = true;
+    }
+    else{
+        PlayerMoved = false;
+    }
+
+    return PlayerMoved;
+}
 
 void GameLogic::enemyMove(void){
 
-    std::vector<HexCoordinates> movements;
-    bool moved = false;
+    HexMap tmpMap = HexMap(*hexMap);
 
-    while(!moved){
+    std::vector<Move> possibleMoves = getPossibleEnemyMoves(tmpMap);
 
-        int x = rand() % width;
-        int y = rand() % height;
+    unsigned int numPossibleMoves = possibleMoves.size();
+    unsigned int randomMove = rand() % numPossibleMoves;
 
-        Hex* hex = hexMap->getHexPnt(x,y);
+    hexMap->movePeice(possibleMoves[randomMove].sourceHex, possibleMoves[randomMove].destinationHex);
 
-        // if it has a piece && is not a mountain && is other player
-        if(hex->hasPiece() && !hex->getPiece()->isMoutain() && hex->getPiece()->getPlayer() == Player::player2){
-
-            if(hex->getPiece()->getMoveType() == Movement::orthogonal){
-                movements = hex->getPossibleOrthogonalSteps(hex->getPiece()->getRange());
-            }
-            else if(hex->getPiece()->getMoveType() == Movement::diagonal){
-               movements = hex->getPossibleDiagonalSteps(hex->getPiece()->getRange());
-            }
-            else{
-                exit(0);
-            }
-
-            for(auto i = movements.begin(); i<movements.end(); ++i) {
-
-                int xNew = (*i).getCartesianX();
-                int yNew = (*i).getCartesianY();
-                Hex *newHex = hexMap->getHexPnt(xNew,yNew);
-
-                if(outOfBounds(xNew,yNew))
-                    continue;
-
-                if(canMove(hex, newHex)){
-                    hexMap->movePeice(hex, newHex);
-                    moved = true;
-                    break;
-                }
-            }
-        }
-    }
+    gameState = GameState::player1Turn;
 }
 
 void GameLogic::deselect(void){
@@ -138,7 +131,7 @@ void GameLogic::deselect(void){
     resetMap();
 }
 
-std::vector<Hex*> GameLogic::getPossibleMovements(Hex* hex){
+std::vector<Hex*> GameLogic::getPossibleMovements(HexMap _hexMap, Hex* hex){
 
     std::vector<HexCoordinates> movements;
     std::vector<Hex*> possibleMovements;
@@ -162,14 +155,14 @@ std::vector<Hex*> GameLogic::getPossibleMovements(Hex* hex){
     return possibleMovements;
 }
 
-std::vector<Hex*> GameLogic::getValidMovements(Hex* hex){
+std::vector<Hex*> GameLogic::getValidMovements(HexMap _hexMap, Hex* hex){
 
     std::vector<Hex*> validMovements;
-    std::vector<Hex*> possibleMovements = getPossibleMovements(hex);
+    std::vector<Hex*> possibleMovements = getPossibleMovements(_hexMap, hex);
 
     for(auto i = possibleMovements.begin(); i<possibleMovements.end(); ++i) {
 
-        if(canMove(hex, (*i)))
+        if(canMove(_hexMap, hex, (*i)))
             validMovements.push_back((*i));
     }
 
@@ -179,7 +172,7 @@ std::vector<Hex*> GameLogic::getValidMovements(Hex* hex){
 
 void GameLogic::showMovements(Hex* hex){
 
-    std::vector<Hex*> movements = getPossibleMovements(hex);
+    std::vector<Hex*> movements = getPossibleMovements(*hexMap, hex);
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
         hexMap->setColor((*i)->getCartesianX(),(*i)->getCartesianY(),sf::Color(230,0,0));
@@ -187,7 +180,7 @@ void GameLogic::showMovements(Hex* hex){
 }
 
 
-bool GameLogic::canMove(Hex* sourceHex, Hex* targetHex){
+bool GameLogic::canMove(HexMap _hexmap, Hex* sourceHex, Hex* targetHex){
 
     std::vector<HexCoordinates> steps;
 
@@ -224,7 +217,7 @@ bool GameLogic::canMove(Hex* sourceHex, Hex* targetHex){
         if(outOfBounds((*i).getCartesianX(), (*i).getCartesianY())){
             return false;
         }
-        if( hexMap->hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
+        if( _hexmap.hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
             return false;
         }
     }
@@ -240,13 +233,6 @@ bool GameLogic::canMove(Hex* sourceHex, Hex* targetHex){
     else
         return false;
 }
-
-void GameLogic::movePiece(Hex* sourceHex, Hex* targetHex){
-
-   // pieces.erase(std::remove(pieces.begin(), pieces.end(), targetHex->getPiece()), pieces.end());
-    hexMap->movePeice(sourceHex, targetHex);
-}
-
 
 void GameLogic::resetMap(void) {
 

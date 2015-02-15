@@ -29,7 +29,6 @@ class Hex : public HexCoordinates
 
     private:
 
-
         sf::CircleShape shape;
         Piece* piece;
 

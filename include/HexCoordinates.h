@@ -28,16 +28,14 @@ class HexCoordinates
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);
 
-        int getCartesianX() const;
-        int getCartesianY() const;
+        int getCartesianX();
+        int getCartesianY();
 
         int getCubeX();
         int getCubeY();
         int getCubeZ();
 
     protected:
-
-
 
         int cartesianX;
         int cartesianY;

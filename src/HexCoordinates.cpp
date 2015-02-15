@@ -231,11 +231,11 @@ int HexCoordinates::getDistance(HexCoordinates hex){
 }
 
 
-int HexCoordinates::getCartesianX() const{
+int HexCoordinates::getCartesianX(){
     return cartesianX;
 }
 
-int HexCoordinates::getCartesianY() const{
+int HexCoordinates::getCartesianY(){
     return cartesianY;
 }
 
