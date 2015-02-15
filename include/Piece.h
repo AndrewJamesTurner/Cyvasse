@@ -12,6 +12,7 @@ class Piece
 {
     public:
         Piece(Player _player, Type _type, Movement _movement, int _range, std::string textureName);
+        //Piece(const Piece &obj);
         virtual ~Piece();
 
         sf::Sprite getSprite(void);
@@ -34,6 +35,8 @@ class Piece
         Player player;
         Type type;
         int range;
+
+        std::string textureName;
 
     private:
 

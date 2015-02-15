@@ -19,6 +19,40 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color) : Hex
     piece = nullptr;
 }
 
+Hex::Hex(const Hex &obj) : HexCoordinates(obj.cartesianX, obj.cartesianY){
+
+    shape = obj.shape;
+    pixelX  = obj.pixelX;
+    pixelY  = obj.pixelY;
+    hexSize  = obj.hexSize;
+    hexHeight  = obj.hexHeight;
+    color  = obj.color;
+
+    if(obj.piece == nullptr)
+        piece = nullptr;
+    else
+        piece  = new Piece(*obj.piece);
+
+/*
+sf::CircleShape shape;
+        Piece* piece;
+
+
+        float pixelX;
+        float pixelY;
+
+        float hexSize;
+        float hexHeight;
+        float hexWidth;
+
+        sf::Color color;
+*/
+
+
+}
+
+
+
 Hex::~Hex()
 {
     //delete coordinates;
@@ -64,9 +98,10 @@ bool Hex::hasPiece(void){
 
 void Hex::setPiece(Piece* _piece){
 
+/*
     if(hasPiece())
         delete piece;
-
+*/
     piece = _piece;
     piece->setPosition(pixelX+(hexSize*(sqrt(3) / 2)) + hexSize - hexSize*cos(0.5236),pixelY+hexSize);
 }
@@ -75,6 +110,7 @@ void Hex::clearPiece(void){
     piece = nullptr;
 }
 
+/*
 void Hex::deletePiece(void){
 
     if(piece != nullptr)
@@ -82,7 +118,7 @@ void Hex::deletePiece(void){
 
     clearPiece();
 }
-
+*/
 
 void Hex::setPixelX(void){
 

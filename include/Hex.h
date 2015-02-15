@@ -9,6 +9,7 @@ class Hex : public HexCoordinates
 {
     public:
         Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color);
+        Hex(const Hex &obj);
         virtual ~Hex();
 
         sf::CircleShape getShape(void);
@@ -20,7 +21,7 @@ class Hex : public HexCoordinates
         bool hasPiece(void);
         void setPiece(Piece* _piece);
         void clearPiece(void);
-        void deletePiece(void);
+        //void deletePiece(void);
 
         void draw(sf::RenderWindow *window);
 

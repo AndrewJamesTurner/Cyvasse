@@ -16,6 +16,16 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
     populateBoard();
 }
 
+HexMap::HexMap(const HexMap &obj) {
+
+    width = obj.width;
+    height = obj.height;
+    hexSize = obj.hexSize;
+
+    hexes = obj.hexes;
+//    pieces = obj.pieces;
+}
+
 
 HexMap::~HexMap()
 {
@@ -29,6 +39,18 @@ std::vector<Hex> HexMap::getHexes(void){
 
 void HexMap::populateBoard(void){
 
+
+    setPiece(5,5, new Rabble(Player::player1));
+    setPiece(6,6, new King(Player::player1));
+    setPiece(5,7, new Spears(Player::player1));
+    setPiece(3,7, new Mountain(Player::player1));
+
+    setPiece(3,2, new Rabble(Player::player2));
+    setPiece(8,8, new King(Player::player2));
+    setPiece(8,1, new Spears(Player::player2));
+    setPiece(7,3, new Mountain(Player::player2));
+
+    /*
     pieces.push_back(new Rabble(Player::player1));
     setPiece(5,5, pieces.back());
 
@@ -52,6 +74,7 @@ void HexMap::populateBoard(void){
 
     pieces.push_back(new Mountain(Player::player2));
     setPiece(7,3, pieces.back());
+    */
 }
 
 
@@ -94,6 +117,7 @@ bool HexMap::hasPiece(int x, int y){
     return hexes[index].hasPiece();
 }
 
+/*
 void HexMap::removePiece(int x, int y){
 
     if(isOffMap(x,y))
@@ -102,6 +126,7 @@ void HexMap::removePiece(int x, int y){
     int index = getIndex(x,y);
     hexes[index].deletePiece();
 }
+*/
 
 void HexMap::clearPiece(int x, int y){
 
@@ -173,3 +198,19 @@ bool HexMap::isOffMap(int x, int y){
         return false;
 }
 
+
+std::vector<Hex*> HexMap::getPlayerPositions(Player player){
+
+    std::vector<Hex*> playerPositions;
+
+    for(auto i = hexes.begin(); i<hexes.end(); ++i) {
+
+        if((*i).hasPiece() && (*i).getPiece()->getPlayer() == player){
+
+            playerPositions.push_back(&(*i));
+        }
+    }
+
+
+    return playerPositions;
+}

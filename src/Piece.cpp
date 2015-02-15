@@ -1,14 +1,15 @@
 #include "Piece.h"
 
-Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::string textureName)
+Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::string _textureName)
 {
 
     player = _player;
     type = _type;
     movetype = _movement;
     range = _range;
+    textureName = _textureName;
 
-     if (!texture.loadFromFile(textureName))
+    if (!texture.loadFromFile(textureName))
         exit(0);
 
     sprite.setTexture(texture);
@@ -22,6 +23,31 @@ Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::st
     else
         sprite.setColor(sf::Color::White);
 }
+
+/*
+Piece::Piece(const Piece &obj){
+
+    player = obj.player;
+    type = obj.type;
+    movetype = obj.movetype;
+    range = obj.range;
+    textureName = obj.textureName;
+
+    if (!texture.loadFromFile(textureName))
+        exit(0);
+
+    sprite.setTexture(texture);
+    sf::FloatRect textureRect = sprite.getLocalBounds();
+    sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+
+    sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
+
+    if(player == Player::player1)
+        sprite.setColor(sf::Color::Black);
+    else
+        sprite.setColor(sf::Color::White);
+}
+*/
 
 Piece::~Piece()
 {

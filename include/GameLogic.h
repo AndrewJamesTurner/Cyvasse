@@ -6,6 +6,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <random>
+#include <vector>
+
+struct Move{
+  Hex* sourceHex;
+  Hex* destinationHex;
+};
+
 
 class GameLogic
 {
@@ -60,6 +67,10 @@ class GameLogic
         bool canMove(Hex* sourceHex, Hex* targetHex);
         void showMovements(Hex* hex);
         void populateBoard(void);
+
+        std::vector<Hex*> getPossibleMovements(Hex* hex);
+        std::vector<Hex*> getValidMovements(Hex* hex);
+        std::vector<Move> getPossibleEnemyMoves(HexMap hexMap);
 };
 
 #endif // GAMELOGIC_H

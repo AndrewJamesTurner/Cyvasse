@@ -1,5 +1,4 @@
 #include "GameLogic.h"
-#include <vector>
 
 GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
 
@@ -75,6 +74,21 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
 }
 
 
+std::vector<Move> getPossibleEnemyMoves(HexMap hexMap){
+
+    std::vector<Move> possibleMoves;
+
+    std::vector<Hex*> enemyPositions = hexMap.getPlayerPositions(Player::player2);
+
+
+
+
+    return possibleMoves;
+}
+
+
+
+
 void GameLogic::enemyMove(void){
 
     std::vector<HexCoordinates> movements;
@@ -104,12 +118,13 @@ void GameLogic::enemyMove(void){
 
                 int xNew = (*i).getCartesianX();
                 int yNew = (*i).getCartesianY();
+                Hex *newHex = hexMap->getHexPnt(xNew,yNew);
 
                 if(outOfBounds(xNew,yNew))
                     continue;
 
-                if(canMove(hex, hexMap->getHexPnt(xNew,yNew))){
-                    movePiece(hex, hexMap->getHexPnt(xNew,yNew));
+                if(canMove(hex, newHex)){
+                    hexMap->movePeice(hex, newHex);
                     moved = true;
                     break;
                 }
@@ -119,14 +134,14 @@ void GameLogic::enemyMove(void){
 }
 
 void GameLogic::deselect(void){
-
     selectedHex = nullptr;
     resetMap();
 }
 
-void GameLogic::showMovements(Hex* hex){
+std::vector<Hex*> GameLogic::getPossibleMovements(Hex* hex){
 
     std::vector<HexCoordinates> movements;
+    std::vector<Hex*> possibleMovements;
 
     if(hex->getPiece()->getMoveType() == Movement::orthogonal){
         movements = hex->getPossibleOrthogonalSteps(hex->getPiece()->getRange());
@@ -141,7 +156,33 @@ void GameLogic::showMovements(Hex* hex){
         int y = (*i).getCartesianY();
 
         if(!outOfBounds(x,y))
-            hexMap->setColor(x,y,sf::Color(230,0,0));
+            possibleMovements.push_back(hexMap->getHexPnt(x,y));
+    }
+
+    return possibleMovements;
+}
+
+std::vector<Hex*> GameLogic::getValidMovements(Hex* hex){
+
+    std::vector<Hex*> validMovements;
+    std::vector<Hex*> possibleMovements = getPossibleMovements(hex);
+
+    for(auto i = possibleMovements.begin(); i<possibleMovements.end(); ++i) {
+
+        if(canMove(hex, (*i)))
+            validMovements.push_back((*i));
+    }
+
+    return validMovements;
+}
+
+
+void GameLogic::showMovements(Hex* hex){
+
+    std::vector<Hex*> movements = getPossibleMovements(hex);
+
+    for(auto i = movements.begin(); i<movements.end(); ++i) {
+        hexMap->setColor((*i)->getCartesianX(),(*i)->getCartesianY(),sf::Color(230,0,0));
     }
 }
 

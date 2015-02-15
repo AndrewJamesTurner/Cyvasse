@@ -35,7 +35,9 @@ class HexCoordinates
         int getCubeY();
         int getCubeZ();
 
-    private:
+    protected:
+
+
 
         int cartesianX;
         int cartesianY;
@@ -47,6 +49,9 @@ class HexCoordinates
         void updateCartesianCoordinates(void);
 
         template <typename T> int sgn(T val);
+
+
+     private:
 };
 
 #endif // HEXCOORDINATES_H
