@@ -48,7 +48,6 @@
 		<Unit filename="include/King.h" />
 		<Unit filename="include/Mountain.h" />
 		<Unit filename="include/Piece.h" />
-		<Unit filename="include/Pieces.h" />
 		<Unit filename="include/Rabble.h" />
 		<Unit filename="include/Spears.h" />
 		<Unit filename="include/header.h" />
@@ -59,7 +58,6 @@
 		<Unit filename="src/King.cpp" />
 		<Unit filename="src/Mountain.cpp" />
 		<Unit filename="src/Piece.cpp" />
-		<Unit filename="src/Pieces.cpp" />
 		<Unit filename="src/Rabble.cpp" />
 		<Unit filename="src/Spears.cpp" />
 		<Unit filename="src/main.cpp" />

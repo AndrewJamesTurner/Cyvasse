@@ -7,13 +7,18 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <vector>
+#include <climits>
 
 enum class GameState{setUp,player1Turn,player2Turn,player1Won,player2Won};
 
 
 struct Move{
+
   Hex* sourceHex;
   Hex* destinationHex;
+
+  int score;
+
   Move(Hex* _sourceHex, Hex* _destinationHex) : sourceHex(_sourceHex), destinationHex(_destinationHex){}
 };
 
@@ -71,7 +76,16 @@ class GameLogic
         void showMovements(Hex* hex);
         std::vector<Hex*> getPossibleMovements(HexMap _hexMap, Hex* hex);
         std::vector<Hex*> getValidMovements(HexMap _hexMap, Hex* hex);
-        std::vector<Move> getPossibleEnemyMoves(HexMap _hexMap);
+        std::vector<Move> getPossibleMoves(HexMap _hexMap, Player player);
+
+        int miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
+
+        int getHeuristicBoardScore(HexMap _map, Player player);
+
+
+        Move randomMove(HexMap _map, Player player);
+
+
 };
 
 #endif // GAMELOGIC_H
