@@ -78,7 +78,7 @@ class GameLogic
         std::vector<Hex*> getValidMovements(HexMap _hexMap, Hex* hex);
         std::vector<Move> getPossibleMoves(HexMap _hexMap, Player player);
 
-        int miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
+        Move miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
 
         int getHeuristicBoardScore(HexMap _map, Player player);
 

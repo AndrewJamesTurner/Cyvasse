@@ -115,76 +115,19 @@ bool GameLogic::playerMove(Hex* sourceHex, Hex* destinationHex){
 void GameLogic::enemyMove(void){
 
     HexMap startMap = HexMap(*hexMap);
-    Move bestMove(nullptr, nullptr);
-    int bestScore = INT_MIN;
-    std::vector<Move> moves = getPossibleMoves(startMap, Player::player2);
 
-    for(auto i = moves.begin(); i < moves.end(); ++i) {
+    //Move _move = miniMax(startMap, 0, INT_MIN, INT_MAX, Player::player2);
+    Move _move = randomMove(*hexMap, Player::player2);
 
-        HexMap tmpMap = HexMap(*hexMap);
-
-        if( int score = miniMax(startMap, 1, INT_MIN, INT_MAX, Player::player2) > bestScore){
-            bestScore = score;
-            bestMove = (*i);
-        }
-    }
-
-    hexMap->movePeice(bestMove.sourceHex, bestMove.destinationHex);
+    hexMap->movePeice(_move.sourceHex, _move.destinationHex);
 
     gameState = GameState::player1Turn;
 }
 
 
-int GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
-
-    if(depth == 0 || getPossibleMoves(_map, player).empty() ){
-        return getHeuristicBoardScore(_map, player);
-    }
-    else if(player == Player::player2){
-
-        int score = INT_MIN;
-        std::vector<Move> moves = getPossibleMoves(_map, player);
-
-        for(auto i = moves.begin(); i < moves.end(); ++i) {
-
-            HexMap tmpMap = HexMap(_map);
-            tmpMap.movePeice((*i).sourceHex, (*i).destinationHex);
-
-            score = std::max(score, miniMax(tmpMap, depth-1, alpha, beta, Player::player1));
-
-            /*
-            alpha = std::max(alpha, score);
-
-            if(beta <= alpha)
-                break;
-            */
-        }
-
-        return score;
-    }
-    else{
-
-        int score = INT_MAX;
-        std::vector<Move> moves = getPossibleMoves(_map, player);
-
-        for(auto i = moves.begin(); i < moves.end(); ++i) {
-
-            HexMap tmpMap = HexMap(_map);
-            tmpMap.movePeice((*i).sourceHex, (*i).destinationHex);
-
-            score = std::min(score, miniMax(tmpMap, depth-1, alpha, beta, Player::player2));
-
-            /*
-            beta = std::min(beta, score);
-
-            if( beta <= alpha)
-                break;
-            */
-        }
-
-        return score;
-
-    }
+Move GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
+    // another day...
+    return Move(nullptr, nullptr);
 }
 
 
