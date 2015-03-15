@@ -231,23 +231,23 @@ int HexCoordinates::getDistance(HexCoordinates hex){
 }
 
 
-int HexCoordinates::getCartesianX(){
+int HexCoordinates::getCartesianX() const{
     return cartesianX;
 }
 
-int HexCoordinates::getCartesianY(){
+int HexCoordinates::getCartesianY() const{
     return cartesianY;
 }
 
-int HexCoordinates::getCubeX() {
+int HexCoordinates::getCubeX() const{
     return cubeX;
 }
 
-int HexCoordinates::getCubeY() {
+int HexCoordinates::getCubeY() const{
     return cubeY;
 }
 
-int HexCoordinates::getCubeZ() {
+int HexCoordinates::getCubeZ() const{
     return cubeZ;
 }
 

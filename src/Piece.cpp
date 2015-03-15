@@ -23,6 +23,8 @@ Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::st
         sprite.setColor(sf::Color::White);
 }
 
+
+
 Piece::~Piece()
 {
     //dtor

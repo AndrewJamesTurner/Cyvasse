@@ -32,12 +32,12 @@ class HexCoordinates
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);
 
-        int getCartesianX();
-        int getCartesianY();
+        int getCartesianX() const;
+        int getCartesianY() const;
 
-        int getCubeX();
-        int getCubeY();
-        int getCubeZ();
+        int getCubeX() const;
+        int getCubeY() const;
+        int getCubeZ() const;
 
     protected:
 

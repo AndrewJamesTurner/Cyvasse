@@ -174,7 +174,7 @@ Move GameLogic::miniMaxMove(HexMap _map, Player player){
     return bestMove;
 }
 
-int GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
+int GameLogic::miniMax(const HexMap& _map, unsigned int depth, int alpha, int beta, Player player){
 
     if(depth == 0 || isGameOver(_map)){
         return getHeuristicBoardScore(_map, Player::player2);
@@ -408,6 +408,7 @@ void GameLogic::update(void) {
     std::vector<Hex> hexes = hexMap.getHexes();
 
     for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
+
         (*i).draw(window);
     }
 }

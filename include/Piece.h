@@ -38,8 +38,8 @@ class Piece
         std::string textureName;
 
     private:
-
-
 };
+
+
 
 #endif // PIECE_H

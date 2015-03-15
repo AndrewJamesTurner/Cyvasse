@@ -42,6 +42,30 @@ Hex::~Hex()
         delete piece;
 }
 
+
+bool Hex::operator == (const Hex& a) const{
+
+    return (a.getCartesianX() == getCartesianX() && a.getCartesianY() == getCartesianY());
+}
+
+Hex& Hex::operator= (const Hex& obj){
+
+    shape = obj.shape;
+    pixelX  = obj.pixelX;
+    pixelY  = obj.pixelY;
+    hexSize  = obj.hexSize;
+    hexHeight  = obj.hexHeight;
+    color  = obj.color;
+
+    if(obj.piece == nullptr)
+        piece = nullptr;
+    else
+        piece  = new Piece(*obj.piece);
+
+    return *this;
+}
+
+
 void Hex::draw(sf::RenderWindow *window){
 
     window->draw(shape);

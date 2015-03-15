@@ -71,6 +71,8 @@ void HexMap::setPiece(int x, int y, Piece* piece){
 
     int index = getIndex(x,y);
     hexes[index].setPiece(piece);
+
+    playerPositions.push_back(Hex(hexes[index]));
 }
 
 Piece* HexMap::getPiece(int x, int y){
@@ -100,6 +102,9 @@ void HexMap::clearPiece(int x, int y){
         return;
 
     int index = getIndex(x,y);
+
+    playerPositions.erase(std::remove(playerPositions.begin(), playerPositions.end(), hexes[index]), playerPositions.end());
+
     hexes[index].clearPiece();
 }
 
@@ -166,15 +171,15 @@ bool HexMap::isOffMap(int x, int y) const {
 
 std::vector<Hex> HexMap::getPlayerPositions(Player player) const{
 
-    std::vector<Hex> playerPositions;
+    std::vector<Hex> playerPositions123;
 
     for(auto i = hexes.begin(); i<hexes.end(); ++i) {
 
         if((*i).hasPiece() && (*i).isPlayer(player) ){
 
-            playerPositions.push_back(Hex((*i)));
+            playerPositions123.push_back(Hex((*i)));
         }
     }
 
-    return playerPositions;
+    return playerPositions123;
 }

@@ -12,6 +12,8 @@ class Hex : public HexCoordinates
         Hex(const Hex &obj);
         virtual ~Hex();
 
+        bool operator== (const Hex& a) const;
+        Hex& operator= (const Hex& obj);
 
 
         sf::CircleShape getShape(void);

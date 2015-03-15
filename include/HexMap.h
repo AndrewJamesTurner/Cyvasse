@@ -41,7 +41,7 @@ class HexMap
         int height;
         int hexSize;
         std::vector<Hex> hexes;
-        //std::vector<Piece*> pieces;
+        std::vector<Hex> playerPositions;
 
         int getIndex(int x, int y) const;
         bool isOffMap(int x, int y) const;

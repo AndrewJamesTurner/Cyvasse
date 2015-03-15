@@ -83,7 +83,7 @@ class GameLogic
         std::vector<Hex> getValidMovements(const HexMap& _hexMap, const Hex& hex);
         std::vector<Move> getPossibleMoves(const HexMap& _hexMap, const Player& player);
 
-        int miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
+        int miniMax(const HexMap& _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
 
         bool isGameOver(const HexMap& _map);
 
