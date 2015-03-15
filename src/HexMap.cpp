@@ -51,7 +51,7 @@ Hex* HexMap::getHexPnt(int x, int y){
 }
 
 
-Hex HexMap::getHex(int x, int y){
+Hex HexMap::getHex(int x, int y) const{
 
     if(isOffMap(x,y))
         std::cerr << "ERROR: in getHex of HexMap";
@@ -148,12 +148,12 @@ void HexMap::setBoarderColor(int x, int y, sf::Color color){
 }
 
 
-int HexMap::getIndex(int x, int y) {
+int HexMap::getIndex(int x, int y) const {
     return (x*width)+y;
 }
 
 
-bool HexMap::isOffMap(int x, int y){
+bool HexMap::isOffMap(int x, int y) const {
 
     if(x < 0 || x >= width)
         return true;

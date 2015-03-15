@@ -76,10 +76,10 @@ class GameLogic
 
         void populateBoard(void);
 
-        void showMovements(Hex* hex);
-        std::vector<Hex> getPossibleMovements(HexMap _hexMap, Hex hex);
-        std::vector<Hex> getValidMovements(HexMap _hexMap, Hex hex);
-        std::vector<Move> getPossibleMoves(const HexMap& _hexMap, Player player);
+        void showMovements(Hex hex);
+        std::vector<Hex> getPossibleMovements(const HexMap& _hexMap, const Hex& hex);
+        std::vector<Hex> getValidMovements(const HexMap& _hexMap, const Hex& hex);
+        std::vector<Move> getPossibleMoves(const HexMap& _hexMap, const Player& player);
 
         //Move miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
 

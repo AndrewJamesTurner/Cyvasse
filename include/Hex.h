@@ -19,7 +19,7 @@ class Hex : public HexCoordinates
         void setColor(sf::Color _color);
         void setBoarderColor(sf::Color _color);
 
-        Piece* getPiece(void);
+        Piece* getPiece(void) const;
         bool hasPiece(void) const;
         void setPiece(Piece* _piece);
         void clearPiece(void);

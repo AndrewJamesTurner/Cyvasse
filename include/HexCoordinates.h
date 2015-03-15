@@ -26,8 +26,8 @@ class HexCoordinates
         std::vector<HexCoordinates> orthogonalSteps(HexCoordinates hex);
         std::vector<HexCoordinates> diagonalSteps(HexCoordinates hex);
 
-        std::vector<HexCoordinates> getPossibleOrthogonalSteps(int range);
-        std::vector<HexCoordinates> getPossibleDiagonalSteps(int range);
+        std::vector<HexCoordinates> getPossibleOrthogonalSteps(int range) const;
+        std::vector<HexCoordinates> getPossibleDiagonalSteps(int range) const;
 
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);

@@ -27,7 +27,7 @@ class HexMap
 
         std::vector<Hex> getHexes(void);
         Hex* getHexPnt(int x, int y);
-        Hex getHex(int x, int y);
+        Hex getHex(int x, int y) const;
 
 
         void populateBoard(void);
@@ -43,8 +43,8 @@ class HexMap
         std::vector<Hex> hexes;
         //std::vector<Piece*> pieces;
 
-        int getIndex(int x, int y);
-        bool isOffMap(int x, int y);
+        int getIndex(int x, int y) const;
+        bool isOffMap(int x, int y) const;
 };
 
 #endif // HEXMAP_H

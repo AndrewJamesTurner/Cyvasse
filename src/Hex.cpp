@@ -79,7 +79,7 @@ bool Hex::isPlayer(Player player) const{
     }
 }
 
-Piece* Hex::getPiece(void){
+Piece* Hex::getPiece(void) const{
     return piece;
 }
 

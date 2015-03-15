@@ -174,7 +174,7 @@ std::vector<HexCoordinates> HexCoordinates::diagonalSteps(HexCoordinates hex){
 }
 
 
-std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range){
+std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range) const {
 
     std::vector<HexCoordinates> steps;
 
@@ -193,7 +193,7 @@ std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range
 
 
 
-std::vector<HexCoordinates> HexCoordinates::getPossibleDiagonalSteps(int range){
+std::vector<HexCoordinates> HexCoordinates::getPossibleDiagonalSteps(int range) const {
 
     std::vector<HexCoordinates> steps;
 
