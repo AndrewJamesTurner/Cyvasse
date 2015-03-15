@@ -1,18 +1,16 @@
 #include "GameLogic.h"
 
-GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize){
-
-    window = _window;
-    mapHexSize = _mapHexSize;
-    width = 2*mapHexSize+1;
-    height = 2*mapHexSize+1;
-    hexSize =_hexSize;
-    hexHeight = 2 * hexSize;
-    hexWidth = hexHeight * (sqrt(3) / 2);
+GameLogic::GameLogic(sf::RenderWindow *_window, double _hexSize, int _mapHexSize):
+    window{_window},
+    hexSize{_hexSize},
+    width{2*_mapHexSize+1},
+    height{2*_mapHexSize+1},
+    mapHexSize{_mapHexSize},
+    hexMap{HexMap(width, height, hexSize)},
+    hexHeight{2 * hexSize},
+    hexWidth{hexHeight * (sqrt(3) / 2)}{
 
     srand (time(NULL));
-
-    hexMap = new HexMap(width, height, hexSize);
 
     selectedHex = nullptr;
 
@@ -22,7 +20,7 @@ GameLogic::GameLogic(sf::RenderWindow *_window, float _hexSize, int _mapHexSize)
 }
 
 GameLogic::~GameLogic() {
-    delete hexMap;
+    //delete hexMap;
 }
 
 GameState GameLogic::getGameState(void){
@@ -41,7 +39,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
         return;
     }
 
-    Hex* hexClicked = hexMap->getHexPnt(x,y);
+    Hex* hexClicked = hexMap.getHexPnt(x,y);
 
     // if nothing selected
     if(!selectedHex){
@@ -101,8 +99,8 @@ bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 
     bool PlayerMoved;
 
-    if(canMove(*hexMap, sourceHex, destinationHex)){
-        hexMap->movePeice(sourceHex, destinationHex);
+    if(canMove(hexMap, sourceHex, destinationHex)){
+        hexMap.movePeice(sourceHex, destinationHex);
         PlayerMoved = true;
     }
     else{
@@ -117,9 +115,9 @@ void GameLogic::enemyMove(void){
     //HexMap startMap = HexMap(*hexMap);
 
     //Move _move = miniMax(startMap, 0, INT_MIN, INT_MAX, Player::player2);
-    Move _move = randomMove(*hexMap, Player::player2);
+    Move _move = randomMove(hexMap, Player::player2);
 
-    hexMap->movePeice(_move.sourceHex, _move.destinationHex);
+    hexMap.movePeice(_move.sourceHex, _move.destinationHex);
 
     gameState = GameState::player1Turn;
 }
@@ -197,10 +195,10 @@ std::vector<Hex> GameLogic::getValidMovements(HexMap _hexMap, Hex hex){
 
 void GameLogic::showMovements(Hex* hex){
 
-    std::vector<Hex> movements = getPossibleMovements(*hexMap, *hex);
+    std::vector<Hex> movements = getPossibleMovements(hexMap, *hex);
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
-        hexMap->setColor((*i).getCartesianX(),(*i).getCartesianY(),sf::Color(230,0,0));
+        hexMap.setColor((*i).getCartesianX(),(*i).getCartesianY(),sf::Color(230,0,0));
     }
 }
 
@@ -269,13 +267,13 @@ void GameLogic::resetMap(void) {
             HexCoordinates currentHex(x, y);
 
             if(centerHex.isInRange(currentHex, mapHexSize)){
-                hexMap->setColor(x,y,sf::Color(17,220,51));
+                hexMap.setColor(x,y,sf::Color(17,220,51));
             }
             else {
-                hexMap->setColor(x,y,sf::Color(20,20,230));
+                hexMap.setColor(x,y,sf::Color(20,20,230));
             }
 
-            hexMap->setBoarderColor(x,y,sf::Color::Black);
+            hexMap.setBoarderColor(x,y,sf::Color::Black);
         }
     }
 }
@@ -283,7 +281,7 @@ void GameLogic::resetMap(void) {
 
 void GameLogic::update(void) {
 
-    std::vector<Hex> hexes = hexMap->getHexes();
+    std::vector<Hex> hexes = hexMap.getHexes();
 
     for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
         (*i).draw(window);

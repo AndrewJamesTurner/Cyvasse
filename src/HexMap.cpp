@@ -16,17 +16,6 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
     populateBoard();
 }
 
-HexMap::HexMap(const HexMap &obj) {
-
-    width = obj.width;
-    height = obj.height;
-    hexSize = obj.hexSize;
-
-    hexes = obj.hexes;
-//    pieces = obj.pieces;
-}
-
-
 HexMap::~HexMap()
 {
     //dtor

@@ -12,12 +12,10 @@ class HexMap
 {
     public:
         HexMap(int _width, int _height, int _hexSize);
-        HexMap (const HexMap &obj);
         virtual ~HexMap();
 
         void setPiece(int x, int y, Piece* piece);
         Piece* getPiece(int x, int y);
-        //void removePiece(int x, int y);
         void clearPiece(int x, int y);
         bool hasPiece(int x, int y);
 

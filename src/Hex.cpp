@@ -42,11 +42,6 @@ Hex::~Hex()
         delete piece;
 }
 
-
-
-
-
-
 void Hex::draw(sf::RenderWindow *window){
 
     window->draw(shape);

@@ -23,18 +23,6 @@ Piece::Piece(Player _player, Type _type, Movement _movement, int _range, std::st
         sprite.setColor(sf::Color::White);
 }
 
-/*
-Piece::Piece(const Piece &obj){
-
-    player = _player;
-    type = _type;
-    movetype = _movement;
-    range = _range;
-    textureName = _textureName;
-
-}
-*/
-
 Piece::~Piece()
 {
     //dtor
@@ -60,6 +48,7 @@ sf::Sprite Piece::getSprite(void){
 void Piece::setPosition(float xPos, float yPos){
    sprite.setPosition(xPos,yPos);
 }
+
 
 Movement Piece::getMoveType(void){
     return movetype;
