@@ -86,7 +86,7 @@ std::vector<Move> GameLogic::getPossibleMoves(const HexMap& _hexMap, const Playe
         std::vector<Hex> validMoves = getValidMovements(_hexMap, (*i));
 
         for(auto j = validMoves.begin(); j<validMoves.end(); ++j) {
-            Move _move((*i), (*j));
+            Move _move((*i).getCartesianX(), (*i).getCartesianY(), (*j).getCartesianX(), (*j).getCartesianY());
             possibleMoves.push_back(_move);
         }
     }
@@ -111,14 +111,17 @@ bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 }
 
 void GameLogic::enemyMove(void){
-
+/*
     HexMap mapTmp = HexMap(hexMap);
     Move _move2 = randomMove(mapTmp, Player::player2);
     mapTmp.movePeice(_move2.sourceHex, _move2.destinationHex);
+*/
 
 
-    Move _move = randomMove(hexMap, Player::player2);
-    hexMap.movePeice(_move.sourceHex, _move.destinationHex);
+
+    //Move _move = randomMove(hexMap, Player::player2);
+    Move _move = miniMaxMove(hexMap, Player::player2);
+    hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
 
     gameState = GameState::player1Turn;
 
@@ -127,20 +130,6 @@ void GameLogic::enemyMove(void){
     //Move _move = miniMax(startMap, 0, INT_MIN, INT_MAX, Player::player2);
 }
 
-/*
-Move GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
-    // another day...
-    return Move(nullptr, nullptr);
-}
-*/
-
-
-int GameLogic::getHeuristicBoardScore(HexMap _map, Player player){
-    return (rand() % 5) - 10;
-}
-
-
-
 Move GameLogic::randomMove(const HexMap& _map, Player player){
 
     std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
@@ -148,10 +137,140 @@ Move GameLogic::randomMove(const HexMap& _map, Player player){
     unsigned int numPossibleMoves = possibleMoves.size();
     unsigned int randMove = rand() % numPossibleMoves;
 
-    Move nextMove(possibleMoves[randMove].sourceHex, possibleMoves[randMove].destinationHex);
+    Move nextMove(possibleMoves[randMove].startX, possibleMoves[randMove].startY, possibleMoves[randMove].endX, possibleMoves[randMove].endY);
 
     return nextMove;
 }
+
+/*
+Only for player2
+*/
+Move GameLogic::miniMaxMove(HexMap _map, Player player){
+
+    int alpha = INT_MIN;
+    int beta = INT_MAX;
+
+    std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+
+    int bestScore = INT_MIN;
+    Move bestMove = possibleMoves[0];
+
+    for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i) {
+
+        HexMap tmpMap = _map;
+        tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
+
+        int score = miniMax(tmpMap, 1, alpha, beta, Player::player1);
+
+        alpha = std::max(alpha, score);
+
+        if(score > bestScore){
+            bestScore = score;
+            bestMove = Move((*i).startX, (*i).startY, (*i).endX, (*i).endY);
+        }
+    }
+
+
+    return bestMove;
+}
+
+int GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
+
+    if(depth == 0 || isGameOver(_map)){
+        return getHeuristicBoardScore(_map, Player::player2);
+    }
+
+    if(player == Player::player2){
+
+        int score = INT_MIN;
+        std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+
+        for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i) {
+
+            HexMap tmpMap = _map;
+            tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
+
+            score = std::max(score, miniMax(tmpMap, depth-1, alpha, beta, Player::player1));
+            alpha = std::max(alpha, score);
+
+            if(beta < alpha)
+                break;
+        }
+
+         return score;
+    }
+    else{
+
+        int score = INT_MAX;
+        std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+
+        for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i) {
+
+            HexMap tmpMap = _map;
+            tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
+
+            score = std::min(score, miniMax(tmpMap, depth-1, alpha, beta, Player::player2));
+            beta = std::min(beta, score);
+
+            if(beta < alpha)
+                break;
+        }
+
+         return score;
+    }
+}
+
+
+int GameLogic::getHeuristicBoardScore(const HexMap& _map, const Player& player){
+
+    std::vector<Hex> player1Positions = _map.getPlayerPositions(Player::player1);
+    std::vector<Hex> player2Positions = _map.getPlayerPositions(Player::player2);
+
+    int numPlayer1 = player1Positions.size();
+    int numPlayer2 = player2Positions.size();
+
+    if(player == Player::player1){
+        return numPlayer1 - numPlayer2;
+    }
+    else{
+        return numPlayer2 - numPlayer1;
+    }
+}
+
+bool GameLogic::isGameOver(const HexMap& _map){
+
+    bool player1King = false;
+    bool player2King = false;
+
+    std::vector<Hex> player1Positions = _map.getPlayerPositions(Player::player1);
+    std::vector<Hex> player2Positions = _map.getPlayerPositions(Player::player2);
+
+    for(auto i = player1Positions.begin(); i<player1Positions.end(); ++i) {
+
+        if( (*i).getType() == Type::king){
+            player1King = true;
+            break;
+        }
+    }
+
+    for(auto i = player2Positions.begin(); i<player2Positions.end(); ++i) {
+
+        if( (*i).getType() == Type::king){
+            player2King = true;
+            break;
+        }
+    }
+
+    if(player1King == false || player2King == false){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
 
 
 void GameLogic::deselect(void){

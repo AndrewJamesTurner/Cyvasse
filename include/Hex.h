@@ -29,6 +29,7 @@ class Hex : public HexCoordinates
 
         bool isPlayer(Player player) const;
 
+        Type getType(void) const;
 
 
     private:
