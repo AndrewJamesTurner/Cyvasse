@@ -12,6 +12,10 @@ class HexCoordinates
         HexCoordinates(int _cubeX, int _cubeY, int _cubeZ);
         virtual ~HexCoordinates();
 
+        bool operator== (HexCoordinates &a){
+            return (a.cartesianX == cartesianX && a.cartesianY == cartesianY);
+        }
+
         bool isOrthogonal(HexCoordinates hex);
         bool isDiagonal(HexCoordinates hex);
 

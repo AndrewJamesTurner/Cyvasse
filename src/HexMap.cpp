@@ -61,6 +61,20 @@ Hex* HexMap::getHexPnt(int x, int y){
     return &hexes[index];
 }
 
+
+Hex HexMap::getHex(int x, int y){
+
+    if(isOffMap(x,y))
+        std::cerr << "ERROR: in getHex of HexMap";
+
+    int index = getIndex(x,y);
+
+    Hex returnedHex(hexes[index]);
+
+    return returnedHex;
+}
+
+
 void HexMap::setPiece(int x, int y, Piece* piece){
 
     if(isOffMap(x,y))
@@ -161,15 +175,15 @@ bool HexMap::isOffMap(int x, int y){
 }
 
 
-std::vector<Hex*> HexMap::getPlayerPositions(Player player){
+std::vector<Hex> HexMap::getPlayerPositions(Player player) const{
 
-    std::vector<Hex*> playerPositions;
+    std::vector<Hex> playerPositions;
 
     for(auto i = hexes.begin(); i<hexes.end(); ++i) {
 
-        if((*i).hasPiece() && (*i).getPiece()->getPlayer() == player){
+        if((*i).hasPiece() && (*i).isPlayer(player) ){
 
-            playerPositions.push_back(&(*i));
+            playerPositions.push_back(Hex((*i)));
         }
     }
 

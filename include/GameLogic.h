@@ -69,21 +69,21 @@ class GameLogic
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 
         bool outOfBounds(int x, int y);
-        bool canMove(HexMap _hexmap, Hex* sourceHex, Hex* targetHex);
+        bool canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex);
 
         void populateBoard(void);
 
         void showMovements(Hex* hex);
-        std::vector<Hex*> getPossibleMovements(HexMap _hexMap, Hex* hex);
-        std::vector<Hex*> getValidMovements(HexMap _hexMap, Hex* hex);
-        std::vector<Move> getPossibleMoves(HexMap _hexMap, Player player);
+        std::vector<Hex> getPossibleMovements(HexMap _hexMap, Hex hex);
+        std::vector<Hex> getValidMovements(HexMap _hexMap, Hex hex);
+        std::vector<Move> getPossibleMoves(const HexMap& _hexMap, Player player);
 
         Move miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
 
         int getHeuristicBoardScore(HexMap _map, Player player);
 
 
-        Move randomMove(HexMap _map, Player player);
+        Move randomMove(const HexMap& _map, Player player);
 
 
 };

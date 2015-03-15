@@ -12,18 +12,22 @@ class Hex : public HexCoordinates
         Hex(const Hex &obj);
         virtual ~Hex();
 
+
+
         sf::CircleShape getShape(void);
 
         void setColor(sf::Color _color);
         void setBoarderColor(sf::Color _color);
 
         Piece* getPiece(void);
-        bool hasPiece(void);
+        bool hasPiece(void) const;
         void setPiece(Piece* _piece);
         void clearPiece(void);
         //void deletePiece(void);
 
         void draw(sf::RenderWindow *window);
+
+        bool isPlayer(Player player) const;
 
 
 
@@ -31,7 +35,6 @@ class Hex : public HexCoordinates
 
         sf::CircleShape shape;
         Piece* piece;
-
 
         float pixelX;
         float pixelY;

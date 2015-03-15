@@ -29,10 +29,12 @@ class HexMap
 
         std::vector<Hex> getHexes(void);
         Hex* getHexPnt(int x, int y);
+        Hex getHex(int x, int y);
+
 
         void populateBoard(void);
 
-        std::vector<Hex*> getPlayerPositions(Player player);
+        std::vector<Hex> getPlayerPositions(Player player) const;
 
     protected:
     private:

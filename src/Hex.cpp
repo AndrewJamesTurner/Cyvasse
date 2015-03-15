@@ -44,6 +44,9 @@ Hex::~Hex()
 
 
 
+
+
+
 void Hex::draw(sf::RenderWindow *window){
 
     window->draw(shape);
@@ -68,11 +71,24 @@ void Hex::setBoarderColor(sf::Color _color){
     shape.setOutlineColor(_color);
 }
 
+bool Hex::isPlayer(Player player) const{
+
+    if(hasPiece()){
+        if(piece->getPlayer() == player)
+            return true;
+        else
+            return false;
+    }
+    else{
+        return false;
+    }
+}
+
 Piece* Hex::getPiece(void){
     return piece;
 }
 
-bool Hex::hasPiece(void){
+bool Hex::hasPiece(void) const{
 
     if(piece)
         return true;
