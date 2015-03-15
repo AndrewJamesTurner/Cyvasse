@@ -72,7 +72,7 @@ void HexMap::setPiece(int x, int y, Piece* piece){
     int index = getIndex(x,y);
     hexes[index].setPiece(piece);
 
-    playerPositions.push_back(Hex(hexes[index]));
+    //playerPositions.push_back(Hex(hexes[index]));
 }
 
 Piece* HexMap::getPiece(int x, int y){
@@ -103,7 +103,7 @@ void HexMap::clearPiece(int x, int y){
 
     int index = getIndex(x,y);
 
-    playerPositions.erase(std::remove(playerPositions.begin(), playerPositions.end(), hexes[index]), playerPositions.end());
+    //playerPositions.erase(std::remove(playerPositions.begin(), playerPositions.end(), hexes[index]), playerPositions.end());
 
     hexes[index].clearPiece();
 }

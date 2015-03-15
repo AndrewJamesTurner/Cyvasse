@@ -28,10 +28,14 @@ Hex::Hex(const Hex &obj) : HexCoordinates(obj.cartesianX, obj.cartesianY){
     hexHeight  = obj.hexHeight;
     color  = obj.color;
 
+
     if(obj.piece == nullptr)
         piece = nullptr;
     else
         piece  = new Piece(*obj.piece);
+
+
+    //piece = obj.piece;
 }
 
 
@@ -57,10 +61,13 @@ Hex& Hex::operator= (const Hex& obj){
     hexHeight  = obj.hexHeight;
     color  = obj.color;
 
+
     if(obj.piece == nullptr)
         piece = nullptr;
     else
         piece  = new Piece(*obj.piece);
+
+   // piece = obj.piece;
 
     return *this;
 }
