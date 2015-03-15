@@ -22,7 +22,7 @@ class HexMap
         bool hasPiece(int x, int y);
 
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
-        void movePeice(Hex* start, Hex* desination);
+        void movePeice(Hex start, Hex desination);
 
         void setColor(int x, int y, sf::Color color);
         void setBoarderColor(int x, int y, sf::Color color);

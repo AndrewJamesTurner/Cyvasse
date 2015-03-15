@@ -14,12 +14,12 @@ enum class GameState{setUp,player1Turn,player2Turn,player1Won,player2Won};
 
 struct Move{
 
-  Hex* sourceHex;
-  Hex* destinationHex;
+  Hex sourceHex;
+  Hex destinationHex;
 
   int score;
 
-  Move(Hex* _sourceHex, Hex* _destinationHex) : sourceHex(_sourceHex), destinationHex(_destinationHex){}
+  Move(Hex _sourceHex, Hex _destinationHex) : sourceHex(_sourceHex), destinationHex(_destinationHex){}
 };
 
 
@@ -62,7 +62,7 @@ class GameLogic
         int getY(int pixelX, int pixelY);
 
 
-        bool playerMove(Hex* sourceHex, Hex* destinationHex);
+        bool playerMove(Hex sourceHex, Hex destinationHex);
 
 
         bool inRangeAny(int row1, int col1, int row2, int col2, int range);
@@ -78,14 +78,11 @@ class GameLogic
         std::vector<Hex> getValidMovements(HexMap _hexMap, Hex hex);
         std::vector<Move> getPossibleMoves(const HexMap& _hexMap, Player player);
 
-        Move miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
+        //Move miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
 
         int getHeuristicBoardScore(HexMap _map, Player player);
 
-
         Move randomMove(const HexMap& _map, Player player);
-
-
 };
 
 #endif // GAMELOGIC_H

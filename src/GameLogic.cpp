@@ -66,7 +66,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
         }
         else{
 
-            bool playerMoved = playerMove(selectedHex, hexClicked);
+            bool playerMoved = playerMove(*selectedHex, *hexClicked);
 
             if(playerMoved){
                 gameState = GameState::player2Turn;
@@ -81,14 +81,14 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
 std::vector<Move> GameLogic::getPossibleMoves(const HexMap& _hexMap, Player player){
 
     std::vector<Move> possibleMoves;
-    std::vector<Hex> enemyPositions = _hexMap.getPlayerPositions(player);
+    std::vector<Hex> playerPositions = _hexMap.getPlayerPositions(player);
 
-    for(auto i = enemyPositions.begin(); i<enemyPositions.end(); ++i) {
+    for(auto i = playerPositions.begin(); i<playerPositions.end(); ++i) {
 
         std::vector<Hex> validMoves = getValidMovements(_hexMap, (*i));
 
         for(auto j = validMoves.begin(); j<validMoves.end(); ++j) {
-            Move _move(&(*i), &(*j));
+            Move _move((*i), (*j));
             possibleMoves.push_back(_move);
         }
     }
@@ -97,11 +97,11 @@ std::vector<Move> GameLogic::getPossibleMoves(const HexMap& _hexMap, Player play
 }
 
 
-bool GameLogic::playerMove(Hex* sourceHex, Hex* destinationHex){
+bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 
     bool PlayerMoved;
 
-    if(canMove(*hexMap, *sourceHex, *destinationHex)){
+    if(canMove(*hexMap, sourceHex, destinationHex)){
         hexMap->movePeice(sourceHex, destinationHex);
         PlayerMoved = true;
     }
@@ -124,12 +124,12 @@ void GameLogic::enemyMove(void){
     gameState = GameState::player1Turn;
 }
 
-
+/*
 Move GameLogic::miniMax(HexMap _map, unsigned int depth, int alpha, int beta, Player player){
     // another day...
     return Move(nullptr, nullptr);
 }
-
+*/
 
 
 int GameLogic::getHeuristicBoardScore(HexMap _map, Player player){

@@ -126,13 +126,13 @@ void HexMap::movePeice(int xStart, int yStart, int xEnd, int yEnd){
 }
 
 
-void HexMap::movePeice(Hex* start, Hex* desination){
+void HexMap::movePeice(Hex start, Hex desination){
 
-    int xStart = start->getCartesianX();
-    int yStart = start->getCartesianY();
+    int xStart = start.getCartesianX();
+    int yStart = start.getCartesianY();
 
-    int xEnd = desination->getCartesianX();
-    int yEnd = desination->getCartesianY();
+    int xEnd = desination.getCartesianX();
+    int yEnd = desination.getCartesianY();
 
     movePeice(xStart, yStart, xEnd, yEnd);
 }
