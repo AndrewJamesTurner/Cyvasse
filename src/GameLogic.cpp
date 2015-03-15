@@ -111,28 +111,17 @@ bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 }
 
 void GameLogic::enemyMove(void){
-/*
-    HexMap mapTmp = HexMap(hexMap);
-    Move _move2 = randomMove(mapTmp, Player::player2);
-    mapTmp.movePeice(_move2.sourceHex, _move2.destinationHex);
-*/
 
-
-
-    //Move _move = randomMove(hexMap, Player::player2);
-    Move _move = miniMaxMove(hexMap, Player::player2);
+    //Move _move = randomMove(hexMap);
+    Move _move = miniMaxMove(hexMap, 2);
     hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
 
     gameState = GameState::player1Turn;
-
-
-
-    //Move _move = miniMax(startMap, 0, INT_MIN, INT_MAX, Player::player2);
 }
 
-Move GameLogic::randomMove(const HexMap& _map, Player player){
+Move GameLogic::randomMove(const HexMap& _map){
 
-    std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+    std::vector<Move> possibleMoves = getPossibleMoves(_map, Player::player2);
 
     unsigned int numPossibleMoves = possibleMoves.size();
     unsigned int randMove = rand() % numPossibleMoves;
@@ -142,15 +131,12 @@ Move GameLogic::randomMove(const HexMap& _map, Player player){
     return nextMove;
 }
 
-/*
-Only for player2
-*/
-Move GameLogic::miniMaxMove(HexMap _map, Player player){
+Move GameLogic::miniMaxMove(HexMap _map, int depth){
 
     int alpha = INT_MIN;
     int beta = INT_MAX;
 
-    std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+    std::vector<Move> possibleMoves = getPossibleMoves(_map, Player::player2);
 
     int bestScore = INT_MIN;
     Move bestMove = possibleMoves[0];
@@ -160,7 +146,8 @@ Move GameLogic::miniMaxMove(HexMap _map, Player player){
         HexMap tmpMap = _map;
         tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
 
-        int score = miniMax(tmpMap, 1, alpha, beta, Player::player1);
+        // -1 for the first loop done for player two
+        int score = miniMax(tmpMap, depth-1, alpha, beta, Player::player1);
 
         alpha = std::max(alpha, score);
 
@@ -170,13 +157,12 @@ Move GameLogic::miniMaxMove(HexMap _map, Player player){
         }
     }
 
-
     return bestMove;
 }
 
-int GameLogic::miniMax(const HexMap& _map, unsigned int depth, int alpha, int beta, Player player){
+int GameLogic::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player player){
 
-    if(depth == 0 || isGameOver(_map)){
+    if(depth <= 0 || isGameOver(_map)){
         return getHeuristicBoardScore(_map, Player::player2);
     }
 
@@ -268,9 +254,6 @@ bool GameLogic::isGameOver(const HexMap& _map){
         return false;
     }
 }
-
-
-
 
 
 void GameLogic::deselect(void){
@@ -373,7 +356,7 @@ bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     if(!targetHex.hasPiece())
         return true;
 
-    // if target contains opponent which is not a moutain
+    // if target contains opponent which is not a mountain
     else if(sourceHex.getPiece()->getPlayer() != targetHex.getPiece()->getPlayer() && !targetHex.getPiece()->isMoutain())
         return true;
 

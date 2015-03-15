@@ -83,14 +83,13 @@ class GameLogic
         std::vector<Hex> getValidMovements(const HexMap& _hexMap, const Hex& hex);
         std::vector<Move> getPossibleMoves(const HexMap& _hexMap, const Player& player);
 
-        int miniMax(const HexMap& _map, unsigned int depth, int alpha, int beta, Player maximizingPlayer);
-
         bool isGameOver(const HexMap& _map);
 
         int getHeuristicBoardScore(const HexMap& _map, const Player& player);
 
-        Move randomMove(const HexMap& _map, Player player);
-        Move miniMaxMove(HexMap _map, Player player);
+        Move randomMove(const HexMap& _map);
+        Move miniMaxMove(HexMap _map, int depth);
+        int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer);
 
 };
 
