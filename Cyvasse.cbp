@@ -50,7 +50,6 @@
 		<Unit filename="include/Piece.h" />
 		<Unit filename="include/Rabble.h" />
 		<Unit filename="include/Spears.h" />
-		<Unit filename="include/header.h" />
 		<Unit filename="src/GameLogic.cpp" />
 		<Unit filename="src/Hex.cpp" />
 		<Unit filename="src/HexCoordinates.cpp" />

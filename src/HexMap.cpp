@@ -17,12 +17,6 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
 }
 
 
-HexMap::~HexMap()
-{
-    //dtor
-}
-
-
 std::vector<Hex> HexMap::getHexes(void){
     return hexes;
 }
@@ -72,8 +66,6 @@ void HexMap::setPiece(int x, int y, Piece* piece){
 
     int index = getIndex(x,y);
     hexes[index].setPiece(piece);
-
-    //playerPositions.push_back(Hex(hexes[index]));
 }
 
 Piece* HexMap::getPiece(int x, int y){
@@ -87,7 +79,7 @@ Piece* HexMap::getPiece(int x, int y){
     return piece;
 }
 
-bool HexMap::hasPiece(int x, int y){
+bool HexMap::hasPiece(int x, int y) const{
 
     if(isOffMap(x,y))
         return nullptr;
@@ -103,8 +95,6 @@ void HexMap::clearPiece(int x, int y){
         return;
 
     int index = getIndex(x,y);
-
-    //playerPositions.erase(std::remove(playerPositions.begin(), playerPositions.end(), hexes[index]), playerPositions.end());
 
     hexes[index].clearPiece();
 }
@@ -131,7 +121,6 @@ void HexMap::movePeice(Hex start, Hex desination){
 
     movePeice(xStart, yStart, xEnd, yEnd);
 }
-
 
 
 void HexMap::setColor(int x, int y, sf::Color color){
@@ -170,17 +159,17 @@ bool HexMap::isOffMap(int x, int y) const {
 }
 
 
-std::vector<Hex> HexMap::getPlayerPositions(Player player) const{
+std::vector<Hex> HexMap::getPlayerPositions(const Player& player) const{
 
-    std::vector<Hex> playerPositions123;
+    std::vector<Hex> playerPositions;
 
     for(auto i = hexes.begin(); i<hexes.end(); ++i) {
 
         if((*i).hasPiece() && (*i).isPlayer(player) ){
 
-            playerPositions123.push_back(Hex((*i)));
+            playerPositions.push_back(Hex((*i)));
         }
     }
 
-    return playerPositions123;
+    return playerPositions;
 }

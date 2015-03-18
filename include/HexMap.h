@@ -12,12 +12,11 @@ class HexMap
 {
     public:
         HexMap(int _width, int _height, int _hexSize);
-        virtual ~HexMap();
 
         void setPiece(int x, int y, Piece* piece);
         Piece* getPiece(int x, int y);
         void clearPiece(int x, int y);
-        bool hasPiece(int x, int y);
+        bool hasPiece(int x, int y) const;
 
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
         void movePeice(Hex start, Hex desination);
@@ -32,7 +31,7 @@ class HexMap
 
         void populateBoard(void);
 
-        std::vector<Hex> getPlayerPositions(Player player) const;
+        std::vector<Hex> getPlayerPositions(const Player& player) const;
 
     protected:
 

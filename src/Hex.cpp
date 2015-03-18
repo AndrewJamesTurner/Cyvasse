@@ -20,36 +20,10 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color) : Hex
 }
 
 
-Hex::~Hex()
-{
-    //if(piece != nullptr)
-    //    delete piece;
-}
-
 
 bool Hex::operator == (const Hex& a) const{
 
     return (a.getCartesianX() == getCartesianX() && a.getCartesianY() == getCartesianY());
-}
-
-Hex& Hex::operator= (const Hex& obj){
-
-    shape = obj.shape;
-    pixelX  = obj.pixelX;
-    pixelY  = obj.pixelY;
-    hexSize  = obj.hexSize;
-    hexHeight  = obj.hexHeight;
-    color  = obj.color;
-
-
-    if(obj.piece == nullptr)
-        piece = nullptr;
-    else
-        piece  = new Piece(*obj.piece);
-
-   // piece = obj.piece;
-
-    return *this;
 }
 
 

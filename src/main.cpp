@@ -1,5 +1,12 @@
 
-#include "header.h"
+#include <SFML/Graphics.hpp>
+#include "math.h"
+#include <iostream>
+
+#include "GameLogic.h"
+
+#include <stdlib.h>
+#include <time.h>
 
 #define SIZE 30
 #define MAPSIZE 6
