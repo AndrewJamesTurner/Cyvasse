@@ -16,6 +16,7 @@ HexMap::HexMap(int _width, int _height, int _hexSize)
     populateBoard();
 }
 
+
 HexMap::~HexMap()
 {
     //dtor

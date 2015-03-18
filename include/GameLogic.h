@@ -88,7 +88,7 @@ class GameLogic
         int getHeuristicBoardScore(const HexMap& _map, const Player& player);
 
         Move randomMove(const HexMap& _map);
-        Move miniMaxMove(HexMap _map, int depth);
+        Move miniMaxMove(const HexMap&, int depth);
         int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer);
 
 };

@@ -47,11 +47,6 @@ sf::Sprite Piece::getSprite(void){
 }
 
 
-void Piece::setPosition(float xPos, float yPos){
-   sprite.setPosition(xPos,yPos);
-}
-
-
 Movement Piece::getMoveType(void){
     return movetype;
 }

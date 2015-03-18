@@ -16,8 +16,6 @@ class Piece
 
         sf::Sprite getSprite(void);
 
-        void setPosition(float _xPos, float _yPos);
-
         Movement getMoveType(void);
         Player getPlayer(void);
         int getRange(void);

@@ -9,12 +9,10 @@ class Hex : public HexCoordinates
 {
     public:
         Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color);
-        Hex(const Hex &obj);
         virtual ~Hex();
 
         bool operator== (const Hex& a) const;
         Hex& operator= (const Hex& obj);
-
 
         sf::CircleShape getShape(void);
 

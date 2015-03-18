@@ -113,7 +113,7 @@ bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 void GameLogic::enemyMove(void){
 
     //Move _move = randomMove(hexMap);
-    Move _move = miniMaxMove(hexMap, 2);
+    Move _move = miniMaxMove(hexMap, 3);
     hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
 
     gameState = GameState::player1Turn;
@@ -131,7 +131,7 @@ Move GameLogic::randomMove(const HexMap& _map){
     return nextMove;
 }
 
-Move GameLogic::miniMaxMove(HexMap _map, int depth){
+Move GameLogic::miniMaxMove(const HexMap& _map, int depth){
 
     int alpha = INT_MIN;
     int beta = INT_MAX;

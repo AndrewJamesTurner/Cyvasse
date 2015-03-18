@@ -19,31 +19,11 @@ Hex::Hex(int _cartesianX, int _cartesianY, int _hexSize, sf::Color _color) : Hex
     piece = nullptr;
 }
 
-Hex::Hex(const Hex &obj) : HexCoordinates(obj.cartesianX, obj.cartesianY){
-
-    shape = obj.shape;
-    pixelX  = obj.pixelX;
-    pixelY  = obj.pixelY;
-    hexSize  = obj.hexSize;
-    hexHeight  = obj.hexHeight;
-    color  = obj.color;
-
-
-    if(obj.piece == nullptr)
-        piece = nullptr;
-    else
-        piece  = new Piece(*obj.piece);
-
-
-    //piece = obj.piece;
-}
-
-
 
 Hex::~Hex()
 {
-    if(piece != nullptr)
-        delete piece;
+    //if(piece != nullptr)
+    //    delete piece;
 }
 
 
@@ -80,6 +60,8 @@ void Hex::draw(sf::RenderWindow *window){
     if(getPiece()){
 
         sf::Sprite sprite = piece->getSprite();
+        sprite.setPosition(pixelX+(hexSize*(sqrt(3) / 2)) + hexSize - hexSize*cos(0.5236),pixelY+hexSize);
+
         window->draw(sprite);
     }
 }
@@ -127,9 +109,7 @@ bool Hex::hasPiece(void) const{
 }
 
 void Hex::setPiece(Piece* _piece){
-
     piece = _piece;
-    piece->setPosition(pixelX+(hexSize*(sqrt(3) / 2)) + hexSize - hexSize*cos(0.5236),pixelY+hexSize);
 }
 
 void Hex::clearPiece(void){

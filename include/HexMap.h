@@ -35,16 +35,16 @@ class HexMap
         std::vector<Hex> getPlayerPositions(Player player) const;
 
     protected:
+
+        int getIndex(int x, int y) const;
+        bool isOffMap(int x, int y) const;
+
     private:
 
         int width;
         int height;
         int hexSize;
         std::vector<Hex> hexes;
-        //std::vector<Hex> playerPositions;
-
-        int getIndex(int x, int y) const;
-        bool isOffMap(int x, int y) const;
 };
 
 #endif // HEXMAP_H
