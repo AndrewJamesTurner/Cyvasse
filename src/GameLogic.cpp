@@ -27,6 +27,10 @@ GameState GameLogic::getGameState(void){
     return gameState;
 }
 
+HexMap GameLogic::getHexMap() const{
+    return hexMap;
+}
+
 void GameLogic::mapClicked(int xPixel, int yPixel) {
 
     resetMap();

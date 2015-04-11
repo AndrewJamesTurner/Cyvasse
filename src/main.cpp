@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "GameLogic.h"
+#include "Render.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -18,12 +19,16 @@ int main()
 {
     // create the window
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow windowTmp(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
 
     // set the frame rate
     window.setFramerateLimit(30);
 
     // make hexmap
 	GameLogic gameLogic(&window, SIZE, MAPSIZE);
+
+    //
+    Render render(&windowTmp);
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -63,12 +68,17 @@ int main()
 
         // clear the window with blue
         window.clear(sf::Color(20,20,230));
+        windowTmp.clear(sf::Color(20,20,230));
 
         // draw everything here...
         gameLogic.update();
 
+        //
+        render.update(gameLogic.getHexMap());
+
         // end the current frame
         window.display();
+        windowTmp.display();
     }
 
     return 0;

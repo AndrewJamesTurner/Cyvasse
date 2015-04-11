@@ -36,6 +36,10 @@ class HexMap
         bool isOnBoard(int x, int y);
         bool isOffBoard(int x, int y);
 
+        int getWidth(void) const {return width;}
+        int getHeight(void) const {return height;}
+
+
     protected:
 
         int getIndex(int x, int y) const;

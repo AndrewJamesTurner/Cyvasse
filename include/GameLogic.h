@@ -38,6 +38,11 @@ class GameLogic
         void deselect(void);
         void resetMap(void);
 
+        HexMap getHexMap() const;
+
+
+
+
     protected:
 
     private:
