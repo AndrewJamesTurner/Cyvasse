@@ -11,7 +11,7 @@
 class HexMap
 {
     public:
-        HexMap(int _width, int _height, int _hexSize);
+        HexMap(int _hexSize, int _mapHexSize);
 
         void setPiece(int x, int y, Piece* piece);
         Piece* getPiece(int x, int y);
@@ -33,6 +33,9 @@ class HexMap
 
         std::vector<Hex> getPlayerPositions(const Player& player) const;
 
+        bool isOnBoard(int x, int y);
+        bool isOffBoard(int x, int y);
+
     protected:
 
         int getIndex(int x, int y) const;
@@ -43,6 +46,7 @@ class HexMap
         int width;
         int height;
         int hexSize;
+        int mapHexSize;
         std::vector<Hex> hexes;
 };
 

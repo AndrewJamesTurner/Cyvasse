@@ -6,7 +6,7 @@ GameLogic::GameLogic(sf::RenderWindow *_window, double _hexSize, int _mapHexSize
     width{2*_mapHexSize+1},
     height{2*_mapHexSize+1},
     mapHexSize{_mapHexSize},
-    hexMap{HexMap(width, height, hexSize)},
+    hexMap{HexMap(hexSize,mapHexSize)},
     hexHeight{2 * hexSize},
     hexWidth{hexHeight * (sqrt(3) / 2)}{
 
@@ -34,7 +34,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
     int x = getX(xPixel, yPixel);
     int y = getY(xPixel, yPixel);
 
-    if(outOfBounds(x,y)) {
+    if(hexMap.isOffBoard(x,y)) {
         selectedHex = nullptr;
         return;
     }
@@ -278,7 +278,7 @@ std::vector<Hex> GameLogic::getPossibleMovements(const HexMap& _hexMap, const He
         int x = (*i).getCartesianX();
         int y = (*i).getCartesianY();
 
-        if(!outOfBounds(x,y))
+        if(hexMap.isOnBoard(x,y))
             possibleMovements.push_back(_hexMap.getHex(x,y));
     }
 
@@ -317,10 +317,10 @@ bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     if(sourceHex.getCartesianX() == targetHex.getCartesianX() && sourceHex.getCartesianY() == targetHex.getCartesianY())
         return false;
 
-    else if(outOfBounds(targetHex.getCartesianX(), targetHex.getCartesianY()))
+    else if(hexMap.isOffBoard(targetHex.getCartesianX(), targetHex.getCartesianY()))
         return false;
 
-    else if(outOfBounds(sourceHex.getCartesianX(), sourceHex.getCartesianY()))
+    else if(hexMap.isOffBoard(sourceHex.getCartesianX(), sourceHex.getCartesianY()))
         return false;
 
     else if(!sourceHex.hasPiece())
@@ -344,7 +344,7 @@ bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     // check all the steps to targetHex are clear
     for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
 
-        if(outOfBounds((*i).getCartesianX(), (*i).getCartesianY())){
+        if(hexMap.isOffBoard((*i).getCartesianX(), (*i).getCartesianY())){
             return false;
         }
         if( _hexmap.hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
@@ -427,15 +427,3 @@ int GameLogic::getY(int pixelX, int pixelY) {
 }
 
 
-bool GameLogic::outOfBounds(int x, int y){
-
-    HexCoordinates current(x,y);
-    HexCoordinates center(mapHexSize,mapHexSize);
-
-    if(center.isInRange(current, mapHexSize)){
-        return false;
-    }
-    else{
-        return true;
-    }
-}

@@ -1,11 +1,12 @@
 #include "HexMap.h"
 
-HexMap::HexMap(int _width, int _height, int _hexSize)
-{
+HexMap::HexMap(int _hexSize, int _mapHexSize):
 
-    width = _width;
-    height = _height;
-    hexSize = _hexSize;
+    width{2*_mapHexSize+1},
+    height{2*_mapHexSize+1},
+    hexSize{_hexSize},
+    mapHexSize{_mapHexSize}
+{
 
     for(int x = 0; x<width; x++) {
         for(int y = 0; y<height; y++) {
@@ -173,3 +174,23 @@ std::vector<Hex> HexMap::getPlayerPositions(const Player& player) const{
 
     return playerPositions;
 }
+
+
+bool HexMap::isOnBoard(int x, int y){
+
+    HexCoordinates current(x,y);
+    HexCoordinates center(mapHexSize,mapHexSize);
+
+    if(center.isInRange(current, mapHexSize)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool HexMap::isOffBoard(int x, int y){
+    return !isOnBoard(x,y);
+}
+
+

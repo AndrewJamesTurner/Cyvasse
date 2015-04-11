@@ -11,7 +11,6 @@
 
 enum class GameState{setUp,player1Turn,player2Turn,player1Won,player2Won};
 
-
 struct Move{
 
   int startX;
@@ -33,7 +32,6 @@ class GameLogic
 
         GameState getGameState(void);
         void enemyMove(void);
-
 
         void mapClicked(int xPixel, int yPixel);
         void update(void);
@@ -66,14 +64,11 @@ class GameLogic
         int getX(int pixelX, int pixelY);
         int getY(int pixelX, int pixelY);
 
-
         bool playerMove(Hex sourceHex, Hex destinationHex);
-
 
         bool inRangeAny(int row1, int col1, int row2, int col2, int range);
         bool inRangeAny(int x1, int y1, int z1, int x2, int y2, int z2, int range);
 
-        bool outOfBounds(int x, int y);
         bool canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex);
 
         void populateBoard(void);
