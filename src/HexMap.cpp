@@ -5,7 +5,8 @@ HexMap::HexMap(int _hexSize, int _mapHexSize):
     width{2*_mapHexSize+1},
     height{2*_mapHexSize+1},
     hexSize{_hexSize},
-    mapHexSize{_mapHexSize}
+    mapHexSize{_mapHexSize},
+    selectedHex{nullptr}
 {
 
     for(int x = 0; x<width; x++) {
@@ -17,6 +18,43 @@ HexMap::HexMap(int _hexSize, int _mapHexSize):
     populateBoard();
 }
 
+
+bool HexMap::isHexSelected(void){
+
+    if(selectedHex)
+        return true;
+    else
+        return false;
+}
+
+bool HexMap::isHexSelected(int x, int y){
+
+    if(!isHexSelected()){
+        return false;
+    }
+
+    else if(x == selectedHex->getCartesianX() && y == selectedHex->getCartesianY()){
+        return true;
+    }
+
+    else{
+        return false;
+    }
+}
+
+
+
+Hex HexMap::getSelectedHex(void){
+    return *selectedHex;
+}
+
+void HexMap::setSelectedHex(int x, int y){
+    selectedHex = getHexPnt(x,y);
+}
+
+void HexMap::setSelectedHex(Hex *_hex){
+    selectedHex = _hex;
+}
 
 std::vector<Hex> HexMap::getHexes(void){
     return hexes;

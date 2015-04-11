@@ -28,7 +28,6 @@ class HexMap
         Hex* getHexPnt(int x, int y);
         Hex getHex(int x, int y) const;
 
-
         void populateBoard(void);
 
         std::vector<Hex> getPlayerPositions(const Player& player) const;
@@ -38,6 +37,13 @@ class HexMap
 
         int getWidth(void) const {return width;}
         int getHeight(void) const {return height;}
+
+        bool isHexSelected(void);
+        bool isHexSelected(int x, int y);
+
+        Hex getSelectedHex(void);
+        void setSelectedHex(int x, int y);
+        void setSelectedHex(Hex *_hex);
 
 
     protected:
@@ -52,6 +58,9 @@ class HexMap
         int hexSize;
         int mapHexSize;
         std::vector<Hex> hexes;
+
+        Hex *selectedHex;
+
 };
 
 #endif // HEXMAP_H

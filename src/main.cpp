@@ -21,6 +21,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
     sf::RenderWindow windowTmp(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
 
+    //
+    HexMap hexMap(SIZE,MAPSIZE);
+
     // set the frame rate
     window.setFramerateLimit(30);
 
@@ -28,7 +31,7 @@ int main()
 	GameLogic gameLogic(&window, SIZE, MAPSIZE);
 
     //
-    Render render(&windowTmp);
+    Render render(&windowTmp, &hexMap);
 
     // run the program as long as the window is open
     while (window.isOpen())

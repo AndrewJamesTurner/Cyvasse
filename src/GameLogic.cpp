@@ -51,11 +51,13 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
         // if clicked on an empty space, a mountain or an enemy
         if(!hexClicked->hasPiece() || hexClicked->getPiece()->isMoutain() || hexClicked->getPiece()->getPlayer() != Player::player1){
             selectedHex = nullptr;
+            hexMap.setSelectedHex(nullptr);
         }
         // else if is moveable player unit
         else{
             hexClicked->setBoarderColor(sf::Color::Yellow);
             selectedHex = hexClicked;
+            hexMap.setSelectedHex(hexClicked->getCartesianX(), hexClicked->getCartesianY());
         }
     }
     // if something is already selected
@@ -75,6 +77,7 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
             }
 
             selectedHex = nullptr;
+            hexMap.setSelectedHex(nullptr);
         }
     }
 }
@@ -262,6 +265,7 @@ bool GameLogic::isGameOver(const HexMap& _map){
 
 void GameLogic::deselect(void){
     selectedHex = nullptr;
+    hexMap.setSelectedHex(nullptr);
     resetMap();
 }
 
