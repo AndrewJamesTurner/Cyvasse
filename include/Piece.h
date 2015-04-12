@@ -1,7 +1,6 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <SFML/Graphics.hpp>
 #include <iostream>
 
 enum class Player{player1, player2};
@@ -11,10 +10,8 @@ enum class Movement{orthogonal,none,diagonal};
 class Piece
 {
     public:
-        Piece(Player _player, Type _type, Movement _movement, int _range, std::string textureName);
+        Piece(Player _player, Type _type, Movement _movement, int _range);
         virtual ~Piece();
-
-        sf::Sprite getSprite(void);
 
         Movement getMoveType(void);
         Player getPlayer(void);
@@ -25,15 +22,10 @@ class Piece
 
     protected:
 
-        sf::Texture texture;
-        sf::Sprite sprite;
-
         Movement movetype;
         Player player;
         Type type;
         int range;
-
-        std::string textureName;
 
     private:
 };

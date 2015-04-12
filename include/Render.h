@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "HexMap.h"
+#include <vector>
+#include <algorithm>
 
 #define SIZE 30
 
@@ -26,7 +28,7 @@ class Render
         int getHexheight(int hexSize);
         int getHexWidth(int hexSize);
 
-        sf::CircleShape getShape(int x, int y, bool selected);
+        sf::CircleShape getShape(int x, int y, bool selected, bool highlighted);
         sf::Sprite getSprite(int x, int y, Type type, Player player);
 
 

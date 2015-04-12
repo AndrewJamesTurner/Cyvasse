@@ -11,7 +11,7 @@
 class HexMap
 {
     public:
-        HexMap(int _hexSize, int _mapHexSize);
+        HexMap(int _mapHexSize);
 
         void setPiece(int x, int y, Piece* piece);
         Piece* getPiece(int x, int y);
@@ -21,8 +21,7 @@ class HexMap
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
         void movePeice(Hex start, Hex desination);
 
-        void setColor(int x, int y, sf::Color color);
-        void setBoarderColor(int x, int y, sf::Color color);
+
 
         std::vector<Hex> getHexes(void);
         Hex* getHexPnt(int x, int y);
@@ -46,6 +45,12 @@ class HexMap
         void setSelectedHex(Hex *_hex);
 
 
+        void clearHighlightedHexes(void);
+        void addHighlightedHexes(Hex hexPnt);
+        bool isHexHighlighted(Hex hex);
+
+
+
     protected:
 
         int getIndex(int x, int y) const;
@@ -55,11 +60,12 @@ class HexMap
 
         int width;
         int height;
-        int hexSize;
+
         int mapHexSize;
         std::vector<Hex> hexes;
 
         Hex *selectedHex;
+        std::vector<Hex> highlightedHexes;
 
 };
 

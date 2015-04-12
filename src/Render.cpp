@@ -19,17 +19,14 @@ Render::~Render()
 
 void Render::update(HexMap hexMap){
 
-std::vector<Hex> hexes = hexMap.getHexes();
+    std::vector<Hex> hexes = hexMap.getHexes();
 
     for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
 
         int xPos = (*i).getCartesianX();
         int yPos = (*i).getCartesianY();
 
-        //int xPix = getPixelX(xPos, yPos);
-        //int yPix = getPixelY(xPos, yPos);
-
-        window->draw(getShape(xPos, yPos, hexMap.isHexSelected(xPos, yPos)));
+        window->draw(getShape(xPos, yPos, hexMap.isHexSelected(xPos, yPos), hexMap.isHexHighlighted((*i))));
 
         if((*i).hasPiece()){
             window->draw(getSprite(xPos, yPos, (*i).getType(), (*i).getPiece()->getPlayer()));
@@ -76,7 +73,7 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
 
 
 
-sf::CircleShape Render::getShape(int x, int y, bool selected){
+sf::CircleShape Render::getShape(int x, int y, bool selected, bool highlighted){
 
     sf::CircleShape shape;
     shape = sf::CircleShape(SIZE,6);
@@ -88,7 +85,10 @@ sf::CircleShape Render::getShape(int x, int y, bool selected){
     else
         shape.setOutlineColor(sf::Color::Black);
 
-    if(hexMap->isOnBoard(x,y))
+
+    if(highlighted)
+        shape.setFillColor(sf::Color::Red);
+    else if(hexMap->isOnBoard(x,y))
        shape.setFillColor(green);
     else
         shape.setFillColor(blue);

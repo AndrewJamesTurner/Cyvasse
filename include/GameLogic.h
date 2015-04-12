@@ -4,7 +4,6 @@
 #include "Hex.h"
 #include "HexMap.h"
 
-#include <SFML/Graphics.hpp>
 #include <random>
 #include <vector>
 #include <climits>
@@ -27,7 +26,7 @@ struct Move{
 class GameLogic
 {
     public:
-        GameLogic(sf::RenderWindow *_window, double _hexSize, int _mapHexSize);
+        GameLogic(int _mapHexSize);
         virtual ~GameLogic();
 
         GameState getGameState(void);
@@ -47,20 +46,11 @@ class GameLogic
 
     private:
 
-        sf::RenderWindow *window;
         Hex* selectedHex;
-
-        double hexSize;
-
-        int width;
-        int height;
 
         int mapHexSize;
 
         HexMap hexMap;
-
-        double hexHeight;
-        double hexWidth;
 
         GameState gameState;
 

@@ -1,17 +1,16 @@
 #include "HexMap.h"
 
-HexMap::HexMap(int _hexSize, int _mapHexSize):
+HexMap::HexMap(int _mapHexSize):
 
     width{2*_mapHexSize+1},
     height{2*_mapHexSize+1},
-    hexSize{_hexSize},
     mapHexSize{_mapHexSize},
     selectedHex{nullptr}
 {
 
     for(int x = 0; x<width; x++) {
         for(int y = 0; y<height; y++) {
-            hexes.push_back(Hex(x,y, hexSize, sf::Color::White));
+            hexes.push_back(Hex(x,y));
         }
     }
 
@@ -161,27 +160,6 @@ void HexMap::movePeice(Hex start, Hex desination){
     movePeice(xStart, yStart, xEnd, yEnd);
 }
 
-
-void HexMap::setColor(int x, int y, sf::Color color){
-
-    if(isOffMap(x,y))
-        return;
-
-    int index = getIndex(x,y);
-    hexes[index].setColor(color);
-}
-
-
-void HexMap::setBoarderColor(int x, int y, sf::Color color){
-
-    if(isOffMap(x,y))
-        return;
-
-    int index = getIndex(x,y);
-    hexes[index].setBoarderColor(color);
-}
-
-
 int HexMap::getIndex(int x, int y) const {
     return (x*width)+y;
 }
@@ -230,5 +208,29 @@ bool HexMap::isOnBoard(int x, int y){
 bool HexMap::isOffBoard(int x, int y){
     return !isOnBoard(x,y);
 }
+
+
+
+
+void HexMap::clearHighlightedHexes(void){
+    highlightedHexes.clear();
+}
+
+void HexMap::addHighlightedHexes(Hex hex){
+    highlightedHexes.push_back(hex);
+}
+
+
+bool HexMap::isHexHighlighted(Hex hex){
+
+    for(auto i = highlightedHexes.begin(); i<highlightedHexes.end(); ++i) {
+
+        if(hex.getCartesianX() == (*i).getCartesianX() && hex.getCartesianY() == (*i).getCartesianY())
+            return true;
+    }
+
+    return false;
+}
+
 
 
