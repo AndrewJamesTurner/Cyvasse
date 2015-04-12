@@ -73,7 +73,7 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
     }
 
     sf::FloatRect textureRect = sprite.getLocalBounds();
-    sprite.setScale(sf::Vector2f(MAPSIZE/(float)windowWidth * 50, MAPSIZE/(float)windowWidth * 50) );
+    sprite.setScale(sf::Vector2f(windowWidth/(float)MAPSIZE * 0.005, windowWidth/(float)MAPSIZE * 0.005) );
 
     sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
     sprite.setPosition(getPixelX(x,y)+(singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236),getPixelY(x,y)+singleHexSize);

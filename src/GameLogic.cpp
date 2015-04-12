@@ -3,7 +3,6 @@
 GameLogic::GameLogic(int _mapHexSize): hexMap{HexMap(_mapHexSize)}
 {
     srand (time(NULL));
-
     gameState = GameState::player1Turn;
 }
 
