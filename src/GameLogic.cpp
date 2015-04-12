@@ -1,12 +1,8 @@
 #include "GameLogic.h"
 
-GameLogic::GameLogic(int _mapHexSize): mapHexSize{_mapHexSize}, hexMap{HexMap(mapHexSize)}
+GameLogic::GameLogic(int _mapHexSize): hexMap{HexMap(_mapHexSize)}
 {
     srand (time(NULL));
-
-    selectedHex = nullptr;
-
-    resetMap();
 
     gameState = GameState::player1Turn;
 }
@@ -23,31 +19,27 @@ HexMap GameLogic::getHexMap() const{
     return hexMap;
 }
 
-void GameLogic::mapClicked(int xPixel, int yPixel) {
+void GameLogic::mapClicked(int x, int y) {
 
     resetMap();
 
-    int x = getX(xPixel, yPixel);
-    int y = getY(xPixel, yPixel);
-
     if(hexMap.isOffBoard(x,y)) {
-        selectedHex = nullptr;
+        hexMap.setSelectedHex(nullptr);
         return;
     }
 
     Hex* hexClicked = hexMap.getHexPnt(x,y);
 
     // if nothing selected
-    if(!selectedHex){
+    if(!hexMap.isHexSelected()){
+    //if(!selectedHex){
 
         // if clicked on an empty space, a mountain or an enemy
         if(!hexClicked->hasPiece() || hexClicked->getPiece()->isMoutain() || hexClicked->getPiece()->getPlayer() != Player::player1){
-            selectedHex = nullptr;
             hexMap.setSelectedHex(nullptr);
         }
         // else if is moveable player unit
         else{
-            selectedHex = hexClicked;
             hexMap.setSelectedHex(hexClicked->getCartesianX(), hexClicked->getCartesianY());
         }
     }
@@ -55,19 +47,18 @@ void GameLogic::mapClicked(int xPixel, int yPixel) {
     else{
 
         // if clicked currently selected
-        if(selectedHex == hexClicked){
+        if(hexMap.getSelectedHex().equals(*hexClicked)){
             //hexClicked->setBoarderColor(sf::Color::Yellow);
             showMovements(*hexClicked);
         }
         else{
 
-            bool playerMoved = playerMove(*selectedHex, *hexClicked);
+            bool playerMoved = playerMove(hexMap.getSelectedHex(), *hexClicked);
 
             if(playerMoved){
                 gameState = GameState::player2Turn;
             }
 
-            selectedHex = nullptr;
             hexMap.setSelectedHex(nullptr);
         }
     }
@@ -255,7 +246,7 @@ bool GameLogic::isGameOver(const HexMap& _map){
 
 
 void GameLogic::deselect(void){
-    selectedHex = nullptr;
+    hexMap.setSelectedHex(nullptr);
     resetMap();
 }
 
@@ -365,36 +356,7 @@ bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
 
 void GameLogic::resetMap(void) {
 
-    HexCoordinates centerHex(mapHexSize, mapHexSize);
-
-    for(int x = 0; x<hexMap.getWidth(); x++) {
-        for(int y = 0; y<hexMap.getHeight(); y++) {
-
-            HexCoordinates currentHex(x, y);
-
-            if(centerHex.isInRange(currentHex, mapHexSize)){
-            //    hexMap.setColor(x,y,sf::Color(17,220,51));
-            }
-            else {
-            //    hexMap.setColor(x,y,sf::Color(20,20,230));
-            }
-
-            //hexMap.setBoarderColor(x,y,sf::Color::Black);
-            hexMap.setSelectedHex(nullptr);
-            hexMap.clearHighlightedHexes();
-        }
-    }
-}
-
-
-void GameLogic::update(void) {
-
-    std::vector<Hex> hexes = hexMap.getHexes();
-
-    for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
-
-        //(*i).draw(window);
-    }
+    hexMap.clearHighlightedHexes();
 }
 
 

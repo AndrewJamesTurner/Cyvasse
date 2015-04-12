@@ -14,10 +14,15 @@ class Render
     public:
         Render(sf::RenderWindow *_window, HexMap *_hexMap);
         virtual ~Render();
+
         void update(HexMap hexMap);
+
+        int getCartesianX(int xPix, int yPix);
+        int getCartesianY(int xPix, int yPix);
+
+
     protected:
     private:
-
 
         const sf::Color green = sf::Color(17,220,51);
         const sf::Color blue = sf::Color(20,20,230);

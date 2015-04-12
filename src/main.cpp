@@ -26,7 +26,7 @@ int main()
     // set the frame rate
     window.setFramerateLimit(30);
 
-    // make hexmap
+    //
 	GameLogic gameLogic(MAPSIZE);
 
     //
@@ -57,7 +57,10 @@ int main()
                         int mouseClickX = event.mouseButton.x;
                         int mouseClickY = event.mouseButton.y;
 
-                        gameLogic.mapClicked(mouseClickX, mouseClickY);
+                        int x = render.getCartesianX(mouseClickX, mouseClickY);
+                        int y = render.getCartesianY(mouseClickX, mouseClickY);
+
+                        gameLogic.mapClicked(x, y);
                     }
 
                     if (event.mouseButton.button == sf::Mouse::Right)
@@ -67,12 +70,6 @@ int main()
                 }
             }
         }
-
-        // clear the window with blue
-        window.clear(sf::Color(20,20,230));
-
-        // draw everything here...
-        gameLogic.update();
 
         //
         render.update(gameLogic.getHexMap());

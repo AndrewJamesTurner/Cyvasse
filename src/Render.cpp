@@ -19,6 +19,8 @@ Render::~Render()
 
 void Render::update(HexMap hexMap){
 
+    window->clear(sf::Color(blue));
+
     std::vector<Hex> hexes = hexMap.getHexes();
 
     for(auto i = hexes.begin(); i!=hexes.end(); ++i) {
@@ -118,4 +120,32 @@ int Render::getPixelY(int x, int y){
     return y * getHexheight(SIZE) * 0.75 - (SIZE*0.5);
 }
 
+int Render::getCartesianX(int xPix, int yPix){
 
+    int xPos;
+    double hexHeight = 2 * SIZE;
+    double hexWidth = hexHeight * (sqrt(3) / 2);
+
+    if(getCartesianY(xPix, yPix) % 2 == 0) {
+        xPos = (xPix/hexWidth) + 0.5;
+    } else {
+
+        if(xPix < hexWidth/2) {
+            xPos = -1;
+        } else {
+            xPos = (xPix/hexWidth);
+        }
+    }
+
+    return xPos;
+}
+
+int Render::getCartesianY(int xPix, int yPix){
+
+    int yPos;
+    double hexHeight = 2 * SIZE;
+
+    yPos = (yPix + (SIZE*0.5))/ (hexHeight*0.75);
+
+    return yPos;
+}

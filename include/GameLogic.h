@@ -18,7 +18,6 @@ struct Move{
   int endX;
   int endY;
 
-
   Move(int _startX, int _startY, int _endX, int _endY) : startX(_startX), startY(_startY), endX{_endX}, endY{_endY}{}
 };
 
@@ -32,26 +31,18 @@ class GameLogic
         GameState getGameState(void);
         void enemyMove(void);
 
-        void mapClicked(int xPixel, int yPixel);
-        void update(void);
+        void mapClicked(int x, int y);
+
         void deselect(void);
         void resetMap(void);
 
         HexMap getHexMap() const;
 
-
-
-
     protected:
 
     private:
 
-        Hex* selectedHex;
-
-        int mapHexSize;
-
         HexMap hexMap;
-
         GameState gameState;
 
         std::random_device rd;
@@ -80,7 +71,6 @@ class GameLogic
         Move randomMove(const HexMap& _map);
         Move miniMaxMove(const HexMap&, int depth);
         int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer);
-
 };
 
 #endif // GAMELOGIC_H

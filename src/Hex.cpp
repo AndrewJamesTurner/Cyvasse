@@ -5,6 +5,15 @@ Hex::Hex(int _cartesianX, int _cartesianY) : HexCoordinates(_cartesianX, _cartes
     piece = nullptr;
 }
 
+bool Hex::equals(Hex hex){
+
+    if(cartesianX == hex.getCartesianX() && cartesianY == hex.getCartesianY())
+        return true;
+
+    return false;
+}
+
+
 bool Hex::isPlayer(Player player) const{
 
     if(hasPiece()){

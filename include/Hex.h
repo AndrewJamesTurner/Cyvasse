@@ -18,6 +18,8 @@ class Hex : public HexCoordinates
 
         Type getType(void) const;
 
+        bool equals(Hex hex);
+
 
     private:
         Piece* piece;
