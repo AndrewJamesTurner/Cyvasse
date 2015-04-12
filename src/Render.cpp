@@ -1,7 +1,14 @@
 #include "Render.h"
 
-Render::Render(sf::RenderWindow *_window, HexMap *_hexMap): window{_window}, hexMap{_hexMap}
+Render::Render()
 {
+    singleHexSize = 30;
+    windowWidth = 2 * singleHexSize * MAPSIZE * 2 * 0.88;
+    windowHeight = 2 * singleHexSize * MAPSIZE * 2 * (sqrt(3) / 2) * 0.93;
+
+    window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
+    window->setFramerateLimit(30);
+
     if (!spearsTexture.loadFromFile("Images/Spears.png"))
         exit(0);
     if (!kingTexture.loadFromFile("Images/King.png"))
@@ -28,7 +35,7 @@ void Render::update(HexMap hexMap){
         int xPos = (*i).getCartesianX();
         int yPos = (*i).getCartesianY();
 
-        window->draw(getShape(xPos, yPos, hexMap.isHexSelected(xPos, yPos), hexMap.isHexHighlighted((*i))));
+        window->draw(getShape(hexMap, xPos, yPos, hexMap.isHexSelected(xPos, yPos), hexMap.isHexHighlighted(*i)));
 
         if((*i).hasPiece()){
             window->draw(getSprite(xPos, yPos, (*i).getType(), (*i).getPiece()->getPlayer()));
@@ -66,19 +73,21 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
     }
 
     sf::FloatRect textureRect = sprite.getLocalBounds();
-    sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    sprite.setScale(sf::Vector2f(MAPSIZE/(float)windowWidth * 50, MAPSIZE/(float)windowWidth * 50) );
+
     sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
-    sprite.setPosition(getPixelX(x,y)+(SIZE*(sqrt(3) / 2)) + SIZE - SIZE*cos(0.5236),getPixelY(x,y)+SIZE);
+    sprite.setPosition(getPixelX(x,y)+(singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236),getPixelY(x,y)+singleHexSize);
 
     return sprite;
 }
 
 
+sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted){
 
-sf::CircleShape Render::getShape(int x, int y, bool selected, bool highlighted){
+    Hex hex = hexMap.getHex(x,y);
 
     sf::CircleShape shape;
-    shape = sf::CircleShape(SIZE,6);
+    shape = sf::CircleShape(singleHexSize,6);
     shape.setOutlineThickness(-1.5);
     shape.setPosition(getPixelX(x,y), getPixelY(x,y));
 
@@ -87,18 +96,15 @@ sf::CircleShape Render::getShape(int x, int y, bool selected, bool highlighted){
     else
         shape.setOutlineColor(sf::Color::Black);
 
-
     if(highlighted)
         shape.setFillColor(sf::Color::Red);
-    else if(hexMap->isOnBoard(x,y))
+    else if(hexMap.isOnBoard(x,y))
        shape.setFillColor(green);
     else
         shape.setFillColor(blue);
 
     return shape;
 }
-
-
 
 int Render::getHexheight(int hexSize){
     return 2 * hexSize;
@@ -111,20 +117,20 @@ int Render::getHexWidth(int hexSize){
 int Render::getPixelX(int x, int y){
 
      if(y % 2 == 0)
-        return x * getHexWidth(SIZE) - (getHexWidth(SIZE)*0.5);
+        return x * getHexWidth(singleHexSize) - (getHexWidth(singleHexSize)*0.5);
     else
-       return x * getHexWidth(SIZE);
+       return x * getHexWidth(singleHexSize);
 }
 
 int Render::getPixelY(int x, int y){
-    return y * getHexheight(SIZE) * 0.75 - (SIZE*0.5);
+    return y * getHexheight(singleHexSize) * 0.75 - (singleHexSize*0.5);
 }
 
 int Render::getCartesianX(int xPix, int yPix){
 
     int xPos;
-    double hexHeight = 2 * SIZE;
-    double hexWidth = hexHeight * (sqrt(3) / 2);
+    float hexHeight = 2 * singleHexSize;
+    float hexWidth = hexHeight * (sqrt(3) / 2);
 
     if(getCartesianY(xPix, yPix) % 2 == 0) {
         xPos = (xPix/hexWidth) + 0.5;
@@ -143,9 +149,13 @@ int Render::getCartesianX(int xPix, int yPix){
 int Render::getCartesianY(int xPix, int yPix){
 
     int yPos;
-    double hexHeight = 2 * SIZE;
+    float hexHeight = 2 * singleHexSize;
 
-    yPos = (yPix + (SIZE*0.5))/ (hexHeight*0.75);
+    yPos = (yPix + (singleHexSize*0.5))/ (hexHeight*0.75);
 
     return yPos;
+}
+
+sf::RenderWindow* Render::getRenderWindow(void){
+    return window;
 }

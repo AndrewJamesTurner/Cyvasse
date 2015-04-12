@@ -9,31 +9,22 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define SIZE 30
-#define MAPSIZE 6
-
-#define WIDTH 2*SIZE*(MAPSIZE*2) * 0.88
-#define HEIGHT 2*SIZE*(MAPSIZE*2)*(sqrt(3) / 2) * 0.93
 
 int main()
 {
-    // create the window
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
-
     //
-    HexMap hexMap(MAPSIZE);
-
-    // set the frame rate
-    window.setFramerateLimit(30);
+    Render render;
 
     //
 	GameLogic gameLogic(MAPSIZE);
 
-    //
-    Render render(&window, &hexMap);
+
+    // create the window
+    sf::RenderWindow* window = render.getRenderWindow();
+
 
     // run the program as long as the window is open
-    while (window.isOpen())
+    while (window->isOpen())
     {
 
         if(gameLogic.getGameState() == GameState::player2Turn){
@@ -44,11 +35,11 @@ int main()
             // check all the window's events that were triggered since the last iteration of the loop
             sf::Event event;
 
-            while (window.pollEvent(event))
+            while (window->pollEvent(event))
             {
                 // "close requested" event: we close the window
                 if (event.type == sf::Event::Closed)
-                    window.close();
+                    window->close();
 
                 if (event.type == sf::Event::MouseButtonPressed)
                 {
@@ -75,7 +66,7 @@ int main()
         render.update(gameLogic.getHexMap());
 
         // end the current frame
-        window.display();
+        window->display();
     }
 
     return 0;

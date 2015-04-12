@@ -6,15 +6,15 @@
 #include <vector>
 #include <algorithm>
 
-#define SIZE 30
-
+#define MAPSIZE 6
 
 class Render
 {
     public:
-        Render(sf::RenderWindow *_window, HexMap *_hexMap);
+        Render();
         virtual ~Render();
 
+        sf::RenderWindow* getRenderWindow(void);
         void update(HexMap hexMap);
 
         int getCartesianX(int xPix, int yPix);
@@ -23,6 +23,10 @@ class Render
 
     protected:
     private:
+
+        int singleHexSize;
+        int windowWidth;
+        int windowHeight;
 
         const sf::Color green = sf::Color(17,220,51);
         const sf::Color blue = sf::Color(20,20,230);
@@ -33,12 +37,12 @@ class Render
         int getHexheight(int hexSize);
         int getHexWidth(int hexSize);
 
-        sf::CircleShape getShape(int x, int y, bool selected, bool highlighted);
+        sf::CircleShape getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted);
         sf::Sprite getSprite(int x, int y, Type type, Player player);
 
 
-        sf::RenderWindow *window;
-        HexMap *hexMap;
+        sf::RenderWindow* window;
+        HexMap* hexMap;
 
         sf::Texture spearsTexture;
         sf::Texture kingTexture;
