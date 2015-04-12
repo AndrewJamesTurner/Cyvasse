@@ -61,13 +61,13 @@ std::vector<Hex> HexMap::getHexes(void){
 
 void HexMap::populateBoard(void){
 
-    setPiece(5,5, new Rabble(Player::player1));
-    setPiece(6,6, new King(Player::player1));
-    setPiece(5,7, new Spears(Player::player1));
-    setPiece(3,7, new Mountain(Player::player1));
+    setPiece(5,8, new Rabble(Player::player1));
+    setPiece(6,8, new King(Player::player1));
+    setPiece(5,10, new Spears(Player::player1));
+    setPiece(3,9, new Mountain(Player::player1));
 
     setPiece(3,2, new Rabble(Player::player2));
-    setPiece(8,8, new King(Player::player2));
+    setPiece(8,3, new King(Player::player2));
     setPiece(8,1, new Spears(Player::player2));
     setPiece(7,3, new Mountain(Player::player2));
 }
@@ -230,6 +230,17 @@ bool HexMap::isHexHighlighted(Hex hex){
     }
 
     return false;
+}
+
+bool HexMap::isInPlayerhalf(Player player, int yPos){
+
+    if(player == Player::player1 && yPos > getHeight()/2)
+        return true;
+    else if(player == Player::player2 && yPos < 1 + getHeight()/2)
+        return true;
+    else
+        return false;
+
 }
 
 

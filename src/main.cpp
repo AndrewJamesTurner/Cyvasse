@@ -12,15 +12,10 @@
 
 int main()
 {
-    //
     Render render;
-
-    //
-	GameLogic gameLogic(MAPSIZE);
-
-
-    // create the window
     sf::RenderWindow* window = render.getRenderWindow();
+
+	GameLogic gameLogic(MAPSIZE);
 
 
     // run the program as long as the window is open
@@ -30,7 +25,7 @@ int main()
         if(gameLogic.getGameState() == GameState::player2Turn){
             gameLogic.enemyMove();
         }
-        else if(gameLogic.getGameState() == GameState::player1Turn){
+        else if(gameLogic.getGameState() == GameState::player1Turn || gameLogic.getGameState() == GameState::placement){
 
             // check all the window's events that were triggered since the last iteration of the loop
             sf::Event event;
@@ -56,14 +51,17 @@ int main()
 
                     if (event.mouseButton.button == sf::Mouse::Right)
                     {
-                        gameLogic.deselect();
+                        if(gameLogic.getGameState() == GameState::placement)
+                            gameLogic.endPlacement();
+                        else
+                            gameLogic.deselect();
                     }
                 }
             }
         }
 
-        //
-        render.update(gameLogic.getHexMap());
+
+        render.update(gameLogic.getHexMap(), gameLogic.getGameState());
 
         // end the current frame
         window->display();

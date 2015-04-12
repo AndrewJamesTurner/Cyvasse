@@ -4,6 +4,7 @@ GameLogic::GameLogic(int _mapHexSize): hexMap{HexMap(_mapHexSize)}
 {
     srand (time(NULL));
     gameState = GameState::player1Turn;
+    gameState = GameState::placement;
 }
 
 GameLogic::~GameLogic() {
@@ -19,6 +20,51 @@ HexMap GameLogic::getHexMap() const{
 }
 
 void GameLogic::mapClicked(int x, int y) {
+
+    if(gameState == GameState::player1Turn)
+        player1Move(x, y);
+    else if(gameState == GameState::placement)
+        player1placement(x, y);
+}
+
+void GameLogic::player1placement(int x, int y){
+
+    if(hexMap.isOffBoard(x,y) || !hexMap.isInPlayerhalf(Player::player1, y)) {
+        hexMap.setSelectedHex(nullptr);
+        return;
+    }
+
+    Hex* hexClicked = hexMap.getHexPnt(x,y);
+
+    // if nothing selected
+    if(!hexMap.isHexSelected()){
+
+        // if clicked on an empty space
+        if(!hexClicked->hasPiece()){
+            hexMap.setSelectedHex(nullptr);
+        }
+        // else if is moveable player unit
+        else{
+            hexMap.setSelectedHex(hexClicked->getCartesianX(), hexClicked->getCartesianY());
+        }
+    }
+    // if something is already selected
+    else{
+
+        if(!hexClicked->hasPiece()  ){
+            hexMap.movePeice(hexMap.getSelectedHex(), *hexClicked);
+        }
+
+        hexMap.setSelectedHex(nullptr);
+    }
+}
+
+void GameLogic::endPlacement(void){
+    gameState = GameState::player1Turn;
+}
+
+
+void GameLogic::player1Move(int x, int y){
 
     resetMap();
 
@@ -47,7 +93,7 @@ void GameLogic::mapClicked(int x, int y) {
 
         // if clicked currently selected
         if(hexMap.getSelectedHex().equals(*hexClicked)){
-            //hexClicked->setBoarderColor(sf::Color::Yellow);
+
             showMovements(*hexClicked);
         }
         else{
@@ -59,6 +105,7 @@ void GameLogic::mapClicked(int x, int y) {
             }
 
             hexMap.setSelectedHex(nullptr);
+
         }
     }
 }

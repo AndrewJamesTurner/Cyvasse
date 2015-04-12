@@ -8,6 +8,9 @@
 #include "Spears.h"
 #include "Mountain.h"
 
+enum class GameState{placement,player1Turn,player2Turn,player1Won,player2Won};
+
+
 class HexMap
 {
     public:
@@ -49,6 +52,7 @@ class HexMap
         void addHighlightedHexes(Hex hexPnt);
         bool isHexHighlighted(Hex hex);
 
+        bool isInPlayerhalf(Player player, int yPos);
 
 
     protected:
@@ -66,7 +70,6 @@ class HexMap
 
         Hex *selectedHex;
         std::vector<Hex> highlightedHexes;
-
 };
 
 #endif // HEXMAP_H

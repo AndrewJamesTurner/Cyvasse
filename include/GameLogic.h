@@ -8,7 +8,7 @@
 #include <vector>
 #include <climits>
 
-enum class GameState{setUp,player1Turn,player2Turn,player1Won,player2Won};
+//enum class GameState{placement,player1Turn,player2Turn,player1Won,player2Won};
 
 struct Move{
 
@@ -35,6 +35,8 @@ class GameLogic
 
         void deselect(void);
         void resetMap(void);
+        void endPlacement(void);
+
 
         HexMap getHexMap() const;
 
@@ -46,6 +48,9 @@ class GameLogic
         GameState gameState;
 
         std::random_device rd;
+
+        void player1placement(int x, int y);
+        void player1Move(int x, int y);
 
         int getX(int pixelX, int pixelY);
         int getY(int pixelX, int pixelY);

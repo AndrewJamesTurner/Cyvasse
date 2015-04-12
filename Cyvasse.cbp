@@ -49,6 +49,7 @@
 		<Unit filename="include/Mountain.h" />
 		<Unit filename="include/Piece.h" />
 		<Unit filename="include/Rabble.h" />
+		<Unit filename="include/Render.h" />
 		<Unit filename="include/Spears.h" />
 		<Unit filename="src/GameLogic.cpp" />
 		<Unit filename="src/Hex.cpp" />
@@ -58,6 +59,7 @@
 		<Unit filename="src/Mountain.cpp" />
 		<Unit filename="src/Piece.cpp" />
 		<Unit filename="src/Rabble.cpp" />
+		<Unit filename="src/Render.cpp" />
 		<Unit filename="src/Spears.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
