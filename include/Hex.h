@@ -4,6 +4,9 @@
 #include "Piece.h"
 #include "HexCoordinates.h"
 
+enum class Terrain{hill,forest,grassland,fortresses,none};
+
+
 class Hex : public HexCoordinates
 {
     public:
@@ -20,9 +23,12 @@ class Hex : public HexCoordinates
 
         bool equals(Hex hex);
 
+        Terrain getTerrain(void) const;
+        void setTerrain(Terrain _terrain);
 
     private:
         Piece* piece;
+        Terrain terrain;
 };
 
 #endif // HEX_H

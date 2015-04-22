@@ -104,10 +104,12 @@ sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, boo
         shape.setFillColor(lightBlue);
     else if(highlighted)
         shape.setFillColor(sf::Color::Red);
-    else if(hexMap.isOnBoard(x,y))
-       shape.setFillColor(green);
-    else
+    else if(hexMap.isOffBoard(x,y))
         shape.setFillColor(blue);
+    else if(hex.getTerrain() == Terrain::forest)
+        shape.setFillColor(sf::Color(0,100,0));
+    else
+         shape.setFillColor(green);
 
     return shape;
 }

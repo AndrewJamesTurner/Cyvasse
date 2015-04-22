@@ -8,8 +8,6 @@
 #include <vector>
 #include <climits>
 
-//enum class GameState{placement,player1Turn,player2Turn,player1Won,player2Won};
-
 struct Move{
 
   int startX;

@@ -74,6 +74,28 @@ void HexMap::populateBoard(void){
 }
 
 
+void HexMap::placeTerrain(void){
+
+    for(auto i = hexes.begin(); i<hexes.end(); ++i){
+
+        if((*i).hasPiece()){
+
+            switch((*i).getPiece()->getType()){
+
+            case Type::king:
+                break;
+            case Type::rabble:
+                break;
+            case Type::spears:
+                (*i).setTerrain(Terrain::forest);
+                break;
+            case Type::mountain:
+                break;
+            }
+        }
+    }
+}
+
 Hex* HexMap::getHexPnt(int x, int y){
 
     if(isOffMap(x,y))

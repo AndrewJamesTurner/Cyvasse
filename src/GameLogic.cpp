@@ -61,6 +61,7 @@ void GameLogic::player1placement(int x, int y){
 
 void GameLogic::endPlacement(void){
     gameState = GameState::player1Turn;
+    hexMap.placeTerrain();
 }
 
 

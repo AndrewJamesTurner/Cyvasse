@@ -54,11 +54,13 @@ class HexMap
 
         bool isInPlayerhalf(Player player, int yPos);
 
+        void placeTerrain(void);
 
     protected:
 
         int getIndex(int x, int y) const;
         bool isOffMap(int x, int y) const;
+
 
     private:
 

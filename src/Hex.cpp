@@ -3,6 +3,7 @@
 Hex::Hex(int _cartesianX, int _cartesianY) : HexCoordinates(_cartesianX, _cartesianY){
 
     piece = nullptr;
+    terrain = Terrain::none;
 }
 
 bool Hex::equals(Hex hex){
@@ -51,7 +52,14 @@ void Hex::clearPiece(void){
     piece = nullptr;
 }
 
+Terrain Hex::getTerrain(void) const{
+    return terrain;
+}
 
+
+void Hex::setTerrain(Terrain _terrain){
+    terrain = _terrain;
+}
 
 
 
