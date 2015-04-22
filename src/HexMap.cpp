@@ -65,6 +65,7 @@ void HexMap::populateBoard(void){
     setPiece(6,8, new King(Player::player1));
     setPiece(5,10, new Spears(Player::player1));
     setPiece(3,9, new Mountain(Player::player1));
+    setPiece(3,10, new Mountain(Player::player1));
 
     setPiece(3,2, new Rabble(Player::player2));
     setPiece(8,3, new King(Player::player2));

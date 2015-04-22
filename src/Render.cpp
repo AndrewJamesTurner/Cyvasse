@@ -101,7 +101,7 @@ sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, boo
         shape.setOutlineColor(sf::Color::Black);
 
     if(gameState == GameState::placement && hexMap.isInPlayerhalf(Player::player2, y) && hexMap.isOnBoard(x,y))
-        shape.setFillColor(sf::Color::Black);
+        shape.setFillColor(lightBlue);
     else if(highlighted)
         shape.setFillColor(sf::Color::Red);
     else if(hexMap.isOnBoard(x,y))

@@ -31,6 +31,7 @@ class Render
 
         const sf::Color green = sf::Color(17,220,51);
         const sf::Color blue = sf::Color(20,20,230);
+        const sf::Color lightBlue = sf::Color(180,180,180);
 
         int getPixelX(int x, int y);
         int getPixelY(int x, int y);

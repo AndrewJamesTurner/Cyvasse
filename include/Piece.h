@@ -10,7 +10,7 @@ enum class Movement{orthogonal,none,diagonal};
 class Piece
 {
     public:
-        Piece(Player _player, Type _type, Movement _movement, int _range);
+        Piece(Player _player, Type _type, Movement _movement, int _range, int tier, int value);
         virtual ~Piece();
 
         Movement getMoveType(void);
@@ -20,12 +20,17 @@ class Piece
         bool isMoutain(void);
         Type getType(void) const;
 
+        int getTier(void) const;
+        int getValue(void) const;
+
     protected:
 
-        Movement movetype;
         Player player;
         Type type;
+        Movement movetype;
         int range;
+        int tier;
+        int value;
 
     private:
 };

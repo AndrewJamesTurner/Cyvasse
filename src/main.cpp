@@ -60,7 +60,6 @@ int main()
             }
         }
 
-
         render.update(gameLogic.getHexMap(), gameLogic.getGameState());
 
         // end the current frame

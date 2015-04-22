@@ -1,11 +1,8 @@
 #include "Piece.h"
 
-Piece::Piece(Player _player, Type _type, Movement _movement, int _range)
+Piece::Piece(Player _player, Type _type, Movement _movement, int _range, int _tier, int _value) : player{_player}, type{_type}, movetype{_movement}, range{_range}, tier{_tier}, value{_value}
 {
-    player = _player;
-    type = _type;
-    movetype = _movement;
-    range = _range;
+
 }
 
 
@@ -40,3 +37,12 @@ Player Piece::getPlayer(void){
  int Piece::getRange(void){
     return range;
  }
+
+
+int Piece::getValue(void) const{
+    return value;
+}
+
+int Piece::getTier(void) const{
+    return tier;
+}

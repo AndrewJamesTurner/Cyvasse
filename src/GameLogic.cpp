@@ -225,7 +225,7 @@ int GameLogic::miniMax(const HexMap& _map, int depth, int alpha, int beta, Playe
         int score = INT_MAX;
         std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
 
-        for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i) {
+        for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i){
 
             HexMap tmpMap = _map;
             tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
@@ -247,14 +247,22 @@ int GameLogic::getHeuristicBoardScore(const HexMap& _map, const Player& player){
     std::vector<Hex> player1Positions = _map.getPlayerPositions(Player::player1);
     std::vector<Hex> player2Positions = _map.getPlayerPositions(Player::player2);
 
-    int numPlayer1 = player1Positions.size();
-    int numPlayer2 = player2Positions.size();
+    int player1Score = 0;
+    int player2Score = 0;
+
+    for(auto i = player1Positions.begin(); i<player1Positions.end(); ++i){
+        player1Score += (*i).getPiece()->getValue();
+    }
+
+    for(auto i = player2Positions.begin(); i<player2Positions.end(); ++i){
+        player2Score += (*i).getPiece()->getValue();
+    }
 
     if(player == Player::player1){
-        return numPlayer1 - numPlayer2;
+        return player1Score - player2Score;
     }
     else{
-        return numPlayer2 - numPlayer1;
+        return player2Score - player1Score;
     }
 }
 
@@ -337,10 +345,10 @@ std::vector<Hex> GameLogic::getValidMovements(const HexMap& _hexMap, const Hex& 
 
 void GameLogic::showMovements(Hex hex){
 
-    std::vector<Hex> movements = getPossibleMovements(hexMap, hex);
+    //std::vector<Hex> movements = getPossibleMovements(hexMap, hex);
+    std::vector<Hex> movements = getValidMovements(hexMap, hex);
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
-
           hexMap.addHighlightedHexes((*i));
     }
 }
@@ -392,16 +400,16 @@ bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     if(!targetHex.hasPiece())
         return true;
 
-    // if target contains opponent which is not a mountain
-    else if(sourceHex.getPiece()->getPlayer() != targetHex.getPiece()->getPlayer() && !targetHex.getPiece()->isMoutain())
+    // if target contains opponent and is not a mountain and is lower/equal tier
+    else if(sourceHex.getPiece()->getPlayer() != targetHex.getPiece()->getPlayer() &&
+            !targetHex.getPiece()->isMoutain() &&
+            sourceHex.getPiece()->getTier() >= targetHex.getPiece()->getTier())
         return true;
-
     else
         return false;
 }
 
 void GameLogic::resetMap(void) {
-
     hexMap.clearHighlightedHexes();
 }
 
