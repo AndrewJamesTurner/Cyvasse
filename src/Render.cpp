@@ -17,6 +17,8 @@ Render::Render()
         exit(0);
     if (!rabbleTexture.loadFromFile("Images/Rabble.png"))
         exit(0);
+    if (!crossbowTexture.loadFromFile("Images/Crossbow.png"))
+        exit(0);
 }
 
 Render::~Render()
@@ -64,6 +66,9 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
             break;
         case Type::spears:
             sprite.setTexture(spearsTexture);
+            break;
+        case Type::crossbow:
+            sprite.setTexture(crossbowTexture);
             break;
     }
 

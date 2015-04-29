@@ -50,6 +50,7 @@ class Render
         sf::Texture kingTexture;
         sf::Texture mountainTexture;
         sf::Texture rabbleTexture;
+        sf::Texture crossbowTexture;
 
 };
 

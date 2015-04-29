@@ -7,6 +7,7 @@
 #include "King.h"
 #include "Spears.h"
 #include "Mountain.h"
+#include "Crossbow.h"
 
 enum class GameState{placement,player1Turn,player2Turn,player1Won,player2Won};
 
@@ -23,8 +24,6 @@ class HexMap
 
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
         void movePeice(Hex start, Hex desination);
-
-
 
         std::vector<Hex> getHexes(void);
         Hex* getHexPnt(int x, int y);
@@ -46,7 +45,6 @@ class HexMap
         Hex getSelectedHex(void);
         void setSelectedHex(int x, int y);
         void setSelectedHex(Hex *_hex);
-
 
         void clearHighlightedHexes(void);
         void addHighlightedHexes(Hex hexPnt);

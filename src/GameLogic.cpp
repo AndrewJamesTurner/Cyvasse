@@ -51,7 +51,7 @@ void GameLogic::player1placement(int x, int y){
     // if something is already selected
     else{
 
-        if(!hexClicked->hasPiece()  ){
+        if(!hexClicked->hasPiece()){
             hexMap.movePeice(hexMap.getSelectedHex(), *hexClicked);
         }
 

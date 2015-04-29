@@ -66,11 +66,14 @@ void HexMap::populateBoard(void){
     setPiece(5,10, new Spears(Player::player1));
     setPiece(3,9, new Mountain(Player::player1));
     setPiece(3,10, new Mountain(Player::player1));
+    setPiece(4,10, new Crossbow(Player::player1));
 
     setPiece(3,2, new Rabble(Player::player2));
     setPiece(8,3, new King(Player::player2));
     setPiece(8,1, new Spears(Player::player2));
     setPiece(7,3, new Mountain(Player::player2));
+    setPiece(4,3, new Crossbow(Player::player2));
+
 }
 
 
@@ -85,6 +88,8 @@ void HexMap::placeTerrain(void){
             case Type::king:
                 break;
             case Type::rabble:
+                break;
+            case Type::crossbow:
                 break;
             case Type::spears:
                 (*i).setTerrain(Terrain::forest);
