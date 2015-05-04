@@ -112,30 +112,14 @@ void GameLogic::player1Move(int x, int y){
 }
 
 
-std::vector<Move> GameLogic::getPossibleMoves(const HexMap& _hexMap, const Player& player){
 
-    std::vector<Move> possibleMoves;
-    std::vector<Hex> playerPositions = _hexMap.getPlayerPositions(player);
-
-    for(auto i = playerPositions.begin(); i<playerPositions.end(); ++i) {
-
-        std::vector<Hex> validMoves = getValidMovements(_hexMap, (*i));
-
-        for(auto j = validMoves.begin(); j<validMoves.end(); ++j) {
-            Move _move((*i).getCartesianX(), (*i).getCartesianY(), (*j).getCartesianX(), (*j).getCartesianY());
-            possibleMoves.push_back(_move);
-        }
-    }
-
-    return possibleMoves;
-}
 
 
 bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 
     bool PlayerMoved;
 
-    if(canMove(hexMap, sourceHex, destinationHex)){
+    if(Movement::canMove(hexMap, sourceHex, destinationHex)){
         hexMap.movePeice(sourceHex, destinationHex);
         PlayerMoved = true;
     }
@@ -157,7 +141,7 @@ void GameLogic::enemyMove(void){
 
 Move GameLogic::randomMove(const HexMap& _map){
 
-    std::vector<Move> possibleMoves = getPossibleMoves(_map, Player::player2);
+    std::vector<Move> possibleMoves = Movement::getPossibleMoves(_map, Player::player2);
 
     unsigned int numPossibleMoves = possibleMoves.size();
     unsigned int randMove = rand() % numPossibleMoves;
@@ -172,7 +156,7 @@ Move GameLogic::miniMaxMove(const HexMap& _map, int depth){
     int alpha = INT_MIN;
     int beta = INT_MAX;
 
-    std::vector<Move> possibleMoves = getPossibleMoves(_map, Player::player2);
+    std::vector<Move> possibleMoves = Movement::getPossibleMoves(_map, Player::player2);
 
     int bestScore = INT_MIN;
     Move bestMove = possibleMoves[0];
@@ -205,7 +189,7 @@ int GameLogic::miniMax(const HexMap& _map, int depth, int alpha, int beta, Playe
     if(player == Player::player2){
 
         int score = INT_MIN;
-        std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+        std::vector<Move> possibleMoves = Movement::getPossibleMoves(_map, player);
 
         for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i) {
 
@@ -224,7 +208,7 @@ int GameLogic::miniMax(const HexMap& _map, int depth, int alpha, int beta, Playe
     else{
 
         int score = INT_MAX;
-        std::vector<Move> possibleMoves = getPossibleMoves(_map, player);
+        std::vector<Move> possibleMoves = Movement::getPossibleMoves(_map, player);
 
         for(auto i = possibleMoves.begin(); i<possibleMoves.end(); ++i){
 
@@ -305,49 +289,13 @@ void GameLogic::deselect(void){
     resetMap();
 }
 
-std::vector<Hex> GameLogic::getPossibleMovements(const HexMap& _hexMap, const Hex& hex){
 
-    std::vector<HexCoordinates> movements;
-    std::vector<Hex> possibleMovements;
-
-    if(hex.getPiece()->getMoveType() == Movement::orthogonal){
-        movements = hex.getPossibleOrthogonalSteps(hex.getPiece()->getRange());
-    }
-    else if(hex.getPiece()->getMoveType() == Movement::diagonal){
-       movements = hex.getPossibleDiagonalSteps(hex.getPiece()->getRange());
-    }
-
-    for(auto i = movements.begin(); i<movements.end(); ++i) {
-
-        int x = (*i).getCartesianX();
-        int y = (*i).getCartesianY();
-
-        if(hexMap.isOnBoard(x,y))
-            possibleMovements.push_back(_hexMap.getHex(x,y));
-    }
-
-    return possibleMovements;
-}
-
-std::vector<Hex> GameLogic::getValidMovements(const HexMap& _hexMap, const Hex& hex){
-
-    std::vector<Hex> validMovements;
-    std::vector<Hex> possibleMovements = getPossibleMovements(_hexMap, hex);
-
-    for(auto i = possibleMovements.begin(); i<possibleMovements.end(); ++i) {
-
-        if(canMove(_hexMap, hex, (*i)))
-            validMovements.push_back((*i));
-    }
-
-    return validMovements;
-}
 
 
 void GameLogic::showMovements(Hex hex){
 
     //std::vector<Hex> movements = getPossibleMovements(hexMap, hex);
-    std::vector<Hex> movements = getValidMovements(hexMap, hex);
+    std::vector<Hex> movements = Movement::getValidMovements(hexMap, hex);
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
           hexMap.addHighlightedHexes((*i));
@@ -355,60 +303,7 @@ void GameLogic::showMovements(Hex hex){
 }
 
 
-bool GameLogic::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
 
-    std::vector<HexCoordinates> steps;
-
-    if(sourceHex.getCartesianX() == targetHex.getCartesianX() && sourceHex.getCartesianY() == targetHex.getCartesianY())
-        return false;
-
-    else if(hexMap.isOffBoard(targetHex.getCartesianX(), targetHex.getCartesianY()))
-        return false;
-
-    else if(hexMap.isOffBoard(sourceHex.getCartesianX(), sourceHex.getCartesianY()))
-        return false;
-
-    else if(!sourceHex.hasPiece())
-        return false;
-
-    Movement moveType = sourceHex.getPiece()->getMoveType();
-
-    // if the movement type is orthogonal and the two hexes are in orthogonal range
-    if(moveType == Movement::orthogonal && sourceHex.isOrthogonalRange(targetHex, sourceHex.getPiece()->getRange())){
-       steps = sourceHex.orthogonalSteps(targetHex);
-    }
-
-    // if the movement type is diagonal and the two hexes are in diagonal range
-    else if(moveType == Movement::diagonal && sourceHex.isDiagonalRange(targetHex, sourceHex.getPiece()->getRange())){
-        steps = sourceHex.diagonalSteps(targetHex);
-    }
-    else{
-        return false;
-    }
-
-    // check all the steps to targetHex are clear
-    for(auto i = steps.begin(); i!=steps.end()-1; ++i) {
-
-        if(hexMap.isOffBoard((*i).getCartesianX(), (*i).getCartesianY())){
-            return false;
-        }
-        if( _hexmap.hasPiece((*i).getCartesianX(), (*i).getCartesianY()) ){
-            return false;
-        }
-    }
-
-    // check if the target is clear
-    if(!targetHex.hasPiece())
-        return true;
-
-    // if target contains opponent and is not a mountain and is lower/equal tier
-    else if(sourceHex.getPiece()->getPlayer() != targetHex.getPiece()->getPlayer() &&
-            !targetHex.getPiece()->isMoutain() &&
-            sourceHex.getPiece()->getTier() >= targetHex.getPiece()->getTier())
-        return true;
-    else
-        return false;
-}
 
 void GameLogic::resetMap(void) {
     hexMap.clearHighlightedHexes();

@@ -33,8 +33,8 @@ class HexMap
 
         std::vector<Hex> getPlayerPositions(const Player& player) const;
 
-        bool isOnBoard(int x, int y);
-        bool isOffBoard(int x, int y);
+        bool isOnBoard(int x, int y) const;
+        bool isOffBoard(int x, int y) const;
 
         int getWidth(void) const {return width;}
         int getHeight(void) const {return height;}

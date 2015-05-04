@@ -5,15 +5,15 @@
 
 enum class Player{player1, player2};
 enum class Type{king,rabble,mountain,spears,crossbow};
-enum class Movement{orthogonal,none,diagonal};
+enum class MoveType{orthogonal,none,diagonal};
 
 class Piece
 {
     public:
-        Piece(Player _player, Type _type, Movement _movement, int _range, int tier, int value);
+        Piece(Player _player, Type _type, MoveType _movement, int _range, int tier, int value);
         virtual ~Piece();
 
-        Movement getMoveType(void);
+        MoveType getMoveType(void);
         Player getPlayer(void);
         int getRange(void);
 
@@ -27,7 +27,7 @@ class Piece
 
         Player player;
         Type type;
-        Movement movetype;
+        MoveType movetype;
         int range;
         int tier;
         int value;

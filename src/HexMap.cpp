@@ -220,7 +220,7 @@ std::vector<Hex> HexMap::getPlayerPositions(const Player& player) const{
 }
 
 
-bool HexMap::isOnBoard(int x, int y){
+bool HexMap::isOnBoard(int x, int y) const {
 
     HexCoordinates current(x,y);
     HexCoordinates center(mapHexSize,mapHexSize);
@@ -233,7 +233,7 @@ bool HexMap::isOnBoard(int x, int y){
     }
 }
 
-bool HexMap::isOffBoard(int x, int y){
+bool HexMap::isOffBoard(int x, int y) const {
     return !isOnBoard(x,y);
 }
 
