@@ -9,6 +9,17 @@
 #include "Mountain.h"
 #include "Crossbow.h"
 
+struct Move{
+
+  int startX;
+  int startY;
+
+  int endX;
+  int endY;
+
+  Move(int _startX, int _startY, int _endX, int _endY) : startX(_startX), startY(_startY), endX{_endX}, endY{_endY}{}
+};
+
 enum class GameState{placement,player1Turn,player2Turn,player1Won,player2Won};
 
 
@@ -54,11 +65,14 @@ class HexMap
 
         void placeTerrain(void);
 
+        bool isPieceOnBoard(const Player player, const Type type) const;
+
+        bool isBothKingsOnBoard(void) const;
+
     protected:
 
         int getIndex(int x, int y) const;
         bool isOffMap(int x, int y) const;
-
 
     private:
 

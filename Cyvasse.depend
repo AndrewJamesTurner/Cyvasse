@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1430750017 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
+1430943340 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
 	"HexMap.h"
 
-1430749998 /home/andy/Desktop/Cyvasse/include/HexMap.h
+1430943285 /home/andy/Desktop/Cyvasse/include/HexMap.h
 	"Hex.h"
 	"Rabble.h"
 	"King.h"
@@ -54,13 +54,14 @@
 	<iostream>
 	<vector>
 
-1430750130 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
+1430944128 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
 	"GameLogic.h"
 
-1430750365 /home/andy/Desktop/Cyvasse/include/GameLogic.h
+1430944169 /home/andy/Desktop/Cyvasse/include/GameLogic.h
 	"Hex.h"
 	"HexMap.h"
 	"Movement.h"
+	"AI.h"
 	<random>
 	<vector>
 	<climits>
@@ -104,9 +105,17 @@
 1430343945 /home/andy/Desktop/Cyvasse/include/Crossbow.h
 	"Piece.h"
 
-1430750167 /home/andy/Desktop/Cyvasse/include/Movement.h
+1430750749 /home/andy/Desktop/Cyvasse/include/Movement.h
 	"HexMap.h"
 
 1430750232 source:/home/andy/Desktop/Cyvasse/src/Movement.cpp
+	"Movement.h"
+
+1430944084 source:/home/andy/Desktop/Cyvasse/src/AI.cpp
+	"AI.h"
+
+1430944093 /home/andy/Desktop/Cyvasse/include/AI.h
+	<climits>
+	"HexMap.h"
 	"Movement.h"
 

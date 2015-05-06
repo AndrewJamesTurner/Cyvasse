@@ -3,16 +3,7 @@
 
 #include "HexMap.h"
 
-struct Move{
 
-  int startX;
-  int startY;
-
-  int endX;
-  int endY;
-
-  Move(int _startX, int _startY, int _endX, int _endY) : startX(_startX), startY(_startY), endX{_endX}, endY{_endY}{}
-};
 
 class Movement
 {

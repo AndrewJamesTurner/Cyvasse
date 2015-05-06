@@ -271,5 +271,27 @@ bool HexMap::isInPlayerhalf(Player player, int yPos){
 
 }
 
+bool HexMap::isPieceOnBoard(const Player player, const Type type) const {
+
+    bool onBoard = false;
+
+    std::vector<Hex> playerPositions = getPlayerPositions(player);
+
+    for(auto i = playerPositions.begin(); i<playerPositions.end(); ++i) {
+
+        if( (*i).getType() == type){
+            onBoard = true;
+            break;
+        }
+    }
+
+    return onBoard;
+}
+
+
+bool HexMap::isBothKingsOnBoard(void) const{
+    return isPieceOnBoard(Player::player1, Type::king) && isPieceOnBoard(Player::player2, Type::king);
+}
+
 
 

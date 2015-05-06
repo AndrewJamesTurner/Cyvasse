@@ -4,13 +4,11 @@
 #include "Hex.h"
 #include "HexMap.h"
 #include "Movement.h"
+#include "AI.h"
 
 #include <random>
 #include <vector>
 #include <climits>
-
-
-
 
 class GameLogic
 {
@@ -49,12 +47,7 @@ class GameLogic
 
         void populateBoard(void);
         void showMovements(Hex hex);
-        bool isGameOver(const HexMap& _map);
-
-        int getHeuristicBoardScore(const HexMap& _map, const Player& player);
-        Move randomMove(const HexMap& _map);
-        Move miniMaxMove(const HexMap&, int depth);
-        int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer);
+        bool isGameOver(const HexMap& _map) const;
 };
 
 #endif // GAMELOGIC_H
