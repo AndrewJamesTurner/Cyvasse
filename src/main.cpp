@@ -23,7 +23,12 @@ int main()
     {
 
         if(gameLogic.getGameState() == GameState::player2Turn){
-            gameLogic.enemyMove();
+            //gameLogic.enemyMove();
+            gameLogic.mapClicked(-1, -1);
+        }
+
+        else if(gameLogic.getGameState() == GameState::player1Turn){
+            gameLogic.mapClicked(-1, -1);
         }
         else if(gameLogic.getGameState() == GameState::player1Turn || gameLogic.getGameState() == GameState::placement){
 
@@ -59,6 +64,8 @@ int main()
                 }
             }
         }
+
+
 
         render.update(gameLogic.getHexMap(), gameLogic.getGameState());
 

@@ -12,8 +12,8 @@ class AI
         AI();
         virtual ~AI();
 
-        static Move randomMove(const HexMap& _map);
-        static Move miniMaxMove(const HexMap&, int depth);
+        static void randomMove(HexMap* hexMap, Player player);
+        static void miniMaxMove(HexMap* hexMap, Player player, int depth);
 
     protected:
 
@@ -22,7 +22,7 @@ class AI
     private:
 
         static int getHeuristicBoardScore(const HexMap& _map, const Player& player);
-        static int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer);
+        static int miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer, Player player);
 };
 
 #endif // AI_H

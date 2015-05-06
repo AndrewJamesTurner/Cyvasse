@@ -61,13 +61,20 @@ std::vector<Hex> HexMap::getHexes(void){
 
 void HexMap::populateBoard(void){
 
-    setPiece(5,8, new Rabble(Player::player1));
-    //setPiece(5,11, new Rabble(Player::player1));
     setPiece(6,8, new King(Player::player1));
+
+    setPiece(5,8, new Rabble(Player::player1));
+    setPiece(5,11, new Rabble(Player::player1));
+
     setPiece(5,10, new Spears(Player::player1));
+    setPiece(6,11, new Spears(Player::player1));
+
+    setPiece(4,10, new Crossbow(Player::player1));
+    setPiece(7,11, new Crossbow(Player::player1));
+
     setPiece(3,9, new Mountain(Player::player1));
     setPiece(3,10, new Mountain(Player::player1));
-    setPiece(4,10, new Crossbow(Player::player1));
+
 
     setPiece(3,2, new Rabble(Player::player2));
     setPiece(8,3, new King(Player::player2));
@@ -289,6 +296,14 @@ bool HexMap::isPieceOnBoard(const Player player, const Type type) const {
     return onBoard;
 }
 
+
+int HexMap::getNumPieces(void) const{
+
+    std::vector<Hex> player1Positions = getPlayerPositions(Player::player1);
+    std::vector<Hex> player2Positions = getPlayerPositions(Player::player2);
+
+    return player1Positions.size() + player2Positions.size();
+}
 
 bool HexMap::isBothKingsOnBoard(void) const{
     return isPieceOnBoard(Player::player1, Type::king) && isPieceOnBoard(Player::player2, Type::king);

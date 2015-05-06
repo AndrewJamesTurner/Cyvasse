@@ -7,6 +7,7 @@ enum class Player{player1, player2};
 enum class Type{king,rabble,mountain,spears,crossbow};
 enum class MoveType{orthogonal,none,diagonal};
 
+
 class Piece
 {
     public:

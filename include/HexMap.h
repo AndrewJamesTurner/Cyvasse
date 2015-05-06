@@ -33,6 +33,8 @@ class HexMap
         void clearPiece(int x, int y);
         bool hasPiece(int x, int y) const;
 
+        int getNumPieces(void) const;
+
         void movePeice(int xStart, int yStart, int xEnd, int yEnd);
         void movePeice(Hex start, Hex desination);
 

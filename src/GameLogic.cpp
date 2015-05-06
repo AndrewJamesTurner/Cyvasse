@@ -21,10 +21,26 @@ HexMap GameLogic::getHexMap() const{
 
 void GameLogic::mapClicked(int x, int y) {
 
-    if(gameState == GameState::player1Turn)
-        player1Move(x, y);
+    int depth;
+
+    if(hexMap.getNumPieces() < 12)
+        depth = 3;
+    else
+        depth = 3;
+
+    if(gameState == GameState::player1Turn){
+        //player1Move(x, y);
+        AI::miniMaxMove(&hexMap, Player::player1, depth);
+        gameState = GameState::player2Turn;
+    }
     else if(gameState == GameState::placement)
         player1placement(x, y);
+    else if(gameState == GameState::player2Turn){
+        AI::miniMaxMove(&hexMap, Player::player2, depth);
+        gameState = GameState::player1Turn;
+        //enemyMove();
+    }
+
 }
 
 void GameLogic::player1placement(int x, int y){
@@ -66,7 +82,14 @@ void GameLogic::endPlacement(void){
 
 
 void GameLogic::player1Move(int x, int y){
+/*
+    Move _move = AI::miniMaxMove(hexMap, 3);
+    hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
 
+    gameState = GameState::player2Turn;
+
+    return;
+*/
     resetMap();
 
     if(hexMap.isOffBoard(x,y)) {
@@ -133,8 +156,8 @@ bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
 void GameLogic::enemyMove(void){
 
     //Move _move = AI::randomMove(hexMap);
-    Move _move = AI::miniMaxMove(hexMap, 3);
-    hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
+    AI::miniMaxMove(&hexMap, Player::player2, 3);
+
 
     gameState = GameState::player1Turn;
 }
