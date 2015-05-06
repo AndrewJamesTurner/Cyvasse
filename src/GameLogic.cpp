@@ -140,20 +140,10 @@ void GameLogic::enemyMove(void){
 }
 
 
-
-
-
-bool GameLogic::isGameOver(const HexMap& _map) const {
-    return ! _map.isPieceOnBoard(Player::player1, Type::king) || ! _map.isPieceOnBoard(Player::player2, Type::king);
-}
-
-
 void GameLogic::deselect(void){
     hexMap.setSelectedHex(nullptr);
     resetMap();
 }
-
-
 
 
 void GameLogic::showMovements(Hex hex){

@@ -62,6 +62,7 @@ std::vector<Hex> HexMap::getHexes(void){
 void HexMap::populateBoard(void){
 
     setPiece(5,8, new Rabble(Player::player1));
+    //setPiece(5,11, new Rabble(Player::player1));
     setPiece(6,8, new King(Player::player1));
     setPiece(5,10, new Spears(Player::player1));
     setPiece(3,9, new Mountain(Player::player1));

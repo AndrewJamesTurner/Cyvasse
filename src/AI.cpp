@@ -43,7 +43,7 @@ Move AI::miniMaxMove(const HexMap& _map, int depth){
 
 int AI::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player player){
 
-    if( depth <= 0 || _map.isBothKingsOnBoard() ){
+    if( depth <= 0 || !_map.isBothKingsOnBoard() ){
         return getHeuristicBoardScore(_map, Player::player2);
     }
 

@@ -25,7 +25,6 @@ class GameLogic
         void resetMap(void);
         void endPlacement(void);
 
-
         HexMap getHexMap() const;
 
     protected:
@@ -45,9 +44,7 @@ class GameLogic
 
         bool playerMove(Hex sourceHex, Hex destinationHex);
 
-        void populateBoard(void);
         void showMovements(Hex hex);
-        bool isGameOver(const HexMap& _map) const;
 };
 
 #endif // GAMELOGIC_H
