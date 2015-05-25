@@ -14,6 +14,7 @@ int main()
 {
     Render render;
     sf::RenderWindow* window = render.getRenderWindow();
+    window->setFramerateLimit(1);
 
 	GameLogic gameLogic(MAPSIZE);
 

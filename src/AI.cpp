@@ -14,17 +14,13 @@ void AI::miniMaxMove(HexMap* hexMap, Player player, int depth){
 
     int alpha = INT_MIN;
     int beta = INT_MAX;
-    Player otherPlyer;
 
-    switch(player){
+    Player opponent;
 
-        case Player::player1:
-            otherPlyer = Player::player2;
-            break;
-        case Player::player2:
-                otherPlyer = Player::player1;
-            break;
-    }
+    if( player == Player::player1)
+        opponent = Player::player2;
+    else
+        opponent = Player::player1;
 
     std::vector<Move> possibleMoves = Movement::getPossibleMoves(*hexMap, player);
 
@@ -37,9 +33,9 @@ void AI::miniMaxMove(HexMap* hexMap, Player player, int depth){
         tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
 
         // -1 for the first loop done for player two
-        int score = AI::miniMax(tmpMap, depth-1, alpha, beta, player, player);
+        int score = AI::miniMax(tmpMap, depth-1, alpha, beta, player, opponent);
 
-        alpha = std::max(alpha, score);
+        //alpha = std::max(alpha, score);
 
         if(score > bestScore){
             bestScore = score;
@@ -53,6 +49,13 @@ void AI::miniMaxMove(HexMap* hexMap, Player player, int depth){
 
 
 int AI::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maximizingPlayer, Player player){
+
+    Player opponent;
+
+    if( player == Player::player1)
+        opponent = Player::player2;
+    else
+        opponent = Player::player1;
 
     if( depth <= 0 || !_map.isBothKingsOnBoard() ){
         return getHeuristicBoardScore(_map, player);
@@ -68,11 +71,11 @@ int AI::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maxim
             HexMap tmpMap = _map;
             tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
 
-            score = std::max(score, miniMax(tmpMap, depth-1, alpha, beta, maximizingPlayer, Player::player1));
-            alpha = std::max(alpha, score);
+            score = std::max(score, miniMax(tmpMap, depth-1, alpha, beta, maximizingPlayer, opponent));
+            //alpha = std::max(alpha, score);
 
-            if(beta < alpha)
-                break;
+            //if(beta < alpha)
+            //    break;
         }
 
          return score;
@@ -87,11 +90,11 @@ int AI::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maxim
             HexMap tmpMap = _map;
             tmpMap.movePeice((*i).startX, (*i).startY, (*i).endX, (*i).endY);
 
-            score = std::min(score, miniMax(tmpMap, depth-1, alpha, beta, maximizingPlayer, Player::player2));
+            score = std::min(score, miniMax(tmpMap, depth-1, alpha, beta, maximizingPlayer, opponent));
             beta = std::min(beta, score);
 
-            if(beta < alpha)
-                break;
+            //if(beta < alpha)
+            //    break;
         }
 
          return score;
