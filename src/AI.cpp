@@ -58,7 +58,7 @@ int AI::miniMax(const HexMap& _map, int depth, int alpha, int beta, Player maxim
         opponent = Player::player1;
 
     if( depth <= 0 || !_map.isBothKingsOnBoard() ){
-        return getHeuristicBoardScore(_map, player);
+        return getHeuristicBoardScore(_map, maximizingPlayer);
     }
 
     if(player == maximizingPlayer){

@@ -14,7 +14,7 @@ int main()
 {
     Render render;
     sf::RenderWindow* window = render.getRenderWindow();
-    window->setFramerateLimit(1);
+    window->setFramerateLimit(60);
 
 	GameLogic gameLogic(MAPSIZE);
 
@@ -23,14 +23,18 @@ int main()
     while (window->isOpen())
     {
 
-        if(gameLogic.getGameState() == GameState::player2Turn){
+        if(gameLogic.getGameState() == GameState::gameOver){
+            std::cout << "\nGame Over\n";
+            return 0;
+        }
+        else if(gameLogic.getGameState() == GameState::player2Turn){
             //gameLogic.enemyMove();
             gameLogic.mapClicked(-1, -1);
         }
 
-        else if(gameLogic.getGameState() == GameState::player1Turn){
-            gameLogic.mapClicked(-1, -1);
-        }
+        //else if(gameLogic.getGameState() == GameState::player1Turn){
+        //    gameLogic.mapClicked(-1, -1);
+        //}
         else if(gameLogic.getGameState() == GameState::player1Turn || gameLogic.getGameState() == GameState::placement){
 
             // check all the window's events that were triggered since the last iteration of the loop

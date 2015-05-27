@@ -24,14 +24,14 @@ void GameLogic::mapClicked(int x, int y) {
     int depth;
 
     if(hexMap.getNumPieces() < 12)
-        depth = 2;
+        depth = 3;
     else
-        depth = 2;
+        depth = 3;
 
     if(gameState == GameState::player1Turn){
-        //player1Move(x, y);
-        AI::miniMaxMove(&hexMap, Player::player1, depth);
-        gameState = GameState::player2Turn;
+        player1Move(x, y);
+        //AI::miniMaxMove(&hexMap, Player::player1, depth);
+        //gameState = GameState::player2Turn;
     }
     else if(gameState == GameState::placement)
         player1placement(x, y);
@@ -41,6 +41,8 @@ void GameLogic::mapClicked(int x, int y) {
         //enemyMove();
     }
 
+    if(!hexMap.isBothKingsOnBoard())
+        gameState = GameState::gameOver;
 }
 
 void GameLogic::player1placement(int x, int y){
@@ -82,14 +84,7 @@ void GameLogic::endPlacement(void){
 
 
 void GameLogic::player1Move(int x, int y){
-/*
-    Move _move = AI::miniMaxMove(hexMap, 3);
-    hexMap.movePeice(_move.startX, _move.startY, _move.endX, _move.endY);
 
-    gameState = GameState::player2Turn;
-
-    return;
-*/
     resetMap();
 
     if(hexMap.isOffBoard(x,y)) {
@@ -133,9 +128,6 @@ void GameLogic::player1Move(int x, int y){
         }
     }
 }
-
-
-
 
 
 bool GameLogic::playerMove(Hex sourceHex, Hex destinationHex){
