@@ -1,5 +1,7 @@
 #include "Movement.h"
 
+std::default_random_engine Movement::engine = std::default_random_engine{};
+
 Movement::Movement()
 {
     //ctor
@@ -30,6 +32,8 @@ std::vector<Hex> Movement::getPossibleMovements(const HexMap& _hexMap, const Hex
         if(_hexMap.isOnBoard(x,y))
             possibleMovements.push_back(_hexMap.getHex(x,y));
     }
+
+    std::shuffle(std::begin(possibleMovements), std::end(possibleMovements), engine);
 
     return possibleMovements;
 }
@@ -62,6 +66,8 @@ std::vector<Move> Movement::getPossibleMoves(const HexMap& _hexMap, const Player
             possibleMoves.push_back(_move);
         }
     }
+
+    std::shuffle(std::begin(possibleMoves), std::end(possibleMoves), engine);
 
     return possibleMoves;
 }

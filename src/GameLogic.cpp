@@ -24,9 +24,9 @@ void GameLogic::mapClicked(int x, int y) {
     int depth;
 
     if(hexMap.getNumPieces() < 12)
-        depth = 3;
+        depth = 2;
     else
-        depth = 3;
+        depth = 2;
 
     if(gameState == GameState::player1Turn){
         //player1Move(x, y);

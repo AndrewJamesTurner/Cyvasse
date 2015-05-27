@@ -6,6 +6,7 @@
 #include "HexMap.h"
 #include "Movement.h"
 
+
 class AI
 {
     public:
@@ -16,8 +17,6 @@ class AI
         static void miniMaxMove(HexMap* hexMap, Player player, int depth);
 
     protected:
-
-
 
     private:
 

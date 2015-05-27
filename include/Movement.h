@@ -1,9 +1,10 @@
 #ifndef MOVEMENT_H
 #define MOVEMENT_H
 
+#include <algorithm>
+#include <random>
+
 #include "HexMap.h"
-
-
 
 class Movement
 {
@@ -18,6 +19,8 @@ class Movement
 
 
     private:
+
+        static std::default_random_engine engine;
 };
 
 #endif // MOVEMENT_H
