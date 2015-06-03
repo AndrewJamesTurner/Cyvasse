@@ -26,7 +26,7 @@ Render::~Render()
     //dtor
 }
 
-void Render::update(HexMap hexMap, GameState gameState){
+void Render::update(HexMap hexMap, GameState2 gameState){
 
     window->clear(sf::Color(blue));
 
@@ -41,7 +41,7 @@ void Render::update(HexMap hexMap, GameState gameState){
 
         if((*i).hasPiece()){
 
-            if(gameState == GameState::placement && hexMap.isInPlayerhalf(Player::player2, yPos))
+            if(gameState == GameState2::placement && hexMap.isInPlayerhalf(Player::player2, yPos))
                 continue;
 
             window->draw(getSprite(xPos, yPos, (*i).getType(), (*i).getPiece()->getPlayer()));
@@ -91,7 +91,7 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
 }
 
 
-sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted, GameState gameState){
+sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted, GameState2 gameState){
 
     Hex hex = hexMap.getHex(x,y);
 
@@ -105,7 +105,7 @@ sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, boo
     else
         shape.setOutlineColor(sf::Color::Black);
 
-    if(gameState == GameState::placement && hexMap.isInPlayerhalf(Player::player2, y) && hexMap.isOnBoard(x,y))
+    if(gameState == GameState2::placement && hexMap.isInPlayerhalf(Player::player2, y) && hexMap.isOnBoard(x,y))
         shape.setFillColor(lightBlue);
     else if(highlighted)
         shape.setFillColor(sf::Color::Red);

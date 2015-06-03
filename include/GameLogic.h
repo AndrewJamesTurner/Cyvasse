@@ -34,8 +34,6 @@ class GameLogic
         HexMap hexMap;
         GameState gameState;
 
-        std::random_device rd;
-
         void player1placement(int x, int y);
         void player1Move(int x, int y);
 

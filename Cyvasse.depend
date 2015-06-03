@@ -10,12 +10,14 @@
 	"Mountain.h"
 	"Crossbow.h"
 
-1432762180 source:/home/andy/Desktop/Cyvasse/src/main.cpp
+1433367170 source:/home/andy/Desktop/Cyvasse/src/main.cpp
 	<SFML/Graphics.hpp>
 	"math.h"
 	<iostream>
 	"GameLogic.h"
 	"Render.h"
+	"GameState.h"
+	"PlayerControls.h"
 	<stdlib.h>
 	<time.h>
 
@@ -54,10 +56,10 @@
 	<iostream>
 	<vector>
 
-1432762682 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
+1433363983 source:/home/andy/Desktop/Cyvasse/src/GameLogic.cpp
 	"GameLogic.h"
 
-1430945156 /home/andy/Desktop/Cyvasse/include/GameLogic.h
+1433363995 /home/andy/Desktop/Cyvasse/include/GameLogic.h
 	"Hex.h"
 	"HexMap.h"
 	"Movement.h"
@@ -90,13 +92,14 @@
 1430749155 source:/home/andy/Desktop/Cyvasse/src/Mountain.cpp
 	"Mountain.h"
 
-1430344061 /home/andy/Desktop/Cyvasse/include/Render.h
+1433363074 /home/andy/Desktop/Cyvasse/include/Render.h
 	<SFML/Graphics.hpp>
 	"HexMap.h"
 	<vector>
 	<algorithm>
+	"GameState.h"
 
-1430344087 source:/home/andy/Desktop/Cyvasse/src/Render.cpp
+1433363119 source:/home/andy/Desktop/Cyvasse/src/Render.cpp
 	"Render.h"
 
 1430749155 source:/home/andy/Desktop/Cyvasse/src/Crossbow.cpp
@@ -120,4 +123,12 @@
 	<climits>
 	"HexMap.h"
 	"Movement.h"
+
+1433367019 /home/andy/Desktop/Cyvasse/include/GameState.h
+
+1433365462 source:/home/andy/Desktop/Cyvasse/src/PlayerControls.cpp
+	"PlayerControls.h"
+
+1433364507 /home/andy/Desktop/Cyvasse/include/PlayerControls.h
+	"HexMap.h"
 

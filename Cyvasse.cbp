@@ -44,6 +44,7 @@
 		<Unit filename="include/AI.h" />
 		<Unit filename="include/Crossbow.h" />
 		<Unit filename="include/GameLogic.h" />
+		<Unit filename="include/GameState.h" />
 		<Unit filename="include/Hex.h" />
 		<Unit filename="include/HexCoordinates.h" />
 		<Unit filename="include/HexMap.h" />
@@ -51,6 +52,7 @@
 		<Unit filename="include/Mountain.h" />
 		<Unit filename="include/Movement.h" />
 		<Unit filename="include/Piece.h" />
+		<Unit filename="include/PlayerControls.h" />
 		<Unit filename="include/Rabble.h" />
 		<Unit filename="include/Render.h" />
 		<Unit filename="include/Spears.h" />
@@ -64,6 +66,7 @@
 		<Unit filename="src/Mountain.cpp" />
 		<Unit filename="src/Movement.cpp" />
 		<Unit filename="src/Piece.cpp" />
+		<Unit filename="src/PlayerControls.cpp" />
 		<Unit filename="src/Rabble.cpp" />
 		<Unit filename="src/Render.cpp" />
 		<Unit filename="src/Spears.cpp" />

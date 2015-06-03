@@ -30,7 +30,7 @@ void GameLogic::mapClicked(int x, int y) {
 
     if(gameState == GameState::player1Turn){
         player1Move(x, y);
-        //AI::miniMaxMove(&hexMap, Player::player1, depth);
+        //AI::ŔaxMove(&hexMap, Player::player1, depth);
         //gameState = GameState::player2Turn;
     }
     else if(gameState == GameState::placement)
@@ -150,8 +150,10 @@ void GameLogic::enemyMove(void){
     //Move _move = AI::randomMove(hexMap);
     AI::miniMaxMove(&hexMap, Player::player2, 3);
 
-
-    gameState = GameState::player1Turn;
+    if(hexMap.isBothKingsOnBoard())
+        gameState = GameState::player1Turn;
+    else
+        gameState = GameState::gameOver;
 }
 
 
