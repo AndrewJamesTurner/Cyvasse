@@ -19,6 +19,10 @@ Render::Render()
         exit(0);
     if (!crossbowTexture.loadFromFile("Images/Crossbow.png"))
         exit(0);
+
+
+    if(!pieceRankFont.loadFromFile("Fonts/AjarSans-Regular.ttf"))
+        exit(0);
 }
 
 Render::~Render()
@@ -44,13 +48,53 @@ void Render::update(HexMap hexMap, GameState gameState, Player player){
             if(gameState == GameState::placement && !hexMap.isInPlayerhalf(player, yPos))
                 continue;
 
-            window->draw(getSprite(xPos, yPos, (*i).getType(), (*i).getPiece()->getPlayer()));
+            window->draw(getPieceSprite(xPos, yPos, (*i).getPiece()->getType(), (*i).getPiece()->getPlayer()));
+            window->draw(getPieceRankText(xPos, yPos, (*i) ));
+
         }
     }
 }
 
+sf::Text Render::getPieceRankText(int x, int y, Hex hex){
 
-sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
+
+    sf::Text text;
+    Piece* piece = hex.getPiece();
+
+    text.setFont(pieceRankFont);
+
+    int pieceTier = piece->getTier();
+
+    Player player = piece->getPlayer();
+
+    std::string s = std::to_string(pieceTier);
+
+    if(hex.getTerrain() == piece->getBonusTerrain())
+        s = s + "+";
+
+
+    text.setString(s);
+
+
+
+    text.setCharacterSize(singleHexSize * tierTextScaleFactor); // in pixels, not points!
+
+    if(player == Player::player1)
+        text.setColor(sf::Color::Black);
+    else
+        text.setColor(sf::Color::White);
+
+
+    sf::FloatRect textureRect = text.getLocalBounds();
+    text.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
+  //  text.setPosition(getPixelX(x,y) + (singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236) + (getHexWidth(singleHexSize) * 0.75) ,getPixelY(x,y)+singleHexSize);
+    text.setPosition(getPixelX(x,y) + (singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236), getPixelY(x,y) + singleHexSize * 1.65);
+
+    return text;
+}
+
+
+sf::Sprite Render::getPieceSprite(int x, int y, Type type, Player player){
 
     sf::Sprite sprite;
 
@@ -81,11 +125,12 @@ sf::Sprite Render::getSprite(int x, int y, Type type, Player player){
             break;
     }
 
-    sf::FloatRect textureRect = sprite.getLocalBounds();
-    sprite.setScale(sf::Vector2f(windowWidth/(float)MAPSIZE * 0.005, windowWidth/(float)MAPSIZE * 0.005) );
 
+    sprite.setScale(sf::Vector2f(windowWidth/(float)MAPSIZE * spriteScaleFactor, windowWidth/(float)MAPSIZE * spriteScaleFactor) );
+
+    sf::FloatRect textureRect = sprite.getLocalBounds();
     sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
-    sprite.setPosition(getPixelX(x,y)+(singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236),getPixelY(x,y)+singleHexSize);
+    sprite.setPosition(getPixelX(x,y)+(singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236) ,getPixelY(x,y) + (singleHexSize * 0.93));
 
     return sprite;
 }
@@ -111,20 +156,43 @@ sf::CircleShape Render::getShape(HexMap hexMap, int x, int y, bool selected, boo
         shape.setFillColor(sf::Color::Red);
     else if(hexMap.isOffBoard(x,y))
         shape.setFillColor(blue);
-    else if(hex.getTerrain() == Terrain::forest)
-        shape.setFillColor(sf::Color(0,100,0));
-    else
-         shape.setFillColor(green);
+    else{
+
+        switch(hex.getTerrain()){
+
+            case Terrain::forest:
+                shape.setFillColor(forestGreen);
+                break;
+
+            case Terrain::fortresses:
+                break;
+
+            case Terrain::grassland:
+                shape.setFillColor(grassGreen);
+                break;
+
+            case Terrain::hill:
+                shape.setFillColor(hillOrange);
+                break;
+
+            case Terrain::none:
+                shape.setFillColor(green);
+                break;
+        }
+    }
+
+
+
 
     return shape;
 }
 
-int Render::getHexheight(int hexSize){
-    return 2 * hexSize;
+double Render::getHexheight(int hexSize){
+    return 2.0 * hexSize;
 }
 
-int Render::getHexWidth(int hexSize){
-    return getHexheight(hexSize) * (sqrt(3) / 2);
+double Render::getHexWidth(int hexSize){
+    return getHexheight(hexSize) * (sqrt(3.0) / 2.0);
 }
 
 int Render::getPixelX(int x, int y){

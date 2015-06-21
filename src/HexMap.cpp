@@ -14,7 +14,7 @@ HexMap::HexMap(int _mapHexSize):
         }
     }
 
-    populateBoard();
+    populateBoard(InitialBoard::testing);
 }
 
 
@@ -59,7 +59,28 @@ std::vector<Hex> HexMap::getHexes(void){
     return hexes;
 }
 
-void HexMap::populateBoard(void){
+void HexMap::populateBoard(InitialBoard initialBoard){
+
+    switch(initialBoard){
+
+    case InitialBoard::testing:
+        testingBoard();
+        break;
+
+    case InitialBoard::random:
+        break;
+
+    case InitialBoard::fromFile:
+        std::cout << "Error InitialBoard::fromFile not implemented.\n";
+        exit(0);
+        break;
+    }
+
+    placeTerrain();
+}
+
+
+void HexMap::testingBoard(void){
 
     setPiece(6,8, new King(Player::player1));
 
@@ -82,6 +103,7 @@ void HexMap::populateBoard(void){
     setPiece(7,3, new Mountain(Player::player2));
     setPiece(4,3, new Crossbow(Player::player2));
 
+
 }
 
 
@@ -98,6 +120,7 @@ void HexMap::placeTerrain(void){
             case Type::rabble:
                 break;
             case Type::crossbow:
+                (*i).setTerrain(Terrain::hill);
                 break;
             case Type::spears:
                 (*i).setTerrain(Terrain::forest);
@@ -105,6 +128,9 @@ void HexMap::placeTerrain(void){
             case Type::mountain:
                 break;
             }
+        }
+        else{
+            (*i).setTerrain(Terrain::none);
         }
     }
 }
@@ -287,7 +313,7 @@ bool HexMap::isPieceOnBoard(const Player player, const Type type) const {
 
     for(auto i = playerPositions.begin(); i<playerPositions.end(); ++i) {
 
-        if( (*i).getType() == type){
+        if( (*i).getPiece()->getType() == type){
             onBoard = true;
             break;
         }

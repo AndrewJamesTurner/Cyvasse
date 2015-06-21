@@ -4,7 +4,6 @@
 #include "Piece.h"
 #include "HexCoordinates.h"
 
-enum class Terrain{hill,forest,grassland,fortresses,none};
 
 
 class Hex : public HexCoordinates
@@ -19,7 +18,8 @@ class Hex : public HexCoordinates
 
         bool isPlayer(Player player) const;
 
-        Type getType(void) const;
+        int getPieceTier(void) const;
+
 
         bool equals(Hex hex);
 

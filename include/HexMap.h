@@ -20,6 +20,7 @@ struct Move{
   Move(int _startX, int _startY, int _endX, int _endY) : startX(_startX), startY(_startY), endX{_endX}, endY{_endY}{}
 };
 
+enum class InitialBoard{testing,random,fromFile};
 
 
 class HexMap
@@ -41,7 +42,7 @@ class HexMap
         Hex* getHexPnt(int x, int y);
         Hex getHex(int x, int y) const;
 
-        void populateBoard(void);
+        void populateBoard(InitialBoard initialBoard);
 
         std::vector<Hex> getPlayerPositions(const Player& player) const;
 
@@ -75,6 +76,9 @@ class HexMap
         int getIndex(int x, int y) const;
         bool isOffMap(int x, int y) const;
 
+        void testingBoard(void);
+
+
     private:
 
         int width;
@@ -85,6 +89,8 @@ class HexMap
 
         Hex *selectedHex;
         std::vector<Hex> highlightedHexes;
+
+
 };
 
 #endif // HEXMAP_H

@@ -1,6 +1,6 @@
 #include "Piece.h"
 
-Piece::Piece(Player _player, Type _type, MoveType _movement, int _range, int _tier, int _value) : player{_player}, type{_type}, movetype{_movement}, range{_range}, tier{_tier}, value{_value}
+Piece::Piece(Player _player, Type _type, MoveType _movement, Terrain _terrainBonus, int _range, int _tier, int _value) : player{_player}, type{_type}, movetype{_movement}, terrainBonus{_terrainBonus}, range{_range}, tier{_tier}, value{_value}
 {
 
 }
@@ -33,6 +33,11 @@ MoveType Piece::getMoveType(void){
 Player Piece::getPlayer(void){
     return player;
 }
+
+Terrain Piece::getBonusTerrain(void) const{
+    return terrainBonus;
+}
+
 
  int Piece::getRange(void){
     return range;

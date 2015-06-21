@@ -21,6 +21,8 @@ class Movement
     private:
 
         static std::default_random_engine engine;
+        static int isOnTerrainBonus(const Hex hex);
+
 };
 
 #endif // MOVEMENT_H

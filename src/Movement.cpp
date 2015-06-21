@@ -122,8 +122,19 @@ bool Movement::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     // if target contains opponent and is not a mountain and is lower/equal tier
     else if(sourceHex.getPiece()->getPlayer() != targetHex.getPiece()->getPlayer() &&
             !targetHex.getPiece()->isMoutain() &&
-            sourceHex.getPiece()->getTier() >= targetHex.getPiece()->getTier())
+            sourceHex.getPiece()->getTier() + isOnTerrainBonus(sourceHex)  >= targetHex.getPiece()->getTier() + isOnTerrainBonus(targetHex) )
         return true;
     else
         return false;
 }
+
+
+int Movement::isOnTerrainBonus(const Hex hex){
+
+    if(hex.getTerrain() == hex.getPiece()->getBonusTerrain())
+        return 1;
+    else
+        return 0;
+}
+
+

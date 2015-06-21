@@ -1,6 +1,6 @@
 #include "Crossbow.h"
 
-Crossbow::Crossbow(Player _player) : Piece(_player, Type::crossbow, MoveType::orthogonal, 3, 1, 1)
+Crossbow::Crossbow(Player _player) : Piece(_player, Type::crossbow, MoveType::orthogonal, Terrain::hill, 3, 2, 1)
 {
     //ctor
 }

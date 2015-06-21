@@ -32,9 +32,9 @@ Piece* Hex::getPiece(void) const{
     return piece;
 }
 
-Type Hex::getType(void) const {
-    return piece->getType();
-}
+
+
+
 
 bool Hex::hasPiece(void) const{
 
