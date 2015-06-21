@@ -20,7 +20,6 @@ struct Move{
   Move(int _startX, int _startY, int _endX, int _endY) : startX(_startX), startY(_startY), endX{_endX}, endY{_endY}{}
 };
 
-enum class GameState{placement,player1Turn,player2Turn,gameOver};
 
 
 class HexMap

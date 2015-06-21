@@ -3,12 +3,12 @@
 #include "math.h"
 #include <iostream>
 
-#include "GameLogic.h"
 #include "Render.h"
 
 #include "GameState.h"
 
 #include "PlayerControls.h"
+#include "AI.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -32,25 +32,24 @@ int main()
     sf::RenderWindow* window = render.getRenderWindow();
     window->setFramerateLimit(60);
 
-	GameState2 gameState = GameState2::placement;
+	GameState gameState = GameState::placement;
 
     // run the program as long as the window is open
     while (window->isOpen())
     {
-        //
-        if(gameState == GameState2::gameOver){
+        if(gameState == GameState::gameOver){
             std::cout << "\ngame over\n";
             return 0;
         }
 
         // deal with AI players
-        if(gameState == GameState2::player1Turn && player1 == PlayerType::AI){
+        if(gameState == GameState::player1Turn && player1 == PlayerType::AI){
             AI::AImove(&hexmap, Player::player1, AIdifficulty);
-            gameState = GameState2::player2Turn;
+            gameState = GameState::player2Turn;
         }
-        else if(gameState == GameState2::player2Turn && player2 == PlayerType::AI){
+        else if(gameState == GameState::player2Turn && player2 == PlayerType::AI){
             AI::AImove(&hexmap, Player::player2, AIdifficulty);
-            gameState = GameState2::player1Turn;
+            gameState = GameState::player1Turn;
         }
 
         sf::Event event;
@@ -71,7 +70,7 @@ int main()
                     int x = render.getCartesianX(mouseClickX, mouseClickY);
                     int y = render.getCartesianY(mouseClickX, mouseClickY);
 
-                    if(gameState == GameState2::placement){
+                    if(gameState == GameState::placement){
 
                         if(player1 == PlayerType::human)
                             PlayerControls::playerPlacement(&hexmap, Player::player1, x, y);
@@ -81,27 +80,23 @@ int main()
 
 
                     }
-                    else if(gameState == GameState2::player1Turn && player1 == PlayerType::human){
+                    else if(gameState == GameState::player1Turn && player1 == PlayerType::human){
 
-                        bool didMove = PlayerControls::playerMove(&hexmap, Player::player1, x, y);
-
-                        if(didMove)
-                            gameState = GameState2::player2Turn;
+                        if(PlayerControls::playerMove(&hexmap, Player::player1, x, y))
+                            gameState = GameState::player2Turn;
 
                     }
-                    else if(gameState == GameState2::player2Turn && player2 == PlayerType::human){
+                    else if(gameState == GameState::player2Turn && player2 == PlayerType::human){
 
-                        bool didMove = PlayerControls::playerMove(&hexmap, Player::player2, x, y);
-
-                        if(didMove)
-                            gameState = GameState2::player1Turn;
+                        if(PlayerControls::playerMove(&hexmap, Player::player2, x, y))
+                            gameState = GameState::player1Turn;
                     }
                 }
 
                 else if (event.mouseButton.button == sf::Mouse::Right)
                 {
-                    if(gameState == GameState2::placement){
-                        gameState = GameState2::player1Turn;
+                    if(gameState == GameState::placement){
+                        gameState = GameState::player1Turn;
                     }
                     else{
                         hexmap.clearHighlightedHexes();
@@ -111,7 +106,7 @@ int main()
             }
         }
 
-        if(gameState == GameState2::placement){
+        if(gameState == GameState::placement){
 
             if(player1 == PlayerType::human)
                 render.update(hexmap, gameState, Player::player1);
@@ -125,7 +120,7 @@ int main()
         window->display();
 
         if(!hexmap.isBothKingsOnBoard()){
-            gameState = GameState2::gameOver;
+            gameState = GameState::gameOver;
         }
     }
 
