@@ -10,6 +10,33 @@ AI::~AI()
     //dtor
 }
 
+void AI::AImove(HexMap* hexMap, Player player, Difficulty difficulty){
+
+    switch(difficulty){
+
+    case Difficulty::veryEasy:
+        randomMove(hexMap, player);
+        break;
+
+    case Difficulty::easy:
+        miniMaxMove(hexMap, player, 1);
+        break;
+
+    case Difficulty::medium:
+        miniMaxMove(hexMap, player, 2);
+        break;
+
+    case Difficulty::hard:
+        miniMaxMove(hexMap, player, 3);
+        break;
+
+
+    }
+
+
+}
+
+
 void AI::miniMaxMove(HexMap* hexMap, Player player, int depth){
 
     int alpha = INT_MIN;

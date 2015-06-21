@@ -24,6 +24,8 @@ int main()
     PlayerType player1 = PlayerType::human;
     PlayerType player2 = PlayerType::AI;
 
+    Difficulty AIdifficulty = Difficulty::veryEasy;
+
 
     HexMap hexmap(MAPSIZE);
     Render render;
@@ -43,11 +45,11 @@ int main()
 
         // deal with AI players
         if(gameState == GameState2::player1Turn && player1 == PlayerType::AI){
-            AI::miniMaxMove(&hexmap, Player::player1, 2);
+            AI::AImove(&hexmap, Player::player1, AIdifficulty);
             gameState = GameState2::player2Turn;
         }
         else if(gameState == GameState2::player2Turn && player2 == PlayerType::AI){
-            AI::miniMaxMove(&hexmap, Player::player2, 2);
+            AI::AImove(&hexmap, Player::player2, AIdifficulty);
             gameState = GameState2::player1Turn;
         }
 
