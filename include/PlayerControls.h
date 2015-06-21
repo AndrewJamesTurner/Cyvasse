@@ -2,6 +2,7 @@
 #define PLAYERCONTROLS_H
 
 #include "HexMap.h"
+#include "Movement.h"
 
 class PlayerControls
 {
@@ -9,7 +10,15 @@ class PlayerControls
         PlayerControls();
         virtual ~PlayerControls();
 
-        static void player1placement(HexMap* hexmap, int x, int y);
+        static void playerPlacement(HexMap* hexmap, Player player, int x, int y);
+
+        static bool playerMove(HexMap* hexmap, Player player, int x, int y);
+
+        static void showMovements(HexMap* hexmap, Hex hex);
+
+        static bool movePiece(HexMap* hexmap, Hex sourceHex, Hex destinationHex);
+
+
 
 
     protected:

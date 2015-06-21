@@ -17,7 +17,7 @@ class Render
         virtual ~Render();
 
         sf::RenderWindow* getRenderWindow(void);
-        void update(HexMap hexMap, GameState2 gameState);
+        void update(HexMap hexMap, GameState2 gameState, Player player);
 
         int getCartesianX(int xPix, int yPix);
         int getCartesianY(int xPix, int yPix);
@@ -40,7 +40,7 @@ class Render
         int getHexheight(int hexSize);
         int getHexWidth(int hexSize);
 
-        sf::CircleShape getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted, GameState2 gameState);
+        sf::CircleShape getShape(HexMap hexMap, int x, int y, bool selected, bool highlighted, GameState2 gameState, Player player);
         sf::Sprite getSprite(int x, int y, Type type, Player player);
 
 
