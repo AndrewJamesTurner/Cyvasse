@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+
+
 enum class PlayerType{human,AI};
 
 
@@ -24,13 +26,13 @@ int main()
     PlayerType player1 = PlayerType::human;
     PlayerType player2 = PlayerType::AI;
 
-    Difficulty AIdifficulty = Difficulty::veryEasy;
+    Difficulty AIdifficulty = Difficulty::medium;
 
 
     HexMap hexmap(MAPSIZE);
     Render render;
     sf::RenderWindow* window = render.getRenderWindow();
-    window->setFramerateLimit(60);
+    window->setFramerateLimit(30);
 
 	GameState gameState = GameState::placement;
 
@@ -70,6 +72,8 @@ int main()
                     int x = render.getCartesianX(mouseClickX, mouseClickY);
                     int y = render.getCartesianY(mouseClickX, mouseClickY);
 
+                    //std::cout << "x: " << x << ", y: " << y << "\n";
+
                     if(gameState == GameState::placement){
 
                         if(player1 == PlayerType::human)
@@ -97,6 +101,7 @@ int main()
                 {
                     if(gameState == GameState::placement){
                         gameState = GameState::player1Turn;
+                        hexmap.placeTerrain();
                     }
                     else{
                         hexmap.clearHighlightedHexes();

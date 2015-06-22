@@ -6,7 +6,7 @@ Render::Render()
     windowWidth = 2 * singleHexSize * MAPSIZE * 2 * 0.88;
     windowHeight = 2 * singleHexSize * MAPSIZE * 2 * (sqrt(3) / 2) * 0.93;
 
-    window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Hex Map!", sf::Style::Titlebar | sf::Style::Close);
+    window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Cyvasse: you play the game, or you die.", sf::Style::Titlebar | sf::Style::Close);
     window->setFramerateLimit(30);
 
     if (!spearsTexture.loadFromFile("Images/Spears.png"))
@@ -57,26 +57,23 @@ void Render::update(HexMap hexMap, GameState gameState, Player player){
 
 sf::Text Render::getPieceRankText(int x, int y, Hex hex){
 
-
     sf::Text text;
+    std::string s;
     Piece* piece = hex.getPiece();
-
-    text.setFont(pieceRankFont);
-
     int pieceTier = piece->getTier();
-
     Player player = piece->getPlayer();
 
-    std::string s = std::to_string(pieceTier);
+    if(piece->getType() == Type::mountain)
+        std::string s = "";
+    else{
+        s = std::to_string(pieceTier);
 
-    if(hex.getTerrain() == piece->getBonusTerrain())
-        s = s + "+";
+        if( hex.getTerrain() != Terrain::none && hex.getTerrain() == piece->getBonusTerrain())
+            s = s + "+";
+    }
 
-
+    text.setFont(pieceRankFont);
     text.setString(s);
-
-
-
     text.setCharacterSize(singleHexSize * tierTextScaleFactor); // in pixels, not points!
 
     if(player == Player::player1)
@@ -84,10 +81,8 @@ sf::Text Render::getPieceRankText(int x, int y, Hex hex){
     else
         text.setColor(sf::Color::White);
 
-
     sf::FloatRect textureRect = text.getLocalBounds();
     text.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);
-  //  text.setPosition(getPixelX(x,y) + (singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236) + (getHexWidth(singleHexSize) * 0.75) ,getPixelY(x,y)+singleHexSize);
     text.setPosition(getPixelX(x,y) + (singleHexSize*(sqrt(3) / 2)) + singleHexSize - singleHexSize*cos(0.5236), getPixelY(x,y) + singleHexSize * 1.65);
 
     return text;

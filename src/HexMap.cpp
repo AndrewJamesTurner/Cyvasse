@@ -14,7 +14,7 @@ HexMap::HexMap(int _mapHexSize):
         }
     }
 
-    populateBoard(InitialBoard::testing);
+    populateBoard(InitialBoard::random);
 }
 
 
@@ -42,6 +42,10 @@ bool HexMap::isHexSelected(int x, int y){
 }
 
 
+int HexMap::getHexSize(void) const{
+    return mapHexSize;
+}
+
 
 Hex HexMap::getSelectedHex(void){
     return *selectedHex;
@@ -68,6 +72,7 @@ void HexMap::populateBoard(InitialBoard initialBoard){
         break;
 
     case InitialBoard::random:
+        randomBoard();
         break;
 
     case InitialBoard::fromFile:
@@ -75,9 +80,55 @@ void HexMap::populateBoard(InitialBoard initialBoard){
         exit(0);
         break;
     }
-
-    placeTerrain();
 }
+
+void HexMap::randomBoard(void){
+
+    placePieceRandomally(new King(Player::player1));
+    placePieceRandomally(new King(Player::player2));
+
+    placePieceRandomally(new Rabble(Player::player1));
+    placePieceRandomally(new Rabble(Player::player2));
+    placePieceRandomally(new Rabble(Player::player1));
+    placePieceRandomally(new Rabble(Player::player2));
+
+    placePieceRandomally(new Spears(Player::player1));
+    placePieceRandomally(new Spears(Player::player2));
+    placePieceRandomally(new Spears(Player::player1));
+    placePieceRandomally(new Spears(Player::player2));
+
+    placePieceRandomally(new Crossbow(Player::player1));
+    placePieceRandomally(new Crossbow(Player::player2));
+    placePieceRandomally(new Crossbow(Player::player1));
+    placePieceRandomally(new Crossbow(Player::player2));
+
+    placePieceRandomally(new Mountain(Player::player1));
+    placePieceRandomally(new Mountain(Player::player2));
+    placePieceRandomally(new Mountain(Player::player1));
+    placePieceRandomally(new Mountain(Player::player2));
+}
+
+void HexMap::placePieceRandomally(Piece* piece){
+
+    bool notPlaced = true;
+    Player player = piece->getPlayer();
+    std::random_device seeder;
+    std::mt19937 engine(seeder());
+    std::uniform_int_distribution<int> dist(1, 2*getHexSize()-1);
+    int randX, randY;
+
+    while(notPlaced){
+
+        randX = dist(engine);
+        randY = dist(engine);
+
+        if(isOnBoard(randX, randY) && isInPlayerhalf(player, randY) && !hasPiece(randX,randY)){
+           setPiece(randX,randY, piece);
+           notPlaced = false;
+        }
+    }
+}
+
 
 
 void HexMap::testingBoard(void){

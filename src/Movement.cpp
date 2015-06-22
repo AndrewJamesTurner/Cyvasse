@@ -131,7 +131,7 @@ bool Movement::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
 
 int Movement::isOnTerrainBonus(const Hex hex){
 
-    if(hex.getTerrain() == hex.getPiece()->getBonusTerrain())
+    if(hex.getTerrain() != Terrain::none && hex.getTerrain() == hex.getPiece()->getBonusTerrain())
         return 1;
     else
         return 0;

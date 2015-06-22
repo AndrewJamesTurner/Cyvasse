@@ -1,6 +1,8 @@
 #ifndef HEXMAP_H
 #define HEXMAP_H
 
+#include <random>
+
 #include "Hex.h"
 
 #include "Rabble.h"
@@ -42,6 +44,8 @@ class HexMap
         Hex* getHexPnt(int x, int y);
         Hex getHex(int x, int y) const;
 
+        int getHexSize(void) const;
+
         void populateBoard(InitialBoard initialBoard);
 
         std::vector<Hex> getPlayerPositions(const Player& player) const;
@@ -77,7 +81,9 @@ class HexMap
         bool isOffMap(int x, int y) const;
 
         void testingBoard(void);
+        void randomBoard(void);
 
+        void placePieceRandomally(Piece* piece);
 
     private:
 
