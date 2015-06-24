@@ -92,6 +92,24 @@ bool HexCoordinates::isDiagonalRange(HexCoordinates hex, int range){
         return false;
 }
 
+bool HexCoordinates::isAnyRange(HexCoordinates hex, int range){
+
+    int cubeXdiff = abs(cubeX - hex.getCubeX());
+    int cubeYdiff = abs(cubeY - hex.getCubeY());
+    int cubeZdiff = abs(cubeZ - hex.getCubeZ());
+
+    int distance;
+
+    distance = std::max(cubeXdiff,cubeYdiff);
+    distance = std::max(distance,cubeZdiff);
+
+    if(distance <= range)
+        return true;
+    else
+        return false;
+}
+
+
 
 std::vector<HexCoordinates> HexCoordinates::orthogonalSteps(HexCoordinates hex){
 
@@ -174,6 +192,16 @@ std::vector<HexCoordinates> HexCoordinates::diagonalSteps(HexCoordinates hex){
 }
 
 
+std::vector<HexCoordinates> HexCoordinates::anySteps(HexCoordinates hex){
+
+    std::vector<HexCoordinates> steps;
+
+    steps.push_back(HexCoordinates(hex.cubeX, hex.cubeY, hex.cubeZ));
+
+    return steps;
+}
+
+
 std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range) const {
 
     std::vector<HexCoordinates> steps;
@@ -190,6 +218,28 @@ std::vector<HexCoordinates> HexCoordinates::getPossibleOrthogonalSteps(int range
 
     return steps;
 }
+
+std::vector<HexCoordinates> HexCoordinates::getPossibleAnySteps(int range) const{
+
+    std::vector<HexCoordinates> steps;
+
+    for(int x = -range; x <= range; x++){
+        for(int y = -range; y <= range; y++){
+            for(int z = -range; z <= range; z++){
+
+                int xMove = cubeX + x;
+                int yMove = cubeY + y;
+                int zMove = cubeZ + z;
+
+                if((xMove + yMove + zMove) == 0)
+                    steps.push_back(HexCoordinates(xMove, yMove, zMove));
+            }
+        }
+    }
+
+    return steps;
+}
+
 
 
 

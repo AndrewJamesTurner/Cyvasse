@@ -19,6 +19,10 @@ Render::Render()
         exit(0);
     if (!crossbowTexture.loadFromFile("Images/Crossbow.png"))
         exit(0);
+    if (!dragonTexture.loadFromFile("Images/Dragon.png"))
+        exit(0);
+
+
 
 
     if(!pieceRankFont.loadFromFile("Fonts/AjarSans-Regular.ttf"))
@@ -109,6 +113,9 @@ sf::Sprite Render::getPieceSprite(int x, int y, Type type, Player player){
         case Type::crossbow:
             sprite.setTexture(crossbowTexture);
             break;
+        case Type::dragon:
+            sprite.setTexture(dragonTexture);
+            break;
     }
 
     switch(player){
@@ -121,7 +128,7 @@ sf::Sprite Render::getPieceSprite(int x, int y, Type type, Player player){
     }
 
 
-    sprite.setScale(sf::Vector2f(windowWidth/(float)MAPSIZE * spriteScaleFactor, windowWidth/(float)MAPSIZE * spriteScaleFactor) );
+    sprite.setScale(sf::Vector2f((windowWidth/(float)MAPSIZE) * spriteScaleFactor, (windowWidth/(float)MAPSIZE) * spriteScaleFactor) );
 
     sf::FloatRect textureRect = sprite.getLocalBounds();
     sprite.setOrigin(textureRect.left + textureRect.width/2.0f, textureRect.top  + textureRect.height/2.0f);

@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1435007201 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
+1435177097 source:/home/andy/Desktop/Cyvasse/src/HexMap.cpp
 	"HexMap.h"
 
-1435006732 /home/andy/Desktop/Cyvasse/include/HexMap.h
+1435177123 /home/andy/Desktop/Cyvasse/include/HexMap.h
 	<random>
 	"Hex.h"
 	"Rabble.h"
@@ -10,6 +10,7 @@
 	"Spears.h"
 	"Mountain.h"
 	"Crossbow.h"
+	"Dragon.h"
 
 1435007434 source:/home/andy/Desktop/Cyvasse/src/main.cpp
 	<SFML/Graphics.hpp>
@@ -40,7 +41,7 @@
 1435004133 source:/home/andy/Desktop/Cyvasse/src/Piece.cpp
 	"Piece.h"
 
-1435004133 /home/andy/Desktop/Cyvasse/include/Piece.h
+1435178803 /home/andy/Desktop/Cyvasse/include/Piece.h
 	<iostream>
 
 1421779711 source:/home/andy/Desktop/Cyvasse/src/Pieces.cpp
@@ -50,10 +51,10 @@
 	<SFML/Graphics.hpp>
 	"Piece.h"
 
-1428759591 source:/home/andy/Desktop/Cyvasse/src/HexCoordinates.cpp
+1435179273 source:/home/andy/Desktop/Cyvasse/src/HexCoordinates.cpp
 	"HexCoordinates.h"
 
-1428759591 /home/andy/Desktop/Cyvasse/include/HexCoordinates.h
+1435178992 /home/andy/Desktop/Cyvasse/include/HexCoordinates.h
 	<iostream>
 	<vector>
 
@@ -93,14 +94,14 @@
 1435004133 source:/home/andy/Desktop/Cyvasse/src/Mountain.cpp
 	"Mountain.h"
 
-1435005769 /home/andy/Desktop/Cyvasse/include/Render.h
+1435177001 /home/andy/Desktop/Cyvasse/include/Render.h
 	<SFML/Graphics.hpp>
 	"HexMap.h"
 	<vector>
 	<algorithm>
 	"GameState.h"
 
-1435004869 source:/home/andy/Desktop/Cyvasse/src/Render.cpp
+1435177230 source:/home/andy/Desktop/Cyvasse/src/Render.cpp
 	"Render.h"
 
 1435004133 source:/home/andy/Desktop/Cyvasse/src/Crossbow.cpp
@@ -114,7 +115,7 @@
 	<random>
 	"HexMap.h"
 
-1435004191 source:/home/andy/Desktop/Cyvasse/src/Movement.cpp
+1435179377 source:/home/andy/Desktop/Cyvasse/src/Movement.cpp
 	"Movement.h"
 
 1435004133 source:/home/andy/Desktop/Cyvasse/src/AI.cpp
@@ -133,4 +134,10 @@
 1435004133 /home/andy/Desktop/Cyvasse/include/PlayerControls.h
 	"HexMap.h"
 	"Movement.h"
+
+1435179483 source:/home/andy/Desktop/Cyvasse/src/Dragon.cpp
+	"Dragon.h"
+
+1435176918 /home/andy/Desktop/Cyvasse/include/Dragon.h
+	"Piece.h"
 

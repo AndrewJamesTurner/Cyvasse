@@ -21,13 +21,16 @@ class HexCoordinates
 
         bool isOrthogonalRange(HexCoordinates hex, int range);
         bool isDiagonalRange(HexCoordinates hex, int range);
+        bool isAnyRange(HexCoordinates hex, int range);
 
 
         std::vector<HexCoordinates> orthogonalSteps(HexCoordinates hex);
         std::vector<HexCoordinates> diagonalSteps(HexCoordinates hex);
+        std::vector<HexCoordinates> anySteps(HexCoordinates hex);
 
         std::vector<HexCoordinates> getPossibleOrthogonalSteps(int range) const;
         std::vector<HexCoordinates> getPossibleDiagonalSteps(int range) const;
+        std::vector<HexCoordinates> getPossibleAnySteps(int range) const;
 
         bool isInRange(HexCoordinates hex, int range);
         int getDistance(HexCoordinates hex);

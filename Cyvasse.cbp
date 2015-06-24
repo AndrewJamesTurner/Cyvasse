@@ -43,6 +43,7 @@
 		</Compiler>
 		<Unit filename="include/AI.h" />
 		<Unit filename="include/Crossbow.h" />
+		<Unit filename="include/Dragon.h" />
 		<Unit filename="include/GameState.h" />
 		<Unit filename="include/Hex.h" />
 		<Unit filename="include/HexCoordinates.h" />
@@ -57,6 +58,7 @@
 		<Unit filename="include/Spears.h" />
 		<Unit filename="src/AI.cpp" />
 		<Unit filename="src/Crossbow.cpp" />
+		<Unit filename="src/Dragon.cpp" />
 		<Unit filename="src/Hex.cpp" />
 		<Unit filename="src/HexCoordinates.cpp" />
 		<Unit filename="src/HexMap.cpp" />

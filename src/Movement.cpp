@@ -17,11 +17,19 @@ std::vector<Hex> Movement::getPossibleMovements(const HexMap& _hexMap, const Hex
     std::vector<HexCoordinates> movements;
     std::vector<Hex> possibleMovements;
 
-    if(hex.getPiece()->getMoveType() == MoveType::orthogonal){
+    switch(hex.getPiece()->getMoveType()){
+
+    case MoveType::orthogonal:
         movements = hex.getPossibleOrthogonalSteps(hex.getPiece()->getRange());
-    }
-    else if(hex.getPiece()->getMoveType() == MoveType::diagonal){
-       movements = hex.getPossibleDiagonalSteps(hex.getPiece()->getRange());
+        break;
+    case MoveType::diagonal:
+        movements = hex.getPossibleDiagonalSteps(hex.getPiece()->getRange());
+        break;
+    case MoveType::any:
+        movements = hex.getPossibleAnySteps(hex.getPiece()->getRange());
+        break;
+    case MoveType::none:
+        break;
     }
 
     for(auto i = movements.begin(); i<movements.end(); ++i) {
@@ -100,6 +108,12 @@ bool Movement::canMove(HexMap _hexmap, Hex sourceHex, Hex targetHex){
     else if(moveType == MoveType::diagonal && sourceHex.isDiagonalRange(targetHex, sourceHex.getPiece()->getRange())){
         steps = sourceHex.diagonalSteps(targetHex);
     }
+
+    // if the movement type is any and..
+    else if(moveType == MoveType::any && sourceHex.isAnyRange(targetHex, sourceHex.getPiece()->getRange())){
+        steps = sourceHex.anySteps(targetHex);
+    }
+
     else{
         return false;
     }

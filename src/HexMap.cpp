@@ -106,6 +106,9 @@ void HexMap::randomBoard(void){
     placePieceRandomally(new Mountain(Player::player2));
     placePieceRandomally(new Mountain(Player::player1));
     placePieceRandomally(new Mountain(Player::player2));
+
+    placePieceRandomally(new Dragon(Player::player1));
+    placePieceRandomally(new Dragon(Player::player2));
 }
 
 void HexMap::placePieceRandomally(Piece* piece){
@@ -177,6 +180,8 @@ void HexMap::placeTerrain(void){
                 (*i).setTerrain(Terrain::forest);
                 break;
             case Type::mountain:
+                break;
+            case Type::dragon:
                 break;
             }
         }

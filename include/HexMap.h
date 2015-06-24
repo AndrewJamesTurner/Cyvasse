@@ -10,6 +10,7 @@
 #include "Spears.h"
 #include "Mountain.h"
 #include "Crossbow.h"
+#include "Dragon.h"
 
 struct Move{
 

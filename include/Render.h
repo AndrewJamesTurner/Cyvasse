@@ -59,6 +59,7 @@ class Render
         sf::Texture mountainTexture;
         sf::Texture rabbleTexture;
         sf::Texture crossbowTexture;
+        sf::Texture dragonTexture;
 
         sf::Font pieceRankFont;
 
